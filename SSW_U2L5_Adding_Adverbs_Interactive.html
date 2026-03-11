@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSW | Unit 2, Lesson 5: Adding Adverbs</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --coral:#E66B5D; --teal:#3A7D8C; --light-blue:#D7ECF0; --blue-pale:#EBF5F8;
+  --yellow:#F3D25B; --yellow-dark:#9E7F0A; --white:#FFFFFF; --dark:#1A1A2E;
+  --coral-pale:#FDF0EE; --green:#4CAF50; --red:#E74C3C;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Open Sans',sans-serif;background:#f0f4f8;color:var(--dark);min-height:100vh;display:flex;flex-direction:column;align-items:center}
+.progress-bar{position:fixed;top:0;left:0;width:100%;height:6px;background:#e0e0e0;z-index:100}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--coral));transition:width .4s ease;width:0}
+.star-counter{position:fixed;top:14px;right:20px;font-family:'Poppins',sans-serif;font-weight:600;font-size:1.1rem;color:var(--yellow-dark);z-index:100;background:var(--white);padding:4px 14px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.star-counter.pop{animation:starPop .4s ease}
+@keyframes starPop{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+.slide-area{flex:1;display:flex;align-items:center;justify-content:center;width:100%;padding:50px 20px 80px}
+.slide{display:none;background:var(--white);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.08);max-width:900px;width:100%;min-height:480px;padding:48px 44px;animation:fadeIn .35s ease}
+.slide.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.nav-bar{position:fixed;bottom:0;left:0;width:100%;background:var(--white);border-top:1px solid #e0e0e0;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100}
+.nav-btn{font-family:'Open Sans',sans-serif;font-weight:600;font-size:.95rem;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+.nav-btn.prev{background:var(--blue-pale);color:var(--teal)}
+.nav-btn.next{background:var(--teal);color:var(--white)}
+.nav-btn:hover{opacity:.85;transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.4;cursor:default;transform:none}
+.slide-counter{font-family:'Open Sans',sans-serif;font-size:.85rem;color:#888}
+/* Slide typography */
+.phase-label{font-family:'Poppins',sans-serif;font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;padding:4px 14px;border-radius:20px;display:inline-block;margin-bottom:16px}
+.phase-learn{background:var(--light-blue);color:var(--teal)}
+.phase-practice{background:var(--coral-pale);color:var(--coral)}
+.phase-review{background:var(--blue-pale);color:var(--teal)}
+h1{font-family:'Poppins',sans-serif;font-weight:700;font-size:2rem;color:var(--teal);margin-bottom:8px}
+h2{font-family:'Poppins',sans-serif;font-weight:600;font-size:1.5rem;color:var(--teal);margin-bottom:12px}
+h3{font-family:'Poppins',sans-serif;font-weight:600;font-size:1.15rem;color:var(--coral);margin-bottom:8px}
+p,.desc{font-family:'Poppins',sans-serif;font-size:1rem;line-height:1.6;color:var(--dark);margin-bottom:10px}
+.subtitle{font-family:'Poppins',sans-serif;font-size:1.1rem;color:#555;margin-bottom:20px}
+.goal-box{background:var(--light-blue);border-radius:10px;padding:16px 20px;margin-top:16px;font-family:'Poppins',sans-serif;font-size:.95rem;color:var(--teal)}
+/* Concept intro */
+.concept-big{font-family:'Poppins',sans-serif;font-weight:700;font-size:3.5rem;color:var(--teal);text-align:center;margin:60px 0 20px}
+.concept-sub{font-family:'Poppins',sans-serif;font-size:1.2rem;color:#666;text-align:center}
+/* MC */
+.mc-options{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.mc-opt{font-family:'Poppins',sans-serif;font-size:1rem;padding:14px 20px;border:2px solid #ddd;border-radius:10px;cursor:pointer;transition:all .2s;background:var(--white)}
+.mc-opt:hover{border-color:var(--teal);background:var(--blue-pale)}
+.mc-opt.correct{border-color:var(--green);background:#e8f5e9}
+.mc-opt.wrong{border-color:var(--red);background:#fce4ec}
+.mc-opt.disabled{pointer-events:none;opacity:.7}
+.mc-feedback{font-family:'Poppins',sans-serif;font-size:.95rem;padding:12px 16px;border-radius:8px;margin-top:12px;display:none}
+.mc-feedback.show{display:block}
+.mc-feedback.correct-fb{background:#e8f5e9;color:#2e7d32}
+.mc-feedback.wrong-fb{background:#fce4ec;color:#c62828}
+/* Rule cards */
+.rule-card{background:var(--light-blue);border-radius:12px;padding:20px 24px;margin:12px 0}
+.rule-card h3{color:var(--teal);margin-bottom:8px}
+.rule-example{font-family:'Poppins',sans-serif;font-size:1rem;margin:6px 0;padding-left:16px;border-left:3px solid var(--coral)}
+.position-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.position-card{background:var(--white);border:2px solid var(--light-blue);border-radius:10px;padding:14px 16px}
+.position-card .pos-label{font-family:'Poppins',sans-serif;font-weight:600;font-size:.85rem;color:var(--coral);text-transform:uppercase;margin-bottom:6px}
+.position-card .pos-example{font-family:'Poppins',sans-serif;font-size:.95rem;color:var(--dark)}
+.position-card .pos-example .adverb{color:var(--coral);font-weight:600}
+/* Sentence expansion */
+.exp-sentence-box{background:var(--blue-pale);border-radius:12px;padding:20px;margin:16px 0}
+.exp-base{font-family:'Poppins',sans-serif;font-weight:600;font-size:1.2rem;color:var(--teal);margin-bottom:12px}
+.exp-verb{background:var(--yellow);padding:2px 6px;border-radius:4px}
+.exp-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.adverb-chip{font-family:'Poppins',sans-serif;font-size:.9rem;padding:8px 16px;border:2px solid #ddd;border-radius:20px;cursor:pointer;transition:all .2s;background:var(--white)}
+.adverb-chip:hover{border-color:var(--coral);background:var(--coral-pale)}
+.adverb-chip.selected{border-color:var(--coral);background:var(--coral);color:var(--white)}
+.exp-result{font-family:'Poppins',sans-serif;font-size:1.1rem;min-height:40px;padding:12px 16px;background:var(--white);border-radius:8px;border:2px dashed #ccc;margin:12px 0;text-align:center;color:#888}
+.exp-result.filled{border-color:var(--teal);border-style:solid;color:var(--dark)}
+.exp-check-btn,.pos-check-btn{font-family:'Poppins',sans-serif;font-weight:600;padding:10px 28px;border:none;border-radius:8px;cursor:pointer;font-size:.95rem;transition:all .2s}
+.exp-check-btn{background:var(--teal);color:var(--white)}
+.exp-check-btn:hover{opacity:.85}
+.exp-check-btn:disabled{opacity:.4;cursor:default}
+.exp-feedback{font-family:'Poppins',sans-serif;font-size:.9rem;margin-top:10px;padding:10px 14px;border-radius:8px;display:none}
+.exp-feedback.show{display:block}
+.exp-next-btn{font-family:'Poppins',sans-serif;font-weight:600;padding:8px 20px;border:none;border-radius:8px;background:var(--coral);color:var(--white);cursor:pointer;margin-top:8px;display:none;font-size:.9rem}
+.exp-next-btn.show{display:inline-block}
+/* Position practice */
+.pos-sentence{font-family:'Poppins',sans-serif;font-size:1.15rem;text-align:center;margin:16px 0;color:var(--dark)}
+.pos-options{display:flex;flex-direction:column;gap:8px;margin:12px 0}
+.pos-opt{font-family:'Poppins',sans-serif;font-size:.95rem;padding:12px 18px;border:2px solid #ddd;border-radius:10px;cursor:pointer;transition:all .2s;background:var(--white)}
+.pos-opt:hover{border-color:var(--teal);background:var(--blue-pale)}
+.pos-opt.selected{border-color:var(--coral);background:var(--coral-pale)}
+.pos-opt.correct-pos{border-color:var(--green);background:#e8f5e9}
+.pos-opt.wrong-pos{border-color:var(--red);background:#fce4ec}
+.pos-feedback{font-family:'Poppins',sans-serif;font-size:.9rem;margin-top:10px;padding:10px 14px;border-radius:8px;display:none}
+.pos-feedback.show{display:block}
+.pos-check-btn{background:var(--teal);color:var(--white)}
+.pos-check-btn:hover{opacity:.85}
+.pos-check-btn:disabled{opacity:.4;cursor:default}
+.pos-counter{font-family:'Poppins',sans-serif;font-size:.85rem;color:#888;text-align:right;margin-bottom:8px}
+/* Review cards */
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.review-card{background:var(--white);border-radius:12px;padding:20px;cursor:pointer;transition:all .3s;border:2px solid #e0e0e0;min-height:100px;display:flex;align-items:center;justify-content:center;text-align:center}
+.review-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.review-card.flipped{border-color:var(--teal)}
+.rc-teal{border-left:4px solid var(--teal)}
+.rc-coral{border-left:4px solid var(--coral)}
+.rc-yellow{border-left:4px solid var(--yellow)}
+.rc-blue{border-left:4px solid var(--light-blue)}
+.rc-front{font-family:'Poppins',sans-serif;font-weight:600;font-size:.95rem;color:var(--teal)}
+.rc-back{font-family:'Poppins',sans-serif;font-size:.9rem;color:var(--dark);display:none}
+.review-card.flipped .rc-front{display:none}
+.review-card.flipped .rc-back{display:block}
+/* Celebration */
+.celebration{text-align:center}
+.celebration h1{font-size:2.2rem;margin-bottom:12px}
+.celebration .stats{display:flex;justify-content:center;gap:30px;margin:24px 0}
+.celebration .stat{text-align:center}
+.celebration .stat-num{font-family:'Poppins',sans-serif;font-weight:700;font-size:2.5rem;color:var(--teal)}
+.celebration .stat-label{font-family:'Poppins',sans-serif;font-size:.85rem;color:#888}
+.start-over-btn{font-family:'Poppins',sans-serif;font-weight:600;padding:12px 32px;border:none;border-radius:8px;background:var(--coral);color:var(--white);cursor:pointer;font-size:1rem;margin-top:20px;transition:all .2s}
+.start-over-btn:hover{opacity:.85}
+/* Confetti */
+.confetti-piece{position:fixed;width:10px;height:10px;z-index:999;pointer-events:none}
+@media(max-width:700px){
+  .slide{padding:32px 24px;min-height:400px}
+  h1{font-size:1.6rem} h2{font-size:1.3rem}
+  .concept-big{font-size:2.5rem}
+  .position-grid,.review-grid{grid-template-columns:1fr}
+}
+@media(max-width:500px){
+  .slide{padding:24px 16px}
+  .concept-big{font-size:2rem}
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="star-counter" id="starCounter">⭐ 0</div>
+
+<div class="slide-area">
+
+<!-- SLIDE 1: Title -->
+<div class="slide active" id="slide1">
+  <span class="phase-label phase-learn">Unit 2 &bull; Lesson 5</span>
+  <h1>Adding Adverbs</h1>
+  <p class="subtitle">Expanding Sentences by Describing Actions</p>
+  <div class="goal-box">
+    <strong>Today's Goal:</strong> I can add adverbs to sentences to describe actions more precisely.
+  </div>
+  <div style="margin-top:24px;">
+    <p style="font-size:.95rem;color:#555">Key ideas for today:</p>
+    <p style="font-size:.95rem;margin:6px 0">&#8226; Adverbs can move to different positions in a sentence</p>
+    <p style="font-size:.95rem;margin:6px 0">&#8226; Choose specific adverbs, not vague ones</p>
+    <p style="font-size:.95rem;margin:6px 0">&#8226; Adverbs make actions clearer and more interesting</p>
+  </div>
+</div>
+
+<!-- SLIDE 2: Concept Intro -->
+<div class="slide" id="slide2">
+  <span class="phase-label phase-learn">Concept</span>
+  <div class="concept-big">Adding Adverbs</div>
+  <div class="concept-sub">Expanding sentences by describing actions</div>
+</div>
+
+<!-- SLIDE 3: Review (L4 - Identifying Adverbs) -->
+<div class="slide" id="slide3">
+  <span class="phase-label phase-learn">Review</span>
+  <h2>Quick Review: What Is an Adverb?</h2>
+  <p>In the sentence below, which word is the adverb?</p>
+  <p style="font-weight:600;font-size:1.1rem;margin:12px 0;font-family:'Poppins',sans-serif;color:var(--teal)">"The fox moved silently through the forest."</p>
+  <div class="mc-options" id="mc1">
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc1')">fox</div>
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc1')">moved</div>
+    <div class="mc-opt" data-correct="true" onclick="checkMC(this,'mc1')">silently</div>
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc1')">forest</div>
+  </div>
+  <div class="mc-feedback" id="mc1-fb"></div>
+</div>
+
+<!-- SLIDE 4: Rule/Concept - Adverb Positions -->
+<div class="slide" id="slide4">
+  <span class="phase-label phase-learn">Learn</span>
+  <h2>Adverbs Are Flexible</h2>
+  <p>Unlike adjectives (which go before nouns), adverbs can <strong>move</strong> to different positions in a sentence.</p>
+  <div class="rule-card" style="margin:16px 0">
+    <h3>Same Adverb, Three Positions</h3>
+    <div class="rule-example"><span class="adverb" style="color:var(--coral);font-weight:600">Carefully,</span> she opened the door.</div>
+    <div class="rule-example">She <span class="adverb" style="color:var(--coral);font-weight:600">carefully</span> opened the door.</div>
+    <div class="rule-example">She opened the door <span class="adverb" style="color:var(--coral);font-weight:600">carefully</span>.</div>
+    <p style="margin-top:10px;font-size:.9rem;color:#555">All three are correct. Choose the position that sounds best.</p>
+  </div>
+  <div class="position-grid">
+    <div class="position-card">
+      <div class="pos-label">After the verb</div>
+      <div class="pos-example">She ran <span class="adverb">quickly</span>.</div>
+      <div style="font-size:.8rem;color:#888;margin-top:4px">Best for HOW adverbs</div>
+    </div>
+    <div class="position-card">
+      <div class="pos-label">Beginning of sentence</div>
+      <div class="pos-example"><span class="adverb">Yesterday,</span> we went to the park.</div>
+      <div style="font-size:.8rem;color:#888;margin-top:4px">Best for WHEN adverbs</div>
+    </div>
+    <div class="position-card">
+      <div class="pos-label">End of sentence</div>
+      <div class="pos-example">The children played <span class="adverb">outside</span>.</div>
+      <div style="font-size:.8rem;color:#888;margin-top:4px">Best for WHERE adverbs</div>
+    </div>
+    <div class="position-card">
+      <div class="pos-label">Before the verb</div>
+      <div class="pos-example">She <span class="adverb">always</span> helps her friends.</div>
+      <div style="font-size:.8rem;color:#888;margin-top:4px">Best for frequency adverbs</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: Quick Check MC -->
+<div class="slide" id="slide5">
+  <span class="phase-label phase-learn">Quick Check</span>
+  <h2>Where Can the Adverb Go?</h2>
+  <p>Which sentence places the adverb "gently" <strong>correctly</strong>?</p>
+  <div class="mc-options" id="mc2">
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc2')">The gently baby slept in the crib.</div>
+    <div class="mc-opt" data-correct="true" onclick="checkMC(this,'mc2')">The baby slept gently in the crib.</div>
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc2')">The baby slept in the gently crib.</div>
+    <div class="mc-opt" data-correct="true" onclick="checkMC(this,'mc2')">Gently, the baby slept in the crib.</div>
+  </div>
+  <div class="mc-feedback" id="mc2-fb"></div>
+</div>
+
+<!-- SLIDE 6: Practice - Sentence Expansion -->
+<div class="slide" id="slide6">
+  <span class="phase-label phase-practice">Practice</span>
+  <h2>Expand with Adverbs</h2>
+  <p>Choose the best adverb to add to each sentence.</p>
+  <div class="pos-counter" id="expCounter">Sentence 1 of 4</div>
+  <div id="expArea"></div>
+</div>
+
+<!-- SLIDE 7: Practice - Position Picker -->
+<div class="slide" id="slide7">
+  <span class="phase-label phase-practice">Practice</span>
+  <h2>Pick the Best Position</h2>
+  <p>Each sentence has an adverb. Which version sounds best?</p>
+  <div class="pos-counter" id="posCounter">Question 1 of 4</div>
+  <div id="posArea"></div>
+</div>
+
+<!-- SLIDE 8: Review Cards -->
+<div class="slide" id="slide8">
+  <span class="phase-label phase-review">Review</span>
+  <h2>What Did We Learn?</h2>
+  <p style="font-size:.9rem;color:#888;margin-bottom:12px">Click each card to reveal the answer.</p>
+  <div class="review-grid">
+    <div class="review-card rc-teal" onclick="this.classList.toggle('flipped')">
+      <div class="rc-front">What do adverbs describe?</div>
+      <div class="rc-back">Adverbs describe <strong>verbs</strong> (actions). They answer: HOW? WHEN? WHERE? TO WHAT EXTENT?</div>
+    </div>
+    <div class="review-card rc-coral" onclick="this.classList.toggle('flipped')">
+      <div class="rc-front">What makes adverbs special compared to adjectives?</div>
+      <div class="rc-back">Adverbs are <strong>flexible</strong>. They can move to different positions in a sentence. Adjectives stay before the noun.</div>
+    </div>
+    <div class="review-card rc-yellow" onclick="this.classList.toggle('flipped')">
+      <div class="rc-front">Name the four common adverb positions.</div>
+      <div class="rc-back">1. After the verb<br>2. Beginning of sentence<br>3. End of sentence<br>4. Before the verb</div>
+    </div>
+    <div class="review-card rc-blue" onclick="this.classList.toggle('flipped')">
+      <div class="rc-front">What adverbs should you avoid in writing?</div>
+      <div class="rc-back">Weak, vague adverbs like <strong>really, very, a lot, so much, kind of, sort of</strong>. Use specific adverbs instead.</div>
+    </div>
+    <div class="review-card rc-teal" onclick="this.classList.toggle('flipped')">
+      <div class="rc-front">How do you add an adverb to a sentence?</div>
+      <div class="rc-back">1. Find the verb<br>2. Ask HOW? WHEN? WHERE?<br>3. Choose a specific adverb<br>4. Try different positions<br>5. Pick the one that sounds best</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: Celebration -->
+<div class="slide celebration" id="slide9">
+  <h1>Great Work Today</h1>
+  <p class="subtitle">You learned how to add adverbs to expand your sentences.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="finalStars">0</div><div class="stat-label">Stars Earned</div></div>
+    <div class="stat"><div class="stat-num" id="finalActivities">0</div><div class="stat-label">Activities Completed</div></div>
+  </div>
+  <p style="margin-top:16px;font-size:.95rem;color:#555">Next time: Using Multiple Describing Words (adjectives AND adverbs together).</p>
+  <button class="start-over-btn" onclick="startOver()">Start Over</button>
+</div>
+
+</div>
+
+<div class="nav-bar">
+  <button class="nav-btn prev" id="prevBtn" onclick="navigate(-1)" disabled>&larr; Back</button>
+  <span class="slide-counter" id="slideCounter">1 / 9</span>
+  <button class="nav-btn next" id="nextBtn" onclick="navigate(1)">Next &rarr;</button>
+</div>
+
+<script>
+// ── DATA ──
+const L = {
+  expansion: [
+    { base: "The dog barked.", verb: "barked",
+      options: ["loudly","yesterday","outside","gently"],
+      correct: [0,1,2,3], // all are valid
+      sample: ["The dog barked loudly.","Yesterday, the dog barked.","The dog barked outside.","The dog barked gently."] },
+    { base: "She read her book.", verb: "read",
+      options: ["quietly","yesterday","upstairs","eagerly"],
+      correct: [0,1,2,3],
+      sample: ["She read her book quietly.","Yesterday, she read her book.","She read her book upstairs.","She eagerly read her book."] },
+    { base: "The rain fell.", verb: "fell",
+      options: ["steadily","overnight","softly","heavily"],
+      correct: [0,1,2,3],
+      sample: ["The rain fell steadily.","Overnight, the rain fell.","The rain fell softly.","The rain fell heavily."] },
+    { base: "My brother laughed.", verb: "laughed",
+      options: ["nervously","suddenly","loudly","cheerfully"],
+      correct: [0,1,2,3],
+      sample: ["My brother laughed nervously.","Suddenly, my brother laughed.","My brother laughed loudly.","My brother laughed cheerfully."] },
+  ],
+  positions: [
+    { adverb: "quickly", sentence: "She finished her homework ___.",
+      options: [
+        { text: "Quickly, she finished her homework.", best: false },
+        { text: "She quickly finished her homework.", best: true },
+        { text: "She finished her homework quickly.", best: false },
+      ],
+      explain: "All are correct, but placing 'quickly' before or after the verb sounds most natural here." },
+    { adverb: "yesterday", sentence: "___ we visited the museum.",
+      options: [
+        { text: "Yesterday, we visited the museum.", best: true },
+        { text: "We yesterday visited the museum.", best: false },
+        { text: "We visited the museum yesterday.", best: false },
+      ],
+      explain: "WHEN adverbs like 'yesterday' sound most natural at the beginning or end of a sentence." },
+    { adverb: "always", sentence: "He ___ remembers to bring his lunch.",
+      options: [
+        { text: "Always, he remembers to bring his lunch.", best: false },
+        { text: "He always remembers to bring his lunch.", best: true },
+        { text: "He remembers to bring his lunch always.", best: false },
+      ],
+      explain: "Frequency adverbs like 'always' usually sound best before the verb." },
+    { adverb: "gracefully", sentence: "The dancer moved ___.",
+      options: [
+        { text: "Gracefully, the dancer moved.", best: false },
+        { text: "The dancer gracefully moved.", best: false },
+        { text: "The dancer moved gracefully.", best: true },
+      ],
+      explain: "HOW adverbs like 'gracefully' sound natural right after the verb." },
+  ],
+  reviewCards: 5,
+};
+
+// ── STATE ──
+let currentSlide = 1;
+const totalSlides = 9;
+let stars = 0;
+let activitiesCompleted = 0;
+let expIndex = 0;
+let posIndex = 0;
+
+// ── NAVIGATION ──
+function showSlide(n) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.getElementById('slide' + n).classList.add('active');
+  currentSlide = n;
+  document.getElementById('slideCounter').textContent = n + ' / ' + totalSlides;
+  document.getElementById('prevBtn').disabled = (n === 1);
+  document.getElementById('nextBtn').style.display = (n === totalSlides) ? 'none' : '';
+  const pct = ((n - 1) / (totalSlides - 1)) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  if (n === totalSlides) showCelebration();
+}
+function navigate(dir) {
+  const next = currentSlide + dir;
+  if (next >= 1 && next <= totalSlides) showSlide(next);
+}
+document.addEventListener('keydown', e => {
+  if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); navigate(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); navigate(-1); }
+});
+
+// ── STARS ──
+function addStars(n) {
+  stars += n;
+  const el = document.getElementById('starCounter');
+  el.textContent = '\u2B50 ' + stars;
+  el.classList.remove('pop');
+  void el.offsetWidth;
+  el.classList.add('pop');
+}
+
+// ── MULTIPLE CHOICE ──
+function checkMC(el, id) {
+  const opts = document.querySelectorAll('#' + id + ' .mc-opt');
+  opts.forEach(o => o.classList.add('disabled'));
+  const fb = document.getElementById(id + '-fb');
+  if (el.dataset.correct === 'true') {
+    el.classList.add('correct');
+    fb.textContent = 'Correct. ' + (id === 'mc1' ? '"Silently" is the adverb. It describes HOW the fox moved.' : 'Both of those options place "gently" in a correct position (after the verb, or at the beginning).');
+    fb.className = 'mc-feedback show correct-fb';
+    addStars(1);
+    activitiesCompleted++;
+  } else {
+    el.classList.add('wrong');
+    // highlight correct
+    opts.forEach(o => { if (o.dataset.correct === 'true') o.classList.add('correct'); });
+    fb.textContent = 'Not quite. ' + (id === 'mc1' ? 'The adverb is "silently." It describes HOW the fox moved.' : 'Remember, adverbs describe verbs, not nouns. "Gently" should go near the verb "slept," not next to a noun.');
+    fb.className = 'mc-feedback show wrong-fb';
+  }
+}
+
+// ── SENTENCE EXPANSION ACTIVITY ──
+function buildExpansion() {
+  const area = document.getElementById('expArea');
+  if (expIndex >= L.expansion.length) {
+    area.innerHTML = '<div style="text-align:center;padding:30px"><p style="font-size:1.1rem;color:var(--teal);font-weight:600">All sentences expanded. Well done.</p></div>';
+    return;
+  }
+  const item = L.expansion[expIndex];
+  document.getElementById('expCounter').textContent = 'Sentence ' + (expIndex + 1) + ' of ' + L.expansion.length;
+  let selectedAdverb = null;
+  area.innerHTML = '';
+
+  const box = document.createElement('div');
+  box.className = 'exp-sentence-box';
+  box.innerHTML = '<div class="exp-base">Base: ' + item.base.replace(item.verb, '<span class="exp-verb">' + item.verb + '</span>') + '</div><p style="font-size:.9rem;color:#555">Pick an adverb to add:</p>';
+
+  const chips = document.createElement('div');
+  chips.className = 'exp-controls';
+  item.options.forEach((opt, i) => {
+    const chip = document.createElement('div');
+    chip.className = 'adverb-chip';
+    chip.textContent = opt;
+    chip.onclick = () => {
+      chips.querySelectorAll('.adverb-chip').forEach(c => c.classList.remove('selected'));
+      chip.classList.add('selected');
+      selectedAdverb = i;
+      result.textContent = item.sample[i];
+      result.classList.add('filled');
+      checkBtn.disabled = false;
+    };
+    chips.appendChild(chip);
+  });
+  box.appendChild(chips);
+
+  const result = document.createElement('div');
+  result.className = 'exp-result';
+  result.textContent = 'Your expanded sentence will appear here.';
+  box.appendChild(result);
+
+  const btnRow = document.createElement('div');
+  btnRow.style.display = 'flex';
+  btnRow.style.gap = '10px';
+  btnRow.style.alignItems = 'center';
+  btnRow.style.flexWrap = 'wrap';
+
+  const checkBtn = document.createElement('button');
+  checkBtn.className = 'exp-check-btn';
+  checkBtn.textContent = 'Check';
+  checkBtn.disabled = true;
+
+  const fb = document.createElement('div');
+  fb.className = 'exp-feedback';
+
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'exp-next-btn';
+  nextBtn.textContent = 'Next Sentence \u2192';
+
+  checkBtn.onclick = () => {
+    checkBtn.disabled = true;
+    chips.querySelectorAll('.adverb-chip').forEach(c => { c.style.pointerEvents = 'none'; });
+    fb.textContent = 'Nice choice. "' + item.options[selectedAdverb] + '" makes the sentence more specific and interesting.';
+    fb.className = 'exp-feedback show';
+    fb.style.background = '#e8f5e9';
+    fb.style.color = '#2e7d32';
+    addStars(2);
+    activitiesCompleted++;
+    if (expIndex < L.expansion.length - 1) {
+      nextBtn.classList.add('show');
+    }
+  };
+  nextBtn.onclick = () => {
+    expIndex++;
+    buildExpansion();
+  };
+
+  btnRow.appendChild(checkBtn);
+  btnRow.appendChild(nextBtn);
+  box.appendChild(btnRow);
+  box.appendChild(fb);
+  area.appendChild(box);
+}
+
+// ── POSITION PICKER ACTIVITY ──
+function buildPosition() {
+  const area = document.getElementById('posArea');
+  if (posIndex >= L.positions.length) {
+    area.innerHTML = '<div style="text-align:center;padding:30px"><p style="font-size:1.1rem;color:var(--teal);font-weight:600">All positions checked. Great job.</p></div>';
+    return;
+  }
+  const item = L.positions[posIndex];
+  document.getElementById('posCounter').textContent = 'Question ' + (posIndex + 1) + ' of ' + L.positions.length;
+  let selectedOpt = null;
+  area.innerHTML = '';
+
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = '<p style="font-family:Poppins,sans-serif;font-size:.95rem;color:#555;margin-bottom:8px">Adverb: <strong style="color:var(--coral)">' + item.adverb + '</strong></p><p style="font-family:Poppins,sans-serif;font-size:.9rem;color:#888;margin-bottom:12px">Which version sounds the most natural?</p>';
+
+  const opts = document.createElement('div');
+  opts.className = 'pos-options';
+  item.options.forEach((opt, i) => {
+    const el = document.createElement('div');
+    el.className = 'pos-opt';
+    el.textContent = opt.text;
+    el.onclick = () => {
+      opts.querySelectorAll('.pos-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedOpt = i;
+      checkBtn.disabled = false;
+    };
+    opts.appendChild(el);
+  });
+  wrapper.appendChild(opts);
+
+  const btnRow = document.createElement('div');
+  btnRow.style.display = 'flex';
+  btnRow.style.gap = '10px';
+  btnRow.style.alignItems = 'center';
+  btnRow.style.flexWrap = 'wrap';
+
+  const checkBtn = document.createElement('button');
+  checkBtn.className = 'pos-check-btn';
+  checkBtn.textContent = 'Check';
+  checkBtn.disabled = true;
+
+  const fb = document.createElement('div');
+  fb.className = 'pos-feedback';
+
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'exp-next-btn';
+  nextBtn.textContent = 'Next \u2192';
+
+  checkBtn.onclick = () => {
+    checkBtn.disabled = true;
+    opts.querySelectorAll('.pos-opt').forEach((o, i) => {
+      o.style.pointerEvents = 'none';
+      if (item.options[i].best) o.classList.add('correct-pos');
+    });
+    if (item.options[selectedOpt].best) {
+      opts.querySelectorAll('.pos-opt')[selectedOpt].classList.add('correct-pos');
+      fb.textContent = 'That sounds natural. ' + item.explain;
+      fb.className = 'pos-feedback show';
+      fb.style.background = '#e8f5e9';
+      fb.style.color = '#2e7d32';
+      addStars(2);
+    } else {
+      opts.querySelectorAll('.pos-opt')[selectedOpt].classList.add('wrong-pos');
+      fb.textContent = 'All positions are technically correct, but the highlighted one sounds most natural. ' + item.explain;
+      fb.className = 'pos-feedback show';
+      fb.style.background = '#fce4ec';
+      fb.style.color = '#c62828';
+      addStars(1);
+    }
+    activitiesCompleted++;
+    if (posIndex < L.positions.length - 1) {
+      nextBtn.classList.add('show');
+    }
+  };
+  nextBtn.onclick = () => {
+    posIndex++;
+    buildPosition();
+  };
+
+  btnRow.appendChild(checkBtn);
+  btnRow.appendChild(nextBtn);
+  wrapper.appendChild(btnRow);
+  wrapper.appendChild(fb);
+  area.appendChild(wrapper);
+}
+
+// ── CELEBRATION ──
+function showCelebration() {
+  document.getElementById('finalStars').textContent = stars;
+  document.getElementById('finalActivities').textContent = activitiesCompleted;
+  fireConfetti();
+}
+
+// ── CONFETTI ──
+function fireConfetti() {
+  const colors = ['#E66B5D','#3A7D8C','#F3D25B','#D7ECF0','#4CAF50'];
+  for (let i = 0; i < 60; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.top = '-10px';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.borderRadius = Math.random() > .5 ? '50%' : '2px';
+    piece.style.width = (6 + Math.random() * 8) + 'px';
+    piece.style.height = (6 + Math.random() * 8) + 'px';
+    document.body.appendChild(piece);
+    const dur = 1500 + Math.random() * 2000;
+    const drift = (Math.random() - .5) * 200;
+    piece.animate([
+      { transform: 'translateY(0) translateX(0) rotate(0deg)', opacity: 1 },
+      { transform: 'translateY(100vh) translateX(' + drift + 'px) rotate(' + (360 + Math.random()*360) + 'deg)', opacity: 0 }
+    ], { duration: dur, easing: 'ease-out' });
+    setTimeout(() => piece.remove(), dur);
+  }
+}
+
+// ── START OVER ──
+function startOver() {
+  stars = 0;
+  activitiesCompleted = 0;
+  expIndex = 0;
+  posIndex = 0;
+  document.getElementById('starCounter').textContent = '\u2B50 0';
+  // Reset MC
+  ['mc1','mc2'].forEach(id => {
+    document.querySelectorAll('#' + id + ' .mc-opt').forEach(o => {
+      o.classList.remove('correct','wrong','disabled');
+    });
+    const fb = document.getElementById(id + '-fb');
+    fb.className = 'mc-feedback';
+    fb.textContent = '';
+  });
+  // Reset review cards
+  document.querySelectorAll('.review-card').forEach(c => c.classList.remove('flipped'));
+  // Rebuild activities
+  buildExpansion();
+  buildPosition();
+  showSlide(1);
+}
+
+// ── INIT ──
+buildExpansion();
+buildPosition();
+showSlide(1);
+</script>
+</body>
+</html>

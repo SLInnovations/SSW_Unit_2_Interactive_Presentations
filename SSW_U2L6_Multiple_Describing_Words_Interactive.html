@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSW | Unit 2, Lesson 6: Using Multiple Describing Words</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--coral:#E66B5D;--teal:#3A7D8C;--light-blue:#D7ECF0;--blue-pale:#EBF5F8;--yellow:#F3D25B;--yellow-dark:#9E7F0A;--white:#FFFFFF;--dark:#1A1A2E;--coral-pale:#FDF0EE;--green:#4CAF50;--red:#E74C3C}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Open Sans',sans-serif;background:#f0f4f8;color:var(--dark);min-height:100vh;display:flex;flex-direction:column;align-items:center}
+.progress-bar{position:fixed;top:0;left:0;width:100%;height:6px;background:#e0e0e0;z-index:100}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--coral));transition:width .4s ease;width:0}
+.star-counter{position:fixed;top:14px;right:20px;font-family:'Poppins',sans-serif;font-weight:600;font-size:1.1rem;color:var(--yellow-dark);z-index:100;background:var(--white);padding:4px 14px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.star-counter.pop{animation:starPop .4s ease}
+@keyframes starPop{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+.slide-area{flex:1;display:flex;align-items:center;justify-content:center;width:100%;padding:50px 20px 80px}
+.slide{display:none;background:var(--white);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.08);max-width:900px;width:100%;min-height:480px;padding:48px 44px;animation:fadeIn .35s ease}
+.slide.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.nav-bar{position:fixed;bottom:0;left:0;width:100%;background:var(--white);border-top:1px solid #e0e0e0;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100}
+.nav-btn{font-family:'Open Sans',sans-serif;font-weight:600;font-size:.95rem;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+.nav-btn.prev{background:var(--blue-pale);color:var(--teal)}.nav-btn.next{background:var(--teal);color:var(--white)}
+.nav-btn:hover{opacity:.85;transform:translateY(-1px)}.nav-btn:disabled{opacity:.4;cursor:default;transform:none}
+.slide-counter{font-family:'Open Sans',sans-serif;font-size:.85rem;color:#888}
+.phase-label{font-family:'Poppins',sans-serif;font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;padding:4px 14px;border-radius:20px;display:inline-block;margin-bottom:16px}
+.phase-learn{background:var(--light-blue);color:var(--teal)}.phase-practice{background:var(--coral-pale);color:var(--coral)}.phase-review{background:var(--blue-pale);color:var(--teal)}
+h1{font-family:'Poppins',sans-serif;font-weight:700;font-size:2rem;color:var(--teal);margin-bottom:8px}
+h2{font-family:'Poppins',sans-serif;font-weight:600;font-size:1.5rem;color:var(--teal);margin-bottom:12px}
+h3{font-family:'Poppins',sans-serif;font-weight:600;font-size:1.15rem;color:var(--coral);margin-bottom:8px}
+p,.desc{font-family:'Poppins',sans-serif;font-size:1rem;line-height:1.6;color:var(--dark);margin-bottom:10px}
+.subtitle{font-family:'Poppins',sans-serif;font-size:1.1rem;color:#555;margin-bottom:20px}
+.goal-box{background:var(--light-blue);border-radius:10px;padding:16px 20px;margin-top:16px;font-family:'Poppins',sans-serif;font-size:.95rem;color:var(--teal)}
+.concept-big{font-family:'Poppins',sans-serif;font-weight:700;font-size:3rem;color:var(--teal);text-align:center;margin:50px 0 16px}
+.concept-sub{font-family:'Poppins',sans-serif;font-size:1.1rem;color:#666;text-align:center}
+/* MC */
+.mc-options{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.mc-opt{font-family:'Poppins',sans-serif;font-size:1rem;padding:14px 20px;border:2px solid #ddd;border-radius:10px;cursor:pointer;transition:all .2s;background:var(--white)}
+.mc-opt:hover{border-color:var(--teal);background:var(--blue-pale)}
+.mc-opt.correct{border-color:var(--green);background:#e8f5e9}.mc-opt.wrong{border-color:var(--red);background:#fce4ec}.mc-opt.disabled{pointer-events:none;opacity:.7}
+.mc-feedback{font-family:'Poppins',sans-serif;font-size:.95rem;padding:12px 16px;border-radius:8px;margin-top:12px;display:none}
+.mc-feedback.show{display:block}.mc-feedback.correct-fb{background:#e8f5e9;color:#2e7d32}.mc-feedback.wrong-fb{background:#fce4ec;color:#c62828}
+/* Rule cards */
+.rule-card{background:var(--light-blue);border-radius:12px;padding:20px 24px;margin:12px 0}
+.rule-card h3{color:var(--teal);margin-bottom:8px}
+.example-row{display:flex;align-items:center;gap:16px;margin:10px 0;flex-wrap:wrap}
+.ex-bad{background:#fce4ec;border-radius:8px;padding:10px 16px;flex:1;min-width:200px}
+.ex-good{background:#e8f5e9;border-radius:8px;padding:10px 16px;flex:1;min-width:200px}
+.ex-label{font-family:'Poppins',sans-serif;font-weight:600;font-size:.8rem;text-transform:uppercase;margin-bottom:4px}
+.ex-text{font-family:'Poppins',sans-serif;font-size:.95rem}
+/* Sentence builder */
+.builder-box{background:var(--blue-pale);border-radius:12px;padding:20px;margin:14px 0}
+.builder-base{font-family:'Poppins',sans-serif;font-weight:600;font-size:1.1rem;color:var(--teal);margin-bottom:10px}
+.word-group{margin:10px 0}
+.word-group-label{font-family:'Poppins',sans-serif;font-weight:600;font-size:.85rem;color:var(--coral);margin-bottom:6px}
+.word-chips{display:flex;flex-wrap:wrap;gap:6px}
+.w-chip{font-family:'Poppins',sans-serif;font-size:.88rem;padding:6px 14px;border:2px solid #ddd;border-radius:18px;cursor:pointer;transition:all .2s;background:var(--white);user-select:none}
+.w-chip:hover{border-color:var(--teal);background:var(--blue-pale)}
+.w-chip.sel-adj{border-color:var(--teal);background:var(--light-blue);color:var(--teal);font-weight:600}
+.w-chip.sel-adv{border-color:var(--coral);background:var(--coral-pale);color:var(--coral);font-weight:600}
+.w-chip.disabled{pointer-events:none;opacity:.5}
+.builder-result{font-family:'Poppins',sans-serif;font-size:1.05rem;min-height:44px;padding:12px 16px;background:var(--white);border-radius:8px;border:2px dashed #ccc;margin:14px 0;text-align:center;color:#888}
+.builder-result.filled{border-color:var(--teal);border-style:solid;color:var(--dark)}
+.btn{font-family:'Poppins',sans-serif;font-weight:600;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;font-size:.95rem;transition:all .2s}
+.btn-teal{background:var(--teal);color:var(--white)}.btn-coral{background:var(--coral);color:var(--white)}
+.btn:hover{opacity:.85}.btn:disabled{opacity:.4;cursor:default}
+.builder-fb{font-family:'Poppins',sans-serif;font-size:.9rem;margin-top:10px;padding:10px 14px;border-radius:8px;display:none}
+.builder-fb.show{display:block}
+.counter-text{font-family:'Poppins',sans-serif;font-size:.85rem;color:#888;text-align:right;margin-bottom:8px}
+/* Overload detection */
+.overload-sentence{font-family:'Poppins',sans-serif;font-size:1.05rem;background:var(--blue-pale);padding:16px 20px;border-radius:10px;margin:12px 0;line-height:1.7}
+.overload-sentence .highlight{background:var(--yellow);padding:1px 4px;border-radius:3px;cursor:pointer;transition:all .2s}
+.overload-sentence .highlight:hover{background:#f0c830}
+.overload-sentence .highlight.cut{background:#fce4ec;text-decoration:line-through;opacity:.5}
+.overload-sentence .highlight.kept{background:#c8e6c9}
+/* Review cards */
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.review-card{background:var(--white);border-radius:12px;padding:20px;cursor:pointer;transition:all .3s;border:2px solid #e0e0e0;min-height:100px;display:flex;align-items:center;justify-content:center;text-align:center}
+.review-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.review-card.flipped{border-color:var(--teal)}
+.rc-teal{border-left:4px solid var(--teal)}.rc-coral{border-left:4px solid var(--coral)}.rc-yellow{border-left:4px solid var(--yellow)}.rc-blue{border-left:4px solid var(--light-blue)}
+.rc-front{font-family:'Poppins',sans-serif;font-weight:600;font-size:.95rem;color:var(--teal)}
+.rc-back{font-family:'Poppins',sans-serif;font-size:.9rem;color:var(--dark);display:none}
+.review-card.flipped .rc-front{display:none}.review-card.flipped .rc-back{display:block}
+/* Celebration */
+.celebration{text-align:center}
+.celebration h1{font-size:2.2rem;margin-bottom:12px}
+.celebration .stats{display:flex;justify-content:center;gap:30px;margin:24px 0}
+.celebration .stat{text-align:center}
+.celebration .stat-num{font-family:'Poppins',sans-serif;font-weight:700;font-size:2.5rem;color:var(--teal)}
+.celebration .stat-label{font-family:'Poppins',sans-serif;font-size:.85rem;color:#888}
+.start-over-btn{font-family:'Poppins',sans-serif;font-weight:600;padding:12px 32px;border:none;border-radius:8px;background:var(--coral);color:var(--white);cursor:pointer;font-size:1rem;margin-top:20px;transition:all .2s}
+.start-over-btn:hover{opacity:.85}
+.confetti-piece{position:fixed;width:10px;height:10px;z-index:999;pointer-events:none}
+@media(max-width:700px){.slide{padding:32px 24px;min-height:400px}h1{font-size:1.6rem}h2{font-size:1.3rem}.concept-big{font-size:2.2rem}.review-grid{grid-template-columns:1fr}.example-row{flex-direction:column}}
+@media(max-width:500px){.slide{padding:24px 16px}.concept-big{font-size:1.8rem}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="star-counter" id="starCounter">⭐ 0</div>
+
+<div class="slide-area">
+
+<!-- SLIDE 1: Title -->
+<div class="slide active" id="slide1">
+  <span class="phase-label phase-learn">Unit 2 &bull; Lesson 6</span>
+  <h1>Using Multiple Describing Words</h1>
+  <p class="subtitle">Combining Adjectives and Adverbs Effectively</p>
+  <div class="goal-box">
+    <strong>Today's Goal:</strong> I can use multiple adjectives AND adverbs together to create detailed sentences WITHOUT overloading them.
+  </div>
+  <div style="margin-top:24px;">
+    <p style="font-size:.95rem;color:#555">Key ideas for today:</p>
+    <p style="font-size:.95rem;margin:6px 0">&#8226; Combine adjectives + adverbs in the same sentence</p>
+    <p style="font-size:.95rem;margin:6px 0">&#8226; Use 2&ndash;3 adjectives per noun, 1 adverb per verb</p>
+    <p style="font-size:.95rem;margin:6px 0">&#8226; Use commas between adjectives (the "and" test)</p>
+    <p style="font-size:.95rem;margin:6px 0">&#8226; Quality over quantity &mdash; do not overload</p>
+  </div>
+</div>
+
+<!-- SLIDE 2: Concept Intro -->
+<div class="slide" id="slide2">
+  <span class="phase-label phase-learn">Concept</span>
+  <div class="concept-big">Multiple Describing Words</div>
+  <div class="concept-sub">Adjectives + Adverbs = Vivid, Balanced Sentences</div>
+</div>
+
+<!-- SLIDE 3: Review (L5 - Adding Adverbs) -->
+<div class="slide" id="slide3">
+  <span class="phase-label phase-learn">Review</span>
+  <h2>Quick Review: Adding Adverbs</h2>
+  <p>Which sentence correctly adds an adverb to expand the meaning?</p>
+  <div class="mc-options" id="mc1">
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc1')">The careful girl painted the picture.</div>
+    <div class="mc-opt" data-correct="true" onclick="checkMC(this,'mc1')">The girl carefully painted the picture.</div>
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc1')">The girl painted the carefully picture.</div>
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc1')">The girl painted the picture careful.</div>
+  </div>
+  <div class="mc-feedback" id="mc1-fb"></div>
+</div>
+
+<!-- SLIDE 4: Rule Display - Combining + Commas + Overload -->
+<div class="slide" id="slide4">
+  <span class="phase-label phase-learn">Learn</span>
+  <h2>Combining Adjectives and Adverbs</h2>
+
+  <div class="rule-card">
+    <h3>Step-by-Step Expansion</h3>
+    <p style="margin:4px 0;font-size:.95rem"><strong>Base:</strong> The dog ran.</p>
+    <p style="margin:4px 0;font-size:.95rem"><strong>+ Adjectives:</strong> The <span style="color:var(--teal);font-weight:600">small, brown</span> dog ran.</p>
+    <p style="margin:4px 0;font-size:.95rem"><strong>+ Adverb:</strong> The <span style="color:var(--teal);font-weight:600">small, brown</span> dog ran <span style="color:var(--coral);font-weight:600">quickly</span>.</p>
+    <p style="margin-top:8px;font-size:.85rem;color:#555">2 adjectives (noun) + 1 adverb (verb) = balanced.</p>
+  </div>
+
+  <div style="display:flex;gap:12px;margin:12px 0;flex-wrap:wrap">
+    <div style="flex:1;min-width:200px;background:#e8f5e9;border-radius:8px;padding:12px 16px">
+      <p style="font-weight:600;font-size:.85rem;color:#2e7d32;margin-bottom:4px">COMMA RULE</p>
+      <p style="font-size:.9rem">Use commas between adjectives when you can say <strong>"and"</strong> between them.<br><em>"tall, green tree"</em> (tall AND green ✓)</p>
+    </div>
+    <div style="flex:1;min-width:200px;background:#fce4ec;border-radius:8px;padding:12px 16px">
+      <p style="font-weight:600;font-size:.85rem;color:#c62828;margin-bottom:4px">AVOID OVERLOADING</p>
+      <p style="font-size:.9rem">2&ndash;3 adjectives per noun, 1&ndash;2 adverbs per verb. Each word should add <strong>new</strong> information.</p>
+    </div>
+  </div>
+
+  <div class="example-row">
+    <div class="ex-bad"><div class="ex-label" style="color:var(--red)">&#10060; Overloaded</div><div class="ex-text">The tiny, small, little, fluffy dog ran very, really fast.</div></div>
+    <div class="ex-good"><div class="ex-label" style="color:var(--green)">&#10004; Balanced</div><div class="ex-text">The tiny, fluffy dog ran swiftly.</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 5: Quick Check - Comma MC -->
+<div class="slide" id="slide5">
+  <span class="phase-label phase-learn">Quick Check</span>
+  <h2>Comma Check</h2>
+  <p>Which sentence uses commas correctly between adjectives?</p>
+  <div class="mc-options" id="mc2">
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc2')">The, old, wise, owl watched, quietly.</div>
+    <div class="mc-opt" data-correct="true" onclick="checkMC(this,'mc2')">The old, wise owl watched quietly.</div>
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc2')">The old wise, owl watched, quietly.</div>
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc2')">The, old, wise owl, watched quietly.</div>
+  </div>
+  <div class="mc-feedback" id="mc2-fb"></div>
+</div>
+
+<!-- SLIDE 6: Practice - Sentence Builder -->
+<div class="slide" id="slide6">
+  <span class="phase-label phase-practice">Practice</span>
+  <h2>Build Balanced Sentences</h2>
+  <p>Pick adjectives and an adverb to expand each sentence. Keep it balanced.</p>
+  <div class="counter-text" id="buildCounter">Sentence 1 of 4</div>
+  <div id="buildArea"></div>
+</div>
+
+<!-- SLIDE 7: Practice - Overload Detection -->
+<div class="slide" id="slide7">
+  <span class="phase-label phase-practice">Practice</span>
+  <h2>Overload Rescue</h2>
+  <p>These sentences have too many describing words. Click the words you would <strong>remove</strong> to create a balanced sentence. Keep 2&ndash;3 of the best ones.</p>
+  <div class="counter-text" id="overloadCounter">Sentence 1 of 3</div>
+  <div id="overloadArea"></div>
+</div>
+
+<!-- SLIDE 8: Review Cards -->
+<div class="slide" id="slide8">
+  <span class="phase-label phase-review">Review</span>
+  <h2>What Did We Learn?</h2>
+  <p style="font-size:.9rem;color:#888;margin-bottom:12px">Click each card to reveal the answer.</p>
+  <div class="review-grid">
+    <div class="review-card rc-teal" onclick="this.classList.toggle('flipped')">
+      <div class="rc-front">How many adjectives should you use per noun?</div>
+      <div class="rc-back"><strong>2&ndash;3 adjectives</strong> per noun, and each should add <em>different</em> information (e.g., size + colour, not big + huge + enormous).</div>
+    </div>
+    <div class="review-card rc-coral" onclick="this.classList.toggle('flipped')">
+      <div class="rc-front">When do you use commas between adjectives?</div>
+      <div class="rc-back">When you can put <strong>"and"</strong> between them and it sounds right.<br><em>"tall, green tree"</em> ✓ (tall AND green)<br><em>"three small dogs"</em> ✗ (three AND small?)</div>
+    </div>
+    <div class="review-card rc-yellow" onclick="this.classList.toggle('flipped')">
+      <div class="rc-front">What does "overloading" a sentence mean?</div>
+      <div class="rc-back">Using <strong>too many</strong> describing words, especially ones that repeat the same idea. This makes sentences confusing instead of clear.</div>
+    </div>
+    <div class="review-card rc-blue" onclick="this.classList.toggle('flipped')">
+      <div class="rc-front">How do you combine adjectives AND adverbs?</div>
+      <div class="rc-back">Add <strong>adjectives</strong> before the nouns, and add <strong>adverbs</strong> near the verb.<br><em>"The small, brown dog ran quickly."</em><br>(2 adj + 1 adv = balanced)</div>
+    </div>
+    <div class="review-card rc-teal" onclick="this.classList.toggle('flipped')">
+      <div class="rc-front">What is the key rule for balance?</div>
+      <div class="rc-back"><strong>Quality over quantity.</strong> Choose the best 2&ndash;3 describing words rather than adding every word you can think of.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: Celebration -->
+<div class="slide celebration" id="slide9">
+  <h1>Great Work Today</h1>
+  <p class="subtitle">You can now combine adjectives and adverbs to write balanced, vivid sentences.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="finalStars">0</div><div class="stat-label">Stars Earned</div></div>
+    <div class="stat"><div class="stat-num" id="finalActivities">0</div><div class="stat-label">Activities Completed</div></div>
+  </div>
+  <p style="margin-top:16px;font-size:.95rem;color:#555">Next time: Articles &mdash; A, An, The.</p>
+  <button class="start-over-btn" onclick="startOver()">Start Over</button>
+</div>
+
+</div>
+
+<div class="nav-bar">
+  <button class="nav-btn prev" id="prevBtn" onclick="navigate(-1)" disabled>&larr; Back</button>
+  <span class="slide-counter" id="slideCounter">1 / 9</span>
+  <button class="nav-btn next" id="nextBtn" onclick="navigate(1)">Next &rarr;</button>
+</div>
+
+<script>
+// ── DATA ──
+const L = {
+  builders: [
+    { base:"The bird flew over the lake.", noun1:"bird", noun2:"lake", verb:"flew",
+      adjN1:["small","blue","graceful","colourful"], adjN2:["calm","sparkling","wide","frozen"],
+      advs:["gracefully","swiftly","silently","yesterday"],
+      sample:"The small, blue bird flew gracefully over the calm lake." },
+    { base:"The children played in the park.", noun1:"children", noun2:"park", verb:"played",
+      adjN1:["happy","energetic","young","excited"], adjN2:["sunny","crowded","large","beautiful"],
+      advs:["joyfully","loudly","eagerly","outside"],
+      sample:"The happy, energetic children played joyfully in the sunny park." },
+    { base:"The cat climbed the fence.", noun1:"cat", noun2:"fence", verb:"climbed",
+      adjN1:["curious","striped","little","nimble"], adjN2:["tall","wooden","old","garden"],
+      advs:["carefully","quickly","silently","easily"],
+      sample:"The curious, striped cat climbed carefully over the tall fence." },
+    { base:"The rain fell on the roof.", noun1:"rain", noun2:"roof", verb:"fell",
+      adjN1:["cold","heavy","steady","gentle"], adjN2:["tin","old","sloped","metal"],
+      advs:["steadily","loudly","softly","overnight"],
+      sample:"The cold, steady rain fell softly on the old tin roof." },
+  ],
+  overloads: [
+    { parts:[
+      {w:"The",cut:false,keep:true},{w:"big,",cut:false,keep:false,adj:true},{w:"huge,",cut:false,keep:false,adj:true},
+      {w:"enormous,",cut:false,keep:false,adj:true},{w:"gigantic,",cut:false,keep:false,adj:true},
+      {w:"large",cut:false,keep:false,adj:true},{w:"elephant",cut:false,keep:true},
+      {w:"walked",cut:false,keep:true},{w:"very",cut:false,keep:false,adv:true},
+      {w:"really",cut:false,keep:false,adv:true},{w:"slowly.",cut:false,keep:false,adv:true}
+    ], bestKeep:["enormous,","slowly."], minCut:3, explain:"Keep one size adjective and one adverb. Example: The enormous elephant walked slowly." },
+    { parts:[
+      {w:"A",cut:false,keep:true},{w:"tiny,",cut:false,keep:false,adj:true},{w:"small,",cut:false,keep:false,adj:true},
+      {w:"little,",cut:false,keep:false,adj:true},{w:"brown,",cut:false,keep:false,adj:true},
+      {w:"fluffy",cut:false,keep:false,adj:true},{w:"puppy",cut:false,keep:true},
+      {w:"barked",cut:false,keep:true},{w:"really",cut:false,keep:false,adv:true},
+      {w:"very",cut:false,keep:false,adv:true},{w:"loudly.",cut:false,keep:false,adv:true}
+    ], bestKeep:["tiny,","fluffy","loudly."], minCut:3, explain:"Keep two different adjectives (size + texture) and one adverb. Example: A tiny, fluffy puppy barked loudly." },
+    { parts:[
+      {w:"The",cut:false,keep:true},{w:"kind,",cut:false,keep:false,adj:true},{w:"nice,",cut:false,keep:false,adj:true},
+      {w:"friendly,",cut:false,keep:false,adj:true},{w:"warm,",cut:false,keep:false,adj:true},
+      {w:"helpful",cut:false,keep:false,adj:true},{w:"teacher",cut:false,keep:true},
+      {w:"spoke",cut:false,keep:true},{w:"very",cut:false,keep:false,adv:true},
+      {w:"really",cut:false,keep:false,adv:true},{w:"softly",cut:false,keep:false,adv:true},
+      {w:"and",cut:false,keep:false,adv:true},{w:"gently.",cut:false,keep:false,adv:true}
+    ], bestKeep:["kind,","helpful","softly"], minCut:4, explain:"Keep two different adjectives and one adverb. Example: The kind, helpful teacher spoke softly." },
+  ],
+};
+
+// ── STATE ──
+let currentSlide=1;const totalSlides=9;let stars=0;let activitiesCompleted=0;
+let buildIdx=0;let overloadIdx=0;
+
+// ── NAVIGATION ──
+function showSlide(n){
+  document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
+  document.getElementById('slide'+n).classList.add('active');
+  currentSlide=n;
+  document.getElementById('slideCounter').textContent=n+' / '+totalSlides;
+  document.getElementById('prevBtn').disabled=(n===1);
+  document.getElementById('nextBtn').style.display=(n===totalSlides)?'none':'';
+  document.getElementById('progressFill').style.width=((n-1)/(totalSlides-1)*100)+'%';
+  if(n===totalSlides)showCelebration();
+}
+function navigate(dir){const next=currentSlide+dir;if(next>=1&&next<=totalSlides)showSlide(next);}
+document.addEventListener('keydown',e=>{
+  if(document.activeElement.tagName==='INPUT'||document.activeElement.tagName==='TEXTAREA')return;
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();navigate(1);}
+  if(e.key==='ArrowLeft'){e.preventDefault();navigate(-1);}
+});
+
+// ── STARS ──
+function addStars(n){stars+=n;const el=document.getElementById('starCounter');el.textContent='\u2B50 '+stars;el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');}
+
+// ── MC ──
+function checkMC(el,id){
+  const opts=document.querySelectorAll('#'+id+' .mc-opt');
+  opts.forEach(o=>o.classList.add('disabled'));
+  const fb=document.getElementById(id+'-fb');
+  if(el.dataset.correct==='true'){
+    el.classList.add('correct');
+    fb.textContent=id==='mc1'?'Correct. "Carefully" is an adverb describing HOW the girl painted. It is placed near the verb.':'Correct. Commas go between coordinate adjectives ("old, wise"), not after articles or before verbs.';
+    fb.className='mc-feedback show correct-fb';addStars(1);activitiesCompleted++;
+  }else{
+    el.classList.add('wrong');opts.forEach(o=>{if(o.dataset.correct==='true')o.classList.add('correct');});
+    fb.textContent=id==='mc1'?'Not quite. "Carefully" is an adverb (describes the verb "painted"). It should go near the verb, not next to a noun.':'Not quite. Remember: commas go between adjectives that describe the same noun, not after "the" or before verbs.';
+    fb.className='mc-feedback show wrong-fb';
+  }
+}
+
+// ── SENTENCE BUILDER ──
+function buildBuilder(){
+  const area=document.getElementById('buildArea');
+  if(buildIdx>=L.builders.length){area.innerHTML='<div style="text-align:center;padding:30px"><p style="font-size:1.1rem;color:var(--teal);font-weight:600">All sentences built. Well done.</p></div>';return;}
+  const item=L.builders[buildIdx];
+  document.getElementById('buildCounter').textContent='Sentence '+(buildIdx+1)+' of '+L.builders.length;
+  let selAdj1=[],selAdj2=[],selAdv=null;
+  area.innerHTML='';
+  const box=document.createElement('div');box.className='builder-box';
+  box.innerHTML='<div class="builder-base">Base: '+item.base+'</div>';
+
+  function makeGroup(label,words,type){
+    const grp=document.createElement('div');grp.className='word-group';
+    grp.innerHTML='<div class="word-group-label">'+label+'</div>';
+    const chips=document.createElement('div');chips.className='word-chips';
+    words.forEach((w,i)=>{
+      const c=document.createElement('div');c.className='w-chip';c.textContent=w;c.dataset.idx=i;
+      c.onclick=()=>{
+        if(type==='adj1'){
+          if(c.classList.contains('sel-adj')){c.classList.remove('sel-adj');selAdj1=selAdj1.filter(x=>x!==w);}
+          else if(selAdj1.length<2){c.classList.add('sel-adj');selAdj1.push(w);}
+        }else if(type==='adj2'){
+          if(c.classList.contains('sel-adj')){c.classList.remove('sel-adj');selAdj2=selAdj2.filter(x=>x!==w);}
+          else if(selAdj2.length<2){c.classList.add('sel-adj');selAdj2.push(w);}
+        }else{
+          chips.querySelectorAll('.w-chip').forEach(ch=>ch.classList.remove('sel-adv'));
+          c.classList.add('sel-adv');selAdv=w;
+        }
+        updatePreview();
+      };
+      chips.appendChild(c);
+    });
+    grp.appendChild(chips);return grp;
+  }
+
+  box.appendChild(makeGroup('Adjectives for "'+item.noun1+'" (pick 1\u20132):',item.adjN1,'adj1'));
+  box.appendChild(makeGroup('Adjectives for "'+item.noun2+'" (pick 1):',item.adjN2,'adj2'));
+  box.appendChild(makeGroup('Adverb for "'+item.verb+'" (pick 1):',item.advs,'adv'));
+
+  const result=document.createElement('div');result.className='builder-result';result.id='buildResult';
+  result.textContent='Your expanded sentence will appear here.';
+  box.appendChild(result);
+
+  function updatePreview(){
+    const a1=selAdj1.length?selAdj1.join(', ')+' ':'';
+    const a2=selAdj2.length?selAdj2.join(', ')+' ':'';
+    const av=selAdv||'';
+    if(!a1&&!a2&&!av){result.textContent='Your expanded sentence will appear here.';result.classList.remove('filled');checkBtn.disabled=true;return;}
+    // Build preview
+    const base=item.base.replace('.','');
+    const parts=base.split(' ');
+    // Simple reconstruction
+    let sentence='The '+a1+item.noun1+' '+item.verb+(av?' '+av:'')+' '+parts.slice(parts.indexOf(item.verb.split(' ')[0])+1).join(' ').replace(item.noun2,'the '+a2+item.noun2);
+    // Clean up
+    sentence=sentence.replace(/\s+/g,' ').trim();
+    if(!sentence.endsWith('.'))sentence+='.';
+    // Capitalize
+    sentence=sentence.charAt(0).toUpperCase()+sentence.slice(1);
+    result.textContent=sentence;result.classList.add('filled');
+    checkBtn.disabled=!(selAdj1.length>=1&&selAdv);
+  }
+
+  const btnRow=document.createElement('div');btnRow.style.cssText='display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px';
+  const checkBtn=document.createElement('button');checkBtn.className='btn btn-teal';checkBtn.textContent='Check';checkBtn.disabled=true;
+  const fb=document.createElement('div');fb.className='builder-fb';
+  const nextBtn=document.createElement('button');nextBtn.className='btn btn-coral';nextBtn.textContent='Next \u2192';nextBtn.style.display='none';
+
+  checkBtn.onclick=()=>{
+    checkBtn.disabled=true;
+    box.querySelectorAll('.w-chip').forEach(c=>c.style.pointerEvents='none');
+    const totalAdj=selAdj1.length+selAdj2.length;
+    if(totalAdj>=2&&totalAdj<=3&&selAdv){
+      fb.textContent='Nicely balanced. '+totalAdj+' adjectives and 1 adverb create a detailed, clear sentence.';
+      fb.style.background='#e8f5e9';fb.style.color='#2e7d32';addStars(2);
+    }else{
+      fb.textContent='Good effort. Aim for 2\u20133 adjectives total plus 1 adverb for the best balance. Sample: '+item.sample;
+      fb.style.background='#fff3e0';fb.style.color='#e65100';addStars(1);
+    }
+    fb.classList.add('show');activitiesCompleted++;
+    if(buildIdx<L.builders.length-1)nextBtn.style.display='inline-block';
+  };
+  nextBtn.onclick=()=>{buildIdx++;buildBuilder();};
+  btnRow.appendChild(checkBtn);btnRow.appendChild(nextBtn);
+  box.appendChild(btnRow);box.appendChild(fb);area.appendChild(box);
+}
+
+// ── OVERLOAD RESCUE ──
+function buildOverload(){
+  const area=document.getElementById('overloadArea');
+  if(overloadIdx>=L.overloads.length){area.innerHTML='<div style="text-align:center;padding:30px"><p style="font-size:1.1rem;color:var(--teal);font-weight:600">All sentences rescued. Great editing.</p></div>';return;}
+  const item=L.overloads[overloadIdx];
+  document.getElementById('overloadCounter').textContent='Sentence '+(overloadIdx+1)+' of '+L.overloads.length;
+  let cutCount=0;
+  area.innerHTML='';
+
+  const wrapper=document.createElement('div');
+  wrapper.innerHTML='<p style="font-size:.9rem;color:#555;margin-bottom:8px">Click describing words to <strong>remove</strong> them. Keep the best 2\u20133.</p>';
+
+  const sentDiv=document.createElement('div');sentDiv.className='overload-sentence';
+  item.parts.forEach((p,i)=>{
+    if(p.adj||p.adv){
+      const span=document.createElement('span');span.className='highlight';span.textContent=p.w;span.dataset.idx=i;
+      span.onclick=()=>{
+        if(span.classList.contains('cut')){span.classList.remove('cut');cutCount--;}
+        else{span.classList.add('cut');cutCount++;}
+        checkBtn.disabled=(cutCount<item.minCut);
+      };
+      sentDiv.appendChild(span);sentDiv.appendChild(document.createTextNode(' '));
+    }else{
+      sentDiv.appendChild(document.createTextNode(p.w+' '));
+    }
+  });
+  wrapper.appendChild(sentDiv);
+
+  const btnRow=document.createElement('div');btnRow.style.cssText='display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px';
+  const checkBtn=document.createElement('button');checkBtn.className='btn btn-teal';checkBtn.textContent='Check My Edits';checkBtn.disabled=true;
+  const fb=document.createElement('div');fb.className='builder-fb';
+  const nextBtn=document.createElement('button');nextBtn.className='btn btn-coral';nextBtn.textContent='Next \u2192';nextBtn.style.display='none';
+
+  checkBtn.onclick=()=>{
+    checkBtn.disabled=true;
+    sentDiv.querySelectorAll('.highlight').forEach(s=>s.style.pointerEvents='none');
+    const remaining=[];
+    sentDiv.querySelectorAll('.highlight').forEach(s=>{if(!s.classList.contains('cut'))remaining.push(s.textContent);});
+    const adjsKept=remaining.filter(w=>item.parts.find(p=>p.w===w&&p.adj));
+    const advsKept=remaining.filter(w=>item.parts.find(p=>p.w===w&&p.adv));
+    // Mark kept ones green
+    sentDiv.querySelectorAll('.highlight').forEach(s=>{if(!s.classList.contains('cut'))s.classList.add('kept');});
+
+    if(adjsKept.length<=3&&advsKept.length<=1&&cutCount>=item.minCut){
+      fb.textContent='Well edited. You kept a balanced set of describing words. '+item.explain;
+      fb.style.background='#e8f5e9';fb.style.color='#2e7d32';addStars(3);
+    }else if(cutCount>=item.minCut){
+      fb.textContent='Good start. You removed some extras. For the best balance, keep just 2 different adjectives and 1 adverb. '+item.explain;
+      fb.style.background='#fff3e0';fb.style.color='#e65100';addStars(1);
+    }else{
+      fb.textContent='Try cutting a few more. This sentence still has too many describing words. '+item.explain;
+      fb.style.background='#fce4ec';fb.style.color='#c62828';addStars(1);
+    }
+    fb.classList.add('show');activitiesCompleted++;
+    if(overloadIdx<L.overloads.length-1)nextBtn.style.display='inline-block';
+  };
+  nextBtn.onclick=()=>{overloadIdx++;buildOverload();};
+  btnRow.appendChild(checkBtn);btnRow.appendChild(nextBtn);
+  wrapper.appendChild(btnRow);wrapper.appendChild(fb);area.appendChild(wrapper);
+}
+
+// ── CELEBRATION ──
+function showCelebration(){document.getElementById('finalStars').textContent=stars;document.getElementById('finalActivities').textContent=activitiesCompleted;fireConfetti();}
+
+// ── CONFETTI ──
+function fireConfetti(){
+  const colors=['#E66B5D','#3A7D8C','#F3D25B','#D7ECF0','#4CAF50'];
+  for(let i=0;i<60;i++){
+    const p=document.createElement('div');p.className='confetti-piece';
+    p.style.left=Math.random()*100+'vw';p.style.top='-10px';
+    p.style.background=colors[Math.floor(Math.random()*colors.length)];
+    p.style.borderRadius=Math.random()>.5?'50%':'2px';
+    p.style.width=(6+Math.random()*8)+'px';p.style.height=(6+Math.random()*8)+'px';
+    document.body.appendChild(p);const dur=1500+Math.random()*2000;const drift=(Math.random()-.5)*200;
+    p.animate([{transform:'translateY(0) translateX(0) rotate(0deg)',opacity:1},{transform:'translateY(100vh) translateX('+drift+'px) rotate('+(360+Math.random()*360)+'deg)',opacity:0}],{duration:dur,easing:'ease-out'});
+    setTimeout(()=>p.remove(),dur);
+  }
+}
+
+// ── START OVER ──
+function startOver(){
+  stars=0;activitiesCompleted=0;buildIdx=0;overloadIdx=0;
+  document.getElementById('starCounter').textContent='\u2B50 0';
+  ['mc1','mc2'].forEach(id=>{
+    document.querySelectorAll('#'+id+' .mc-opt').forEach(o=>o.classList.remove('correct','wrong','disabled'));
+    const fb=document.getElementById(id+'-fb');fb.className='mc-feedback';fb.textContent='';
+  });
+  document.querySelectorAll('.review-card').forEach(c=>c.classList.remove('flipped'));
+  buildBuilder();buildOverload();showSlide(1);
+}
+
+// ── INIT ──
+buildBuilder();buildOverload();showSlide(1);
+</script>
+</body>
+</html>

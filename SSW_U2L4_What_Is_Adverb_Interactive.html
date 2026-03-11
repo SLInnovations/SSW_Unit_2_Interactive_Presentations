@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSW Unit 2, Lesson 4: What is an Adverb?</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--coral:#E66B5D;--teal:#3A7D8C;--lb:#D7ECF0;--bp:#EBF5F8;--yellow:#F3D25B;--yd:#9E7F0A;--wh:#FFFFFF;--dk:#1A1A2E;--cp:#FDF0EE;--grn:#4CAF50;--red:#E74C3C}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Open Sans',sans-serif;background:#f0f4f8;color:var(--dk);min-height:100vh;display:flex;flex-direction:column;align-items:center}
+#pbar{position:fixed;top:0;left:0;height:6px;background:var(--coral);transition:width .4s;z-index:100}
+#stars{position:fixed;top:14px;right:20px;font-family:'Poppins',sans-serif;font-size:1.1rem;font-weight:600;color:var(--yd);z-index:100;background:var(--wh);padding:4px 14px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+#stars.pop{animation:pop .4s}@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+.sl{width:100%;max-width:900px;min-height:480px;margin:50px auto 80px;padding:40px;background:var(--wh);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.08);display:none;animation:fi .3s}.sl.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+nav{position:fixed;bottom:0;left:0;width:100%;background:var(--wh);border-top:2px solid var(--lb);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;z-index:99}
+nav button{font-family:'Poppins',sans-serif;font-weight:600;font-size:.95rem;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+#bb{background:var(--bp);color:var(--teal)}#bb:hover{background:var(--lb)}
+#bn{background:var(--coral);color:var(--wh)}#bn:hover{background:#d45a4d}
+#sn{font-family:'Open Sans',sans-serif;font-size:.9rem;color:#888}
+.ph{display:inline-block;font-family:'Poppins',sans-serif;font-weight:600;font-size:.75rem;text-transform:uppercase;letter-spacing:1px;padding:4px 12px;border-radius:12px;margin-bottom:16px}
+.ph-l{background:var(--lb);color:var(--teal)}.ph-p{background:var(--cp);color:var(--coral)}.ph-r{background:var(--bp);color:var(--teal)}
+h1{font-family:'Poppins',sans-serif;font-weight:700;color:var(--teal);margin-bottom:8px}
+h2{font-family:'Poppins',sans-serif;font-weight:600;color:var(--teal);margin-bottom:12px;font-size:1.4rem}
+h3{font-family:'Poppins',sans-serif;font-weight:600;color:var(--coral);margin-bottom:10px;font-size:1.1rem}
+p{font-size:1rem;line-height:1.7;margin-bottom:10px}
+.ts{text-align:center;padding:60px 30px}.ts .ul{font-family:'Poppins',sans-serif;font-weight:600;color:var(--coral);font-size:1rem;letter-spacing:2px;text-transform:uppercase}
+.ts h1{font-size:2.2rem;margin:12px 0 6px}.ts .sub{font-family:'Poppins',sans-serif;color:#666;font-size:1.1rem;margin-bottom:20px}
+.gb{background:var(--lb);border-radius:12px;padding:16px 24px;margin:20px auto;max-width:600px}.gb p{color:var(--teal);font-weight:600;font-size:.95rem;margin:0}
+.rb{background:var(--lb);border-radius:12px;padding:24px;margin:20px 0;border-left:5px solid var(--teal)}
+.sg{display:grid;gap:12px;margin:20px 0}
+.ss{display:flex;align-items:center;gap:16px;background:var(--wh);border:2px solid var(--lb);border-radius:12px;padding:16px;transition:all .3s}.ss:hover{border-color:var(--teal)}
+.slet{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.1rem;color:var(--wh);background:var(--coral);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stxt{font-family:'Poppins',sans-serif;font-size:.95rem}.stxt strong{color:var(--teal)}
+.mco{display:grid;gap:12px;margin:16px 0}
+.mo{background:var(--wh);border:2px solid var(--lb);border-radius:10px;padding:14px 20px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:.95rem;transition:all .2s;text-align:left}
+.mo:hover{border-color:var(--teal);background:var(--bp)}.mo.ok{border-color:var(--grn);background:#e8f5e9;pointer-events:none}.mo.no{border-color:var(--red);background:#fde8e8}.mo.lk{pointer-events:none;opacity:.6}
+.mfb{margin-top:12px;padding:12px 16px;border-radius:8px;font-weight:600;display:none}.mfb.show{display:block}
+/* Comparison grid */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0}
+.cmp-box{border-radius:12px;padding:20px;text-align:center}
+/* SWF */
+.swf-s{background:var(--bp);border-radius:12px;padding:20px;margin:16px 0;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;font-family:'Poppins',sans-serif;font-size:1.1rem;line-height:2}
+.swf-w{padding:4px 10px;border-radius:6px;cursor:pointer;transition:all .2s;border:2px solid transparent;user-select:none}
+.swf-w:hover{background:var(--lb)}
+.swf-w.v-tag{background:var(--teal);color:white;border-color:var(--teal)}
+.swf-w.a-tag{background:var(--coral);color:white;border-color:var(--coral)}
+.swf-w.wrong{background:var(--red);color:white;animation:shake .3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.pen-bar{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
+.pen{padding:8px 20px;border-radius:20px;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600;font-size:.9rem;border:2px solid transparent;transition:all .2s}
+.pen-v{background:var(--lb);color:var(--teal);border-color:var(--teal)}.pen-v.active{background:var(--teal);color:white}
+.pen-a{background:var(--cp);color:var(--coral);border-color:var(--coral)}.pen-a.active{background:var(--coral);color:white}
+.chk{display:block;margin:16px auto;font-family:'Poppins',sans-serif;font-weight:600;font-size:1rem;padding:12px 32px;background:var(--teal);color:var(--wh);border:none;border-radius:10px;cursor:pointer;transition:all .2s}.chk:hover{background:#2d6470}.chk:disabled{background:#ccc;cursor:default}
+.afb{text-align:center;margin-top:12px;padding:10px;border-radius:8px;font-weight:600;display:none}.afb.show{display:block}
+/* Sort */
+.sbank{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:50px;margin:16px 0;padding:16px;background:#f9f9f9;border-radius:12px}
+.sw{padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:.85rem;font-weight:500;transition:all .2s;user-select:none;border:2px solid var(--lb);background:var(--wh)}.sw:hover{transform:translateY(-2px);box-shadow:0 2px 8px rgba(0,0,0,.1)}.sw.sel{outline:3px solid var(--teal)}
+.scols{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+.scol{border:2px dashed var(--lb);border-radius:12px;padding:12px;min-height:80px;text-align:center;cursor:pointer;transition:all .2s}.scol:hover{border-color:var(--teal)}
+.scol h3{margin-bottom:8px;font-size:.85rem}.scol .dr{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:20px 0}
+.rc{border-radius:12px;padding:20px;cursor:pointer;transition:all .3s;min-height:100px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.rq{font-family:'Poppins',sans-serif;font-weight:600;font-size:1rem}.ra{display:none;font-size:.9rem;margin-top:10px;line-height:1.5}
+.rc.fl .rq{display:none}.rc.fl .ra{display:block}
+.rc-t{background:var(--lb);border:2px solid var(--teal)}.rc-t .rq,.rc-t .ra{color:var(--teal)}
+.rc-c{background:var(--cp);border:2px solid var(--coral)}.rc-c .rq,.rc-c .ra{color:var(--coral)}
+.rc-y{background:#FFFDF0;border:2px solid var(--yellow)}.rc-y .rq,.rc-y .ra{color:var(--yd)}
+.rc-b{background:var(--bp);border:2px solid #90CAF9}.rc-b .rq,.rc-b .ra{color:#1565C0}
+.celeb{text-align:center;padding:40px}.celeb h1{font-size:2rem;margin-bottom:16px}
+.sts{display:flex;justify-content:center;gap:30px;margin:24px 0}.st2{text-align:center}
+.snum{font-family:'Poppins',sans-serif;font-weight:700;font-size:2rem;color:var(--teal)}.slab{font-size:.85rem;color:#888}
+.so{margin-top:20px;font-family:'Poppins',sans-serif;font-weight:600;font-size:1rem;padding:12px 32px;background:var(--coral);color:var(--wh);border:none;border-radius:10px;cursor:pointer}.so:hover{background:#d45a4d}
+@media(max-width:700px){.sl{margin:40px 10px 80px;padding:24px}.cmp,.scols,.rg{grid-template-columns:1fr}.ts h1{font-size:1.6rem}.scols{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div id="pbar"></div>
+<div id="stars">⭐ 0</div>
+
+<!-- S1: Title -->
+<div class="sl active" data-s="1">
+<div class="ts"><div class="ul">Unit 2 &bull; Lesson 4</div>
+<h1>What is an Adverb?</h1>
+<p class="sub">Describing Words That Tell About Verbs</p>
+<div class="gb"><p>🎯 I can identify adverbs and understand that adverbs are words that DESCRIBE VERBS (actions).</p></div>
+</div></div>
+
+<!-- S2: Concept Intro -->
+<div class="sl" data-s="2">
+<div style="text-align:center;padding:60px 30px"><span class="ph ph-l">Learn</span>
+<div style="font-family:'Poppins',sans-serif;font-weight:700;font-size:3rem;color:var(--teal);margin-bottom:10px">Adverb</div>
+<p style="font-size:1.1rem;color:#666;margin-top:12px">A word that describes a verb (action)</p>
+<p style="font-size:.95rem;color:#888;margin-top:8px">Hint: Many adverbs end in <strong>-ly</strong></p>
+</div></div>
+
+<!-- S3: Review - Adjectives vs Adverbs (MC) -->
+<div class="sl" data-s="3">
+<span class="ph ph-l">Learn</span>
+<h2>Quick Review: Adjectives vs. Adverbs</h2>
+<div class="cmp">
+<div class="cmp-box" style="background:var(--lb);border:2px solid var(--teal)"><h3 style="color:var(--teal)">Adjectives</h3><p style="color:var(--teal)">Describe <strong>NOUNS</strong> (things)</p><p style="font-size:.9rem">The <strong>big</strong> dog</p></div>
+<div class="cmp-box" style="background:var(--cp);border:2px solid var(--coral)"><h3>Adverbs</h3><p style="color:var(--coral)">Describe <strong>VERBS</strong> (actions)</p><p style="font-size:.9rem">The dog ran <strong>quickly</strong></p></div>
+</div>
+<h3>Quick Check</h3>
+<p><strong>In "She sings beautifully," which word is the adverb?</strong></p>
+<div class="mco" id="mc1">
+<div class="mo">"She" — it names who is singing</div>
+<div class="mo">"sings" — it's the action</div>
+<div class="mo" data-ok="1">"beautifully" — it describes HOW she sings</div>
+</div>
+<div class="mfb" id="mc1-fb"></div>
+</div>
+
+<!-- S4: Four Questions Strategy Display -->
+<div class="sl" data-s="4">
+<span class="ph ph-l">Learn</span>
+<h2>Adverbs Answer FOUR Questions</h2>
+<div class="sg">
+<div class="ss"><div class="slet">H</div><div class="stxt"><strong>How?</strong> (manner) — carefully, quickly, loudly, quietly, happily</div></div>
+<div class="ss"><div class="slet">W</div><div class="stxt"><strong>When?</strong> (time) — yesterday, today, soon, later, always, never</div></div>
+<div class="ss"><div class="slet">W</div><div class="stxt"><strong>Where?</strong> (place) — here, there, outside, inside, everywhere</div></div>
+<div class="ss"><div class="slet">E</div><div class="stxt"><strong>To what extent?</strong> (degree) — very, completely, almost, quite</div></div>
+</div>
+<div style="background:var(--cp);border-radius:10px;padding:12px 16px;margin-top:16px;text-align:center">
+<p style="font-size:.9rem;color:var(--coral);font-weight:600">💡 Most common: HOW adverbs (many end in -ly)</p>
+</div>
+</div>
+
+<!-- S5: The -ly Pattern -->
+<div class="sl" data-s="5">
+<span class="ph ph-l">Learn</span>
+<h2>The -ly Pattern</h2>
+<div class="rb"><p>You can often turn an adjective INTO an adverb by adding <strong>-ly</strong>:</p>
+<p>slow → slow<strong>ly</strong> &nbsp; | &nbsp; quiet → quiet<strong>ly</strong> &nbsp; | &nbsp; careful → careful<strong>ly</strong></p></div>
+<div style="background:var(--cp);border-radius:12px;padding:16px;margin:16px 0">
+<h3>⚠️ But watch out!</h3>
+<p>Not ALL -ly words are adverbs: <strong>friendly</strong>, <strong>lovely</strong> = adjectives!</p>
+<p>Not ALL adverbs end in -ly: <strong>fast</strong>, <strong>very</strong>, <strong>always</strong>, <strong>here</strong></p>
+<p style="font-weight:600;color:var(--coral);margin-top:8px">The -ly pattern is a CLUE, not a rule!</p>
+</div>
+</div>
+
+<!-- S6: Quick Check MC -->
+<div class="sl" data-s="6">
+<span class="ph ph-l">Learn</span>
+<h2>Quick Check ✓</h2>
+<p><strong>"The children played outside yesterday." How many adverbs are in this sentence?</strong></p>
+<div class="mco" id="mc2">
+<div class="mo">One — "outside" (WHERE)</div>
+<div class="mo" data-ok="1">Two — "outside" (WHERE) and "yesterday" (WHEN)</div>
+<div class="mo">Three — "children," "outside," and "yesterday"</div>
+<div class="mo">None — there are no -ly words</div>
+</div>
+<div class="mfb" id="mc2-fb"></div>
+</div>
+
+<!-- S7: Practice 1 - Sentence Word Finder -->
+<div class="sl" data-s="7">
+<span class="ph ph-p">Practice</span>
+<h2>Find the Adverbs! (1 of 2)</h2>
+<p>Select a pen, then click words to tag them.</p>
+<div class="pen-bar">
+<div class="pen pen-v" id="pv1" onclick="setPen('v',1)">🖊️ Verb</div>
+<div class="pen pen-a" id="pa1" onclick="setPen('a',1)">🖊️ Adverb</div>
+</div>
+<div class="swf-s" id="swf1"></div>
+<button class="chk" id="swf1-btn" onclick="chkSWF(1)">Check My Answers ✓</button>
+<div class="afb" id="swf1-fb"></div>
+</div>
+
+<!-- S8: Practice 2 - Sentence Word Finder -->
+<div class="sl" data-s="8">
+<span class="ph ph-p">Practice</span>
+<h2>Find the Adverbs! (2 of 2)</h2>
+<p>Select a pen, then click words to tag them.</p>
+<div class="pen-bar">
+<div class="pen pen-v" id="pv2" onclick="setPen('v',2)">🖊️ Verb</div>
+<div class="pen pen-a" id="pa2" onclick="setPen('a',2)">🖊️ Adverb</div>
+</div>
+<div class="swf-s" id="swf2"></div>
+<button class="chk" id="swf2-btn" onclick="chkSWF(2)">Check My Answers ✓</button>
+<div class="afb" id="swf2-fb"></div>
+</div>
+
+<!-- S9: Practice 3 - Sort by Question Type -->
+<div class="sl" data-s="9">
+<span class="ph ph-p">Practice</span>
+<h2>Sort: What Question Does It Answer?</h2>
+<p>Click an adverb, then click the correct column.</p>
+<div class="sbank" id="sort-bank"></div>
+<div class="scols">
+<div class="scol" id="col-how" data-cat="how"><h3 style="color:var(--coral)">How?</h3><div class="dr" id="dr-how"></div></div>
+<div class="scol" id="col-when" data-cat="when"><h3 style="color:var(--teal)">When?</h3><div class="dr" id="dr-when"></div></div>
+<div class="scol" id="col-where" data-cat="where"><h3 style="color:var(--yd)">Where?</h3><div class="dr" id="dr-where"></div></div>
+<div class="scol" id="col-ext" data-cat="ext"><h3 style="color:#1565C0">Extent?</h3><div class="dr" id="dr-ext"></div></div>
+</div>
+<button class="chk" id="sort-btn" onclick="chkSort()">Check My Sort ✓</button>
+<div class="afb" id="sort-fb"></div>
+</div>
+
+<!-- S10: Review Cards -->
+<div class="sl" data-s="10">
+<span class="ph ph-r">Review</span>
+<h2>Lesson Review</h2>
+<p>Click each card to reveal the answer.</p>
+<div class="rg" id="rv"></div>
+</div>
+
+<!-- S11: Celebration -->
+<div class="sl" data-s="11">
+<div class="celeb">
+<h1>🎉 Awesome Work!</h1>
+<p>You've completed What is an Adverb!</p>
+<div class="sts">
+<div class="st2"><div class="snum" id="fs">0</div><div class="slab">Stars Earned</div></div>
+<div class="st2"><div class="snum" id="fa">0</div><div class="slab">Activities Done</div></div>
+</div>
+<p style="margin:16px 0;font-family:'Poppins',sans-serif;font-weight:500;color:var(--teal)">You now know that adverbs describe verbs and answer: How? When? Where? To what extent?</p>
+<p style="color:#888;font-size:.9rem">Next lesson: Adding Adverbs to Your Sentences!</p>
+<button class="so" onclick="startOver()">Start Over 🔄</button>
+</div></div>
+
+<nav><button id="bb" onclick="go(-1)">← Back</button><span id="sn">1 / 11</span><button id="bn" onclick="go(1)">Next →</button></nav>
+<canvas id="confetti" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:200"></canvas>
+
+<script>
+const L={total:11,
+swf1:{words:[
+{w:"The",t:""},{w:"girl",t:""},{w:"carefully",t:"a"},{w:"painted",t:"v"},{w:"the",t:""},{w:"picture",t:""},{w:"yesterday.",t:"a"}
+]},
+swf2:{words:[
+{w:"He",t:""},{w:"always",t:"a"},{w:"arrives",t:"v"},{w:"early",t:"a"},{w:"at",t:""},{w:"the",t:""},{w:"busy",t:""},{w:"office.",t:""}
+]},
+sort:[
+{w:"quickly",c:"how"},{w:"yesterday",c:"when"},{w:"outside",c:"where"},{w:"completely",c:"ext"},
+{w:"softly",c:"how"},{w:"soon",c:"when"},{w:"everywhere",c:"where"},{w:"almost",c:"ext"},
+{w:"gracefully",c:"how"},{w:"later",c:"when"},{w:"here",c:"where"},{w:"very",c:"ext"}
+],
+review:[
+{q:"What is an adverb?",a:"A word that describes a verb (action) — it tells us more about how the action happens.",s:"rc-t"},
+{q:"What 4 questions do adverbs answer?",a:"How? When? Where? To what extent?",s:"rc-c"},
+{q:"What's the -ly pattern?",a:"Many adverbs end in -ly (quickly, softly). But not ALL -ly words are adverbs, and not ALL adverbs end in -ly!",s:"rc-y"},
+{q:"Adjective vs. Adverb?",a:"Adjectives describe NOUNS (things). Adverbs describe VERBS (actions). Different words for different jobs!",s:"rc-b"},
+{q:"Can a sentence have 2 adverbs?",a:"Yes! Example: 'They played outside yesterday.' Outside = WHERE, yesterday = WHEN. Both describe the verb 'played.'",s:"rc-t"}
+]};
+
+let cur=1,star=0,acts=0,mcD={},penM={1:null,2:null},swfT={1:{},2:{}},swfD={},sortPl={},sortDn=false,selSW=null;
+
+function go(d){const n=cur+d;if(n<1||n>L.total)return;document.querySelector(`.sl[data-s="${cur}"]`).classList.remove('active');cur=n;document.querySelector(`.sl[data-s="${cur}"]`).classList.add('active');upd();window.scrollTo(0,0)}
+function upd(){document.getElementById('pbar').style.width=`${cur/L.total*100}%`;document.getElementById('sn').textContent=`${cur} / ${L.total}`;document.getElementById('bb').style.visibility=cur===1?'hidden':'visible';document.getElementById('bn').style.visibility=cur===L.total?'hidden':'visible';if(cur===L.total)showC()}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(1);if(e.key==='ArrowLeft')go(-1)});
+function addSt(n){star+=n;const el=document.getElementById('stars');el.textContent=`⭐ ${star}`;el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}
+
+// MC
+document.querySelectorAll('.mco').forEach(g=>{const id=g.id;g.querySelectorAll('.mo').forEach(o=>{o.addEventListener('click',()=>{if(mcD[id])return;const ok=o.dataset.ok==='1';const fb=document.getElementById(id+'-fb');if(ok){mcD[id]=true;o.classList.add('ok');g.querySelectorAll('.mo').forEach(x=>x.classList.add('lk'));fb.textContent='✓ Correct!';fb.style.background='#e8f5e9';fb.style.color='var(--grn)';fb.className='mfb show';addSt(1);acts++}else{o.classList.add('no');fb.textContent='✗ Not quite — try again!';fb.style.background='#fde8e8';fb.style.color='var(--red)';fb.className='mfb show';setTimeout(()=>{o.classList.remove('no');fb.classList.remove('show')},1500)}})})});
+
+// SWF
+function initSWF(n){const data=n===1?L.swf1:L.swf2;const c=document.getElementById('swf'+n);c.innerHTML='';swfT[n]={};swfD[n]=false;
+data.words.forEach((w,i)=>{const el=document.createElement('span');el.className='swf-w';el.textContent=w.w;el.dataset.i=i;
+el.addEventListener('click',()=>{if(swfD[n]||!penM[n])return;const cur=swfT[n][i];
+if(cur===penM[n]){delete swfT[n][i];el.className='swf-w'}
+else{swfT[n][i]=penM[n];el.className='swf-w '+(penM[n]==='v'?'v-tag':'a-tag')}});
+c.appendChild(el)})}
+function setPen(type,n){penM[n]=type;document.getElementById('pv'+n).classList.toggle('active',type==='v');document.getElementById('pa'+n).classList.toggle('active',type==='a')}
+function chkSWF(n){if(swfD[n])return;swfD[n]=true;const data=n===1?L.swf1:L.swf2;let ok=0,total=0;
+data.words.forEach((w,i)=>{if(w.t){total++;const el=document.querySelector(`#swf${n} .swf-w[data-i="${i}"]`);
+if(swfT[n][i]===w.t){ok++;el.style.boxShadow='0 0 0 2px var(--grn)'}
+else{el.classList.add('wrong');setTimeout(()=>{el.classList.remove('wrong');el.className='swf-w '+(w.t==='v'?'v-tag':'a-tag');el.style.boxShadow='0 0 0 2px var(--grn)'},800)}}
+else if(swfT[n][i]){const el=document.querySelector(`#swf${n} .swf-w[data-i="${i}"]`);el.classList.add('wrong');setTimeout(()=>{el.className='swf-w'},800)}});
+const fb=document.getElementById('swf'+n+'-fb');
+if(ok===total){fb.textContent=`✓ Perfect! You found all ${ok} verbs and adverbs!`;fb.style.background='#e8f5e9';fb.style.color='var(--grn)';addSt(2);confetti()}
+else{fb.textContent=`${ok}/${total} correct. Check the corrections!`;fb.style.background='#FFF3E0';fb.style.color='#E65100';addSt(1)}
+fb.className='afb show';acts++;document.getElementById('swf'+n+'-btn').disabled=true}
+initSWF(1);initSWF(2);
+
+// Sort
+(function initSort(){const bank=document.getElementById('sort-bank');bank.innerHTML='';sortPl={};sortDn=false;
+const sh=[...L.sort].sort(()=>Math.random()-.5);
+sh.forEach(item=>{const idx=L.sort.indexOf(item);const el=document.createElement('div');el.className='sw';el.textContent=item.w;el.dataset.idx=idx;
+el.addEventListener('click',()=>{if(sortDn)return;if(el.parentElement.id==='sort-bank'){if(selSW)selSW.classList.remove('sel');selSW=el;el.classList.add('sel')}});
+bank.appendChild(el)});
+document.querySelectorAll('.scol').forEach(col=>{col.addEventListener('click',()=>{if(!selSW||sortDn)return;document.getElementById('dr-'+col.dataset.cat).appendChild(selSW);sortPl[selSW.dataset.idx]=col.dataset.cat;selSW.classList.remove('sel');selSW=null})})})();
+function chkSort(){if(sortDn)return;if(Object.keys(sortPl).length<L.sort.length){const fb=document.getElementById('sort-fb');fb.textContent='Sort all words first!';fb.style.background='#FFF3E0';fb.style.color='#E65100';fb.className='afb show';setTimeout(()=>fb.classList.remove('show'),2000);return}
+sortDn=true;let ok=0;document.querySelectorAll('.sw').forEach(el=>{const idx=el.dataset.idx;if(sortPl[idx]===L.sort[idx].c){el.style.border='2px solid var(--grn)';ok++}else el.style.border='2px solid var(--red)'});
+const fb=document.getElementById('sort-fb');
+if(ok===L.sort.length){fb.textContent=`✓ Perfect! All ${ok} sorted correctly!`;fb.style.background='#e8f5e9';fb.style.color='var(--grn)';addSt(3);confetti()}
+else{fb.textContent=`${ok}/${L.sort.length} correct.`;fb.style.background='#FFF3E0';fb.style.color='#E65100';addSt(1)}
+fb.className='afb show';acts++;document.getElementById('sort-btn').disabled=true}
+
+// Review
+(function(){const g=document.getElementById('rv');g.innerHTML='';L.review.forEach(r=>{const c=document.createElement('div');c.className='rc '+r.s;c.innerHTML=`<div class="rq">${r.q}</div><div class="ra">${r.a}</div>`;c.addEventListener('click',()=>c.classList.toggle('fl'));g.appendChild(c)})})();
+
+function showC(){document.getElementById('fs').textContent=star;document.getElementById('fa').textContent=acts;confetti()}
+function confetti(){const cv=document.getElementById('confetti'),ctx=cv.getContext('2d');cv.width=window.innerWidth;cv.height=window.innerHeight;const P=[],cols=['#E66B5D','#3A7D8C','#F3D25B','#D7ECF0','#FF6B6B','#4CAF50'];for(let i=0;i<120;i++)P.push({x:Math.random()*cv.width,y:Math.random()*cv.height-cv.height,w:Math.random()*10+5,h:Math.random()*6+3,c:cols[Math.floor(Math.random()*cols.length)],vy:Math.random()*3+2,vx:(Math.random()-.5)*2,r:Math.random()*360,rv:(Math.random()-.5)*8});let f=0;(function d(){if(f++>180){ctx.clearRect(0,0,cv.width,cv.height);return}ctx.clearRect(0,0,cv.width,cv.height);P.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.r+=p.rv;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r*Math.PI/180);ctx.fillStyle=p.c;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore()});requestAnimationFrame(d)})()}
+
+function startOver(){cur=1;star=0;acts=0;mcD={};penM={1:null,2:null};swfT={1:{},2:{}};swfD={};sortPl={};sortDn=false;selSW=null;
+document.querySelectorAll('.sl').forEach(s=>s.classList.remove('active'));document.querySelector('.sl[data-s="1"]').classList.add('active');document.getElementById('stars').textContent='⭐ 0';
+document.querySelectorAll('.mo').forEach(o=>o.classList.remove('ok','no','lk'));document.querySelectorAll('.mfb').forEach(f=>f.classList.remove('show'));
+initSWF(1);initSWF(2);
+[1,2].forEach(n=>{document.getElementById('swf'+n+'-btn').disabled=false;document.getElementById('swf'+n+'-fb').classList.remove('show');document.getElementById('pv'+n).classList.remove('active');document.getElementById('pa'+n).classList.remove('active')});
+const bank=document.getElementById('sort-bank');document.querySelectorAll('.sw').forEach(w=>{w.style.border='';w.classList.remove('sel');bank.appendChild(w)});
+['dr-how','dr-when','dr-where','dr-ext'].forEach(id=>document.getElementById(id).innerHTML='');
+document.getElementById('sort-btn').disabled=false;document.getElementById('sort-fb').classList.remove('show');
+document.querySelectorAll('.rc').forEach(c=>c.classList.remove('fl'));upd()}
+upd();
+</script>
+</body>
+</html>

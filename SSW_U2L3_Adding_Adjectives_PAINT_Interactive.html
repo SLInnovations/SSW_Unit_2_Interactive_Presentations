@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSW Unit 2, Lesson 3: Adding Adjectives — PAINT A PICTURE</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--coral:#E66B5D;--teal:#3A7D8C;--lb:#D7ECF0;--bp:#EBF5F8;--yellow:#F3D25B;--yd:#9E7F0A;--wh:#FFFFFF;--dk:#1A1A2E;--cp:#FDF0EE;--grn:#4CAF50;--red:#E74C3C}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Open Sans',sans-serif;background:#f0f4f8;color:var(--dk);min-height:100vh;display:flex;flex-direction:column;align-items:center}
+#pbar{position:fixed;top:0;left:0;height:6px;background:var(--coral);transition:width .4s;z-index:100}
+#stars{position:fixed;top:14px;right:20px;font-family:'Poppins',sans-serif;font-size:1.1rem;font-weight:600;color:var(--yd);z-index:100;background:var(--wh);padding:4px 14px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+#stars.pop{animation:pop .4s}@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+.sl{width:100%;max-width:900px;min-height:480px;margin:50px auto 80px;padding:40px;background:var(--wh);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.08);display:none;animation:fi .3s}.sl.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+nav{position:fixed;bottom:0;left:0;width:100%;background:var(--wh);border-top:2px solid var(--lb);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;z-index:99}
+nav button{font-family:'Poppins',sans-serif;font-weight:600;font-size:.95rem;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+#bb{background:var(--bp);color:var(--teal)}#bb:hover{background:var(--lb)}
+#bn{background:var(--coral);color:var(--wh)}#bn:hover{background:#d45a4d}
+#sn{font-family:'Open Sans',sans-serif;font-size:.9rem;color:#888}
+.ph{display:inline-block;font-family:'Poppins',sans-serif;font-weight:600;font-size:.75rem;text-transform:uppercase;letter-spacing:1px;padding:4px 12px;border-radius:12px;margin-bottom:16px}
+.ph-l{background:var(--lb);color:var(--teal)}.ph-p{background:var(--cp);color:var(--coral)}.ph-r{background:var(--bp);color:var(--teal)}
+h1{font-family:'Poppins',sans-serif;font-weight:700;color:var(--teal);margin-bottom:8px}
+h2{font-family:'Poppins',sans-serif;font-weight:600;color:var(--teal);margin-bottom:12px;font-size:1.4rem}
+h3{font-family:'Poppins',sans-serif;font-weight:600;color:var(--coral);margin-bottom:10px;font-size:1.1rem}
+p{font-size:1rem;line-height:1.7;margin-bottom:10px}
+.ts{text-align:center;padding:60px 30px}.ts .ul{font-family:'Poppins',sans-serif;font-weight:600;color:var(--coral);font-size:1rem;letter-spacing:2px;text-transform:uppercase}
+.ts h1{font-size:2.2rem;margin:12px 0 6px}.ts .sub{font-family:'Poppins',sans-serif;color:#666;font-size:1.1rem;margin-bottom:20px}
+.gb{background:var(--lb);border-radius:12px;padding:16px 24px;margin:20px auto;max-width:600px}.gb p{color:var(--teal);font-weight:600;font-size:.95rem;margin:0}
+.rb{background:var(--lb);border-radius:12px;padding:24px;margin:20px 0;border-left:5px solid var(--teal)}
+.sg{display:grid;gap:12px;margin:20px 0}
+.ss{display:flex;align-items:center;gap:16px;background:var(--wh);border:2px solid var(--lb);border-radius:12px;padding:16px;transition:all .3s}.ss:hover{border-color:var(--teal)}
+.slet{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.1rem;color:var(--wh);background:var(--coral);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stxt{font-family:'Poppins',sans-serif;font-size:.95rem}.stxt strong{color:var(--teal)}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:20px 0}
+.cd{background:var(--bp);border-radius:12px;padding:16px;text-align:center;transition:transform .2s}.cd:hover{transform:translateY(-3px)}
+.ci2{font-size:1.8rem;margin-bottom:6px}.ct{font-family:'Poppins',sans-serif;font-weight:600;color:var(--teal);font-size:.9rem;margin-bottom:4px}.cdesc{font-size:.8rem;color:#555}
+.mco{display:grid;gap:12px;margin:16px 0}
+.mo{background:var(--wh);border:2px solid var(--lb);border-radius:10px;padding:14px 20px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:.95rem;transition:all .2s;text-align:left}
+.mo:hover{border-color:var(--teal);background:var(--bp)}.mo.ok{border-color:var(--grn);background:#e8f5e9;pointer-events:none}.mo.no{border-color:var(--red);background:#fde8e8}.mo.lk{pointer-events:none;opacity:.6}
+.mfb{margin-top:12px;padding:12px 16px;border-radius:8px;font-weight:600;display:none}.mfb.show{display:block}
+/* Sentence Expansion Builder */
+.base-s{background:var(--cp);border-radius:12px;padding:16px 20px;margin-bottom:16px;font-family:'Poppins',sans-serif;font-weight:600;font-size:1.1rem;color:var(--coral);text-align:center}
+.noun-hl{background:var(--teal);color:white;padding:2px 8px;border-radius:4px}
+.adj-bank{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:16px 0}
+.adj-chip{background:var(--wh);border:2px solid var(--lb);border-radius:20px;padding:8px 16px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:.9rem;transition:all .2s;user-select:none}
+.adj-chip:hover{border-color:var(--teal);background:var(--bp)}.adj-chip.sel{background:var(--coral);color:var(--wh);border-color:var(--coral)}.adj-chip.lk{pointer-events:none}
+.sense-tag{font-size:.7rem;display:block;color:#888;margin-top:2px}
+.adj-chip.sel .sense-tag{color:rgba(255,255,255,.8)}
+.preview{background:var(--lb);border-radius:12px;padding:16px 20px;margin:16px 0;min-height:50px;font-family:'Poppins',sans-serif;font-size:1rem;line-height:1.6;text-align:center;color:var(--teal);font-weight:500}
+.chk{display:block;margin:16px auto;font-family:'Poppins',sans-serif;font-weight:600;font-size:1rem;padding:12px 32px;background:var(--teal);color:var(--wh);border:none;border-radius:10px;cursor:pointer;transition:all .2s}.chk:hover{background:#2d6470}.chk:disabled{background:#ccc;cursor:default}
+.afb{text-align:center;margin-top:12px;padding:10px;border-radius:8px;font-weight:600;display:none}.afb.show{display:block}
+/* Sort */
+.sbank{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:50px;margin:16px 0;padding:16px;background:#f9f9f9;border-radius:12px}
+.sw{padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:.85rem;font-weight:500;transition:all .2s;user-select:none;border:2px solid var(--lb);background:var(--wh)}.sw:hover{transform:translateY(-2px);box-shadow:0 2px 8px rgba(0,0,0,.1)}.sw.sel{outline:3px solid var(--teal)}
+.scols{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0}
+.scol{border:2px dashed var(--lb);border-radius:12px;padding:12px;min-height:80px;text-align:center;cursor:pointer;transition:all .2s;font-size:.85rem}.scol:hover{border-color:var(--teal)}
+.scol h3{margin-bottom:8px;font-size:.8rem}.scol .dr{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:20px 0}
+.rc{border-radius:12px;padding:20px;cursor:pointer;transition:all .3s;min-height:100px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.rq{font-family:'Poppins',sans-serif;font-weight:600;font-size:1rem}.ra{display:none;font-size:.9rem;margin-top:10px;line-height:1.5}
+.rc.fl .rq{display:none}.rc.fl .ra{display:block}
+.rc-t{background:var(--lb);border:2px solid var(--teal)}.rc-t .rq,.rc-t .ra{color:var(--teal)}
+.rc-c{background:var(--cp);border:2px solid var(--coral)}.rc-c .rq,.rc-c .ra{color:var(--coral)}
+.rc-y{background:#FFFDF0;border:2px solid var(--yellow)}.rc-y .rq,.rc-y .ra{color:var(--yd)}
+.rc-b{background:var(--bp);border:2px solid #90CAF9}.rc-b .rq,.rc-b .ra{color:#1565C0}
+.celeb{text-align:center;padding:40px}.celeb h1{font-size:2rem;margin-bottom:16px}
+.sts{display:flex;justify-content:center;gap:30px;margin:24px 0}.st2{text-align:center}
+.snum{font-family:'Poppins',sans-serif;font-weight:700;font-size:2rem;color:var(--teal)}.slab{font-size:.85rem;color:#888}
+.so{margin-top:20px;font-family:'Poppins',sans-serif;font-weight:600;font-size:1rem;padding:12px 32px;background:var(--coral);color:var(--wh);border:none;border-radius:10px;cursor:pointer}.so:hover{background:#d45a4d}
+@media(max-width:700px){.sl{margin:40px 10px 80px;padding:24px}.cg,.scols,.rg{grid-template-columns:1fr}.ts h1{font-size:1.6rem}.scols{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:500px){.scols{grid-template-columns:1fr 1fr}.adj-bank{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+<div id="pbar"></div>
+<div id="stars">⭐ 0</div>
+
+<!-- S1: Title -->
+<div class="sl active" data-s="1">
+<div class="ts"><div class="ul">Unit 2 &bull; Lesson 3</div>
+<h1>Adding Adjectives to Paint a Picture</h1>
+<p class="sub">Using the PAINT A PICTURE Strategy</p>
+<div class="gb"><p>🎯 I can add describing words (adjectives) to make my sentences more interesting using PAINT A PICTURE.</p></div>
+</div></div>
+
+<!-- S2: Review - Adjectives (MC) -->
+<div class="sl" data-s="2">
+<span class="ph ph-l">Learn</span>
+<h2>Quick Review: Adjectives</h2>
+<div class="rb">
+<p>From last lesson:</p>
+<p>✔ An <strong>adjective</strong> is a word that <strong>describes a noun</strong></p>
+<p>✔ Adjectives answer: <strong>What kind? How many? Which one?</strong></p>
+<p>✔ Adjectives usually come <strong>before</strong> the noun</p>
+</div>
+<h3>Quick Check</h3>
+<p><strong>In "The tall, old tree swayed," which words are adjectives?</strong></p>
+<div class="mco" id="mc1">
+<div class="mo" data-ok="1">"tall" and "old" — they describe the noun "tree"</div>
+<div class="mo">"swayed" — it tells what the tree did</div>
+<div class="mo">"tree" and "swayed"</div>
+</div>
+<div class="mfb" id="mc1-fb"></div>
+</div>
+
+<!-- S3: PAINT A PICTURE Strategy Display -->
+<div class="sl" data-s="3">
+<span class="ph ph-l">Learn</span>
+<h2>🎨 PAINT A PICTURE Strategy</h2>
+<p>Use this strategy to add adjectives to your sentences:</p>
+<div class="sg">
+<div class="ss"><div class="slet">P</div><div class="stxt"><strong>Pick</strong> a noun in your sentence</div></div>
+<div class="ss"><div class="slet">A</div><div class="stxt"><strong>Ask</strong> "What kind?"</div></div>
+<div class="ss"><div class="slet">I</div><div class="stxt"><strong>Imagine</strong> what it looks, feels, sounds, smells, or tastes like</div></div>
+<div class="ss"><div class="slet">N</div><div class="stxt"><strong>Name</strong> the describing word (adjective)</div></div>
+<div class="ss"><div class="slet">T</div><div class="stxt"><strong>Test</strong> it — Does it make sense? Does it paint a clearer picture?</div></div>
+</div>
+</div>
+
+<!-- S4: Sensory Adjectives -->
+<div class="sl" data-s="4">
+<span class="ph ph-l">Learn</span>
+<h2>Use Your Five Senses! 🖐️</h2>
+<p>The best adjectives help readers <strong>experience</strong> what you're describing.</p>
+<div class="cg">
+<div class="cd"><div class="ci2">👁️</div><div class="ct">See</div><div class="cdesc">blue, tall, shiny, round, sparkling</div></div>
+<div class="cd"><div class="ci2">👂</div><div class="ct">Hear</div><div class="cdesc">loud, quiet, squeaky, musical</div></div>
+<div class="cd"><div class="ci2">🤚</div><div class="ct">Touch</div><div class="cdesc">soft, rough, smooth, bumpy</div></div>
+<div class="cd"><div class="ci2">👃</div><div class="ct">Smell</div><div class="cdesc">sweet, stinky, fresh, smoky</div></div>
+<div class="cd"><div class="ci2">👅</div><div class="ct">Taste</div><div class="cdesc">sour, sweet, salty, bitter</div></div>
+</div>
+<div style="background:var(--cp);border-radius:10px;padding:12px 16px;margin-top:16px;text-align:center">
+<p style="font-size:.9rem;color:var(--coral);font-weight:600">💡 When you IMAGINE (the "I" step), think about your senses!</p>
+</div>
+</div>
+
+<!-- S5: Quick Check MC -->
+<div class="sl" data-s="5">
+<span class="ph ph-l">Learn</span>
+<h2>Quick Check ✓</h2>
+<p><strong>What does the "T" in PAINT stand for?</strong></p>
+<div class="mco" id="mc2">
+<div class="mo">Think of more adjectives</div>
+<div class="mo" data-ok="1">Test it — Does it make sense? Does it paint a clearer picture?</div>
+<div class="mo">Tell your friend the adjective</div>
+<div class="mo">Type the sentence on a computer</div>
+</div>
+<div class="mfb" id="mc2-fb"></div>
+</div>
+
+<!-- S6: Practice 1 - Sentence Expansion -->
+<div class="sl" data-s="6">
+<span class="ph ph-p">Practice</span>
+<h2>PAINT A PICTURE! (1 of 3)</h2>
+<p>The noun is highlighted. Pick adjectives to describe it. Choose 1–3 that paint the best picture.</p>
+<div class="base-s">The <span class="noun-hl">cat</span> sat on the mat.</div>
+<div class="adj-bank" id="exp1-chips"></div>
+<div class="preview" id="exp1-pv">Your expanded sentence will appear here...</div>
+<button class="chk" id="exp1-btn" disabled onclick="chkExp(1)">Check My Sentence ✓</button>
+<div class="afb" id="exp1-fb"></div>
+</div>
+
+<!-- S7: Practice 2 - Sentence Expansion -->
+<div class="sl" data-s="7">
+<span class="ph ph-p">Practice</span>
+<h2>PAINT A PICTURE! (2 of 3)</h2>
+<p>Pick adjectives to describe the highlighted noun.</p>
+<div class="base-s">A <span class="noun-hl">bird</span> flew over the house.</div>
+<div class="adj-bank" id="exp2-chips"></div>
+<div class="preview" id="exp2-pv">Your expanded sentence will appear here...</div>
+<button class="chk" id="exp2-btn" disabled onclick="chkExp(2)">Check My Sentence ✓</button>
+<div class="afb" id="exp2-fb"></div>
+</div>
+
+<!-- S8: Practice 3 - Sentence Expansion -->
+<div class="sl" data-s="8">
+<span class="ph ph-p">Practice</span>
+<h2>PAINT A PICTURE! (3 of 3)</h2>
+<p>Pick adjectives for the highlighted noun.</p>
+<div class="base-s">The <span class="noun-hl">storm</span> came quickly.</div>
+<div class="adj-bank" id="exp3-chips"></div>
+<div class="preview" id="exp3-pv">Your expanded sentence will appear here...</div>
+<button class="chk" id="exp3-btn" disabled onclick="chkExp(3)">Check My Sentence ✓</button>
+<div class="afb" id="exp3-fb"></div>
+</div>
+
+<!-- S9: Practice 4 - Sensory Sort -->
+<div class="sl" data-s="9">
+<span class="ph ph-p">Practice</span>
+<h2>Sort by Sense!</h2>
+<p>Click an adjective, then click the sense it belongs to.</p>
+<div class="sbank" id="sort-bank"></div>
+<div class="scols">
+<div class="scol" id="col-see" data-cat="see"><h3>👁️ See</h3><div class="dr" id="dr-see"></div></div>
+<div class="scol" id="col-hear" data-cat="hear"><h3>👂 Hear</h3><div class="dr" id="dr-hear"></div></div>
+<div class="scol" id="col-touch" data-cat="touch"><h3>🤚 Touch</h3><div class="dr" id="dr-touch"></div></div>
+<div class="scol" id="col-smell" data-cat="smell"><h3>👃 Smell</h3><div class="dr" id="dr-smell"></div></div>
+<div class="scol" id="col-taste" data-cat="taste"><h3>👅 Taste</h3><div class="dr" id="dr-taste"></div></div>
+</div>
+<button class="chk" id="sort-btn" onclick="chkSort()">Check My Sort ✓</button>
+<div class="afb" id="sort-fb"></div>
+</div>
+
+<!-- S10: Review Cards -->
+<div class="sl" data-s="10">
+<span class="ph ph-r">Review</span>
+<h2>Lesson Review</h2>
+<p>Click each card to reveal the answer.</p>
+<div class="rg" id="rv"></div>
+</div>
+
+<!-- S11: Celebration -->
+<div class="sl" data-s="11">
+<div class="celeb">
+<h1>🎨 Amazing Work!</h1>
+<p>You've mastered the PAINT A PICTURE strategy!</p>
+<div class="sts">
+<div class="st2"><div class="snum" id="fs">0</div><div class="slab">Stars Earned</div></div>
+<div class="st2"><div class="snum" id="fa">0</div><div class="slab">Activities Done</div></div>
+</div>
+<p style="margin:16px 0;font-family:'Poppins',sans-serif;font-weight:500;color:var(--teal)">You can now expand sentences by picking nouns, imagining details, and testing vivid adjectives!</p>
+<p style="color:#888;font-size:.9rem">Next lesson: What is an Adverb?</p>
+<button class="so" onclick="startOver()">Start Over 🔄</button>
+</div></div>
+
+<nav><button id="bb" onclick="go(-1)">← Back</button><span id="sn">1 / 11</span><button id="bn" onclick="go(1)">Next →</button></nav>
+<canvas id="confetti" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:200"></canvas>
+
+<script>
+const L={total:11,
+exp:[
+{id:1,pre:"The ",noun:"cat",post:" sat on the mat.",details:[
+{t:"fluffy",s:"touch"},{t:"orange",s:"see"},{t:"sleepy",s:"see"},{t:"soft",s:"touch"},{t:"tiny",s:"see"},{t:"purring",s:"hear"}]},
+{id:2,pre:"A ",noun:"bird",post:" flew over the house.",details:[
+{t:"tiny",s:"see"},{t:"colourful",s:"see"},{t:"loud",s:"hear"},{t:"graceful",s:"see"},{t:"swift",s:"see"},{t:"singing",s:"hear"}]},
+{id:3,pre:"The ",noun:"storm",post:" came quickly.",details:[
+{t:"terrible",s:"see"},{t:"loud",s:"hear"},{t:"dark",s:"see"},{t:"freezing",s:"touch"},{t:"fierce",s:"see"},{t:"rumbling",s:"hear"}]}
+],
+sort:[{w:"shiny",c:"see"},{w:"squeaky",c:"hear"},{w:"bumpy",c:"touch"},{w:"fragrant",c:"smell"},{w:"salty",c:"taste"},
+{w:"golden",c:"see"},{w:"crunchy",c:"hear"},{w:"silky",c:"touch"},{w:"smoky",c:"smell"},{w:"bitter",c:"taste"}],
+review:[
+{q:"What does PAINT stand for?",a:"Pick a noun, Ask 'What kind?', Imagine it, Name the adjective, Test it in your sentence.",s:"rc-c"},
+{q:"What are sensory adjectives?",a:"Adjectives that describe what we see, hear, touch, smell, or taste — they help readers experience the writing!",s:"rc-t"},
+{q:"Where do adjectives go?",a:"Usually right BEFORE the noun they describe. Pattern: adjective + noun.",s:"rc-y"},
+{q:"What's the 'T' step for?",a:"Test your adjective! Read the sentence — does it make sense? Does it paint a clearer picture?",s:"rc-b"},
+{q:"Why avoid 'good' and 'nice'?",a:"They're vague! Specific adjectives like 'golden,' 'crunchy,' or 'enormous' paint much clearer pictures.",s:"rc-c"}
+]};
+
+let cur=1,star=0,acts=0,mcD={},expSel={1:[],2:[],3:[]},expDn={},sortPl={},sortDn=false,selSW=null;
+
+function go(d){const n=cur+d;if(n<1||n>L.total)return;document.querySelector(`.sl[data-s="${cur}"]`).classList.remove('active');cur=n;document.querySelector(`.sl[data-s="${cur}"]`).classList.add('active');upd();window.scrollTo(0,0)}
+function upd(){document.getElementById('pbar').style.width=`${cur/L.total*100}%`;document.getElementById('sn').textContent=`${cur} / ${L.total}`;document.getElementById('bb').style.visibility=cur===1?'hidden':'visible';document.getElementById('bn').style.visibility=cur===L.total?'hidden':'visible';if(cur===L.total)showC()}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(1);if(e.key==='ArrowLeft')go(-1)});
+function addSt(n){star+=n;const el=document.getElementById('stars');el.textContent=`⭐ ${star}`;el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}
+
+// MC
+document.querySelectorAll('.mco').forEach(g=>{const id=g.id;g.querySelectorAll('.mo').forEach(o=>{o.addEventListener('click',()=>{if(mcD[id])return;const ok=o.dataset.ok==='1';const fb=document.getElementById(id+'-fb');if(ok){mcD[id]=true;o.classList.add('ok');g.querySelectorAll('.mo').forEach(x=>x.classList.add('lk'));fb.textContent='✓ Correct!';fb.style.background='#e8f5e9';fb.style.color='var(--grn)';fb.className='mfb show';addSt(1);acts++}else{o.classList.add('no');fb.textContent='✗ Not quite — try again!';fb.style.background='#fde8e8';fb.style.color='var(--red)';fb.className='mfb show';setTimeout(()=>{o.classList.remove('no');fb.classList.remove('show')},1500)}})})});
+
+// Expansion
+function initExp(n){
+const data=L.exp[n-1];const c=document.getElementById('exp'+n+'-chips');c.innerHTML='';expSel[n]=[];expDn[n]=false;
+data.details.forEach((d,i)=>{const ch=document.createElement('div');ch.className='adj-chip';ch.innerHTML=d.t+`<span class="sense-tag">${d.s}</span>`;ch.dataset.i=i;
+ch.addEventListener('click',()=>{if(expDn[n])return;const pos=expSel[n].indexOf(i);
+if(pos>-1){expSel[n].splice(pos,1);ch.classList.remove('sel')}else{expSel[n].push(i);ch.classList.add('sel')}
+updPv(n);document.getElementById('exp'+n+'-btn').disabled=expSel[n].length<1});
+c.appendChild(ch)})}
+function updPv(n){const data=L.exp[n-1];const sel=expSel[n].map(i=>data.details[i]);
+if(!sel.length){document.getElementById('exp'+n+'-pv').textContent='Your expanded sentence will appear here...';return}
+const adjs=sel.map(d=>d.t).join(', ');
+let s=data.pre+adjs+' '+data.noun+data.post;
+s=s.charAt(0).toUpperCase()+s.slice(1);
+document.getElementById('exp'+n+'-pv').textContent=s}
+function chkExp(n){if(expDn[n])return;expDn[n]=true;
+const fb=document.getElementById('exp'+n+'-fb');
+const cnt=expSel[n].length;
+fb.textContent=`✓ Excellent! You added ${cnt} adjective${cnt>1?'s':''} to paint a vivid picture!`;
+fb.style.background='#e8f5e9';fb.style.color='var(--grn)';fb.className='afb show';
+document.getElementById('exp'+n+'-btn').disabled=true;
+document.querySelectorAll(`#exp${n}-chips .adj-chip`).forEach(c=>c.classList.add('lk'));
+addSt(2);acts++;confetti()}
+L.exp.forEach((_,i)=>initExp(i+1));
+
+// Sort
+(function initSort(){const bank=document.getElementById('sort-bank');bank.innerHTML='';sortPl={};sortDn=false;
+const sh=[...L.sort].sort(()=>Math.random()-.5);
+sh.forEach(item=>{const idx=L.sort.indexOf(item);const el=document.createElement('div');el.className='sw';el.textContent=item.w;el.dataset.idx=idx;
+el.addEventListener('click',()=>{if(sortDn)return;if(el.parentElement.id==='sort-bank'){if(selSW)selSW.classList.remove('sel');selSW=el;el.classList.add('sel')}});
+bank.appendChild(el)});
+document.querySelectorAll('.scol').forEach(col=>{col.addEventListener('click',()=>{if(!selSW||sortDn)return;document.getElementById('dr-'+col.dataset.cat).appendChild(selSW);sortPl[selSW.dataset.idx]=col.dataset.cat;selSW.classList.remove('sel');selSW=null})})})();
+function chkSort(){if(sortDn)return;if(Object.keys(sortPl).length<L.sort.length){const fb=document.getElementById('sort-fb');fb.textContent='Sort all words first!';fb.style.background='#FFF3E0';fb.style.color='#E65100';fb.className='afb show';setTimeout(()=>fb.classList.remove('show'),2000);return}
+sortDn=true;let ok=0;document.querySelectorAll('.sw').forEach(el=>{const idx=el.dataset.idx;if(sortPl[idx]===L.sort[idx].c){el.style.border='2px solid var(--grn)';ok++}else el.style.border='2px solid var(--red)'});
+const fb=document.getElementById('sort-fb');
+if(ok===L.sort.length){fb.textContent=`✓ Perfect! All ${ok} sorted correctly!`;fb.style.background='#e8f5e9';fb.style.color='var(--grn)';addSt(3);confetti()}
+else{fb.textContent=`${ok}/${L.sort.length} correct.`;fb.style.background='#FFF3E0';fb.style.color='#E65100';addSt(1)}
+fb.className='afb show';acts++;document.getElementById('sort-btn').disabled=true}
+
+// Review
+(function(){const g=document.getElementById('rv');g.innerHTML='';L.review.forEach(r=>{const c=document.createElement('div');c.className='rc '+r.s;c.innerHTML=`<div class="rq">${r.q}</div><div class="ra">${r.a}</div>`;c.addEventListener('click',()=>c.classList.toggle('fl'));g.appendChild(c)})})();
+
+function showC(){document.getElementById('fs').textContent=star;document.getElementById('fa').textContent=acts;confetti()}
+
+function confetti(){const cv=document.getElementById('confetti'),ctx=cv.getContext('2d');cv.width=window.innerWidth;cv.height=window.innerHeight;const P=[],cols=['#E66B5D','#3A7D8C','#F3D25B','#D7ECF0','#FF6B6B','#4CAF50'];for(let i=0;i<120;i++)P.push({x:Math.random()*cv.width,y:Math.random()*cv.height-cv.height,w:Math.random()*10+5,h:Math.random()*6+3,c:cols[Math.floor(Math.random()*cols.length)],vy:Math.random()*3+2,vx:(Math.random()-.5)*2,r:Math.random()*360,rv:(Math.random()-.5)*8});let f=0;(function d(){if(f++>180){ctx.clearRect(0,0,cv.width,cv.height);return}ctx.clearRect(0,0,cv.width,cv.height);P.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.r+=p.rv;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r*Math.PI/180);ctx.fillStyle=p.c;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore()});requestAnimationFrame(d)})()}
+
+function startOver(){cur=1;star=0;acts=0;mcD={};expSel={1:[],2:[],3:[]};expDn={};sortPl={};sortDn=false;selSW=null;
+document.querySelectorAll('.sl').forEach(s=>s.classList.remove('active'));document.querySelector('.sl[data-s="1"]').classList.add('active');document.getElementById('stars').textContent='⭐ 0';
+document.querySelectorAll('.mo').forEach(o=>{o.classList.remove('ok','no','lk')});document.querySelectorAll('.mfb').forEach(f=>f.classList.remove('show'));
+L.exp.forEach((_,i)=>initExp(i+1));
+[1,2,3].forEach(n=>{document.getElementById('exp'+n+'-pv').textContent='Your expanded sentence will appear here...';document.getElementById('exp'+n+'-btn').disabled=true;document.getElementById('exp'+n+'-fb').classList.remove('show')});
+const bank=document.getElementById('sort-bank');document.querySelectorAll('.sw').forEach(w=>{w.style.border='';w.classList.remove('sel');bank.appendChild(w)});
+['dr-see','dr-hear','dr-touch','dr-smell','dr-taste'].forEach(id=>document.getElementById(id).innerHTML='');
+document.getElementById('sort-btn').disabled=false;document.getElementById('sort-fb').classList.remove('show');
+document.querySelectorAll('.rc').forEach(c=>c.classList.remove('fl'));upd()}
+upd();
+</script>
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSW | Unit 2, Lesson 7: Articles — A, An, The</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--coral:#E66B5D;--teal:#3A7D8C;--light-blue:#D7ECF0;--blue-pale:#EBF5F8;--yellow:#F3D25B;--yellow-dark:#9E7F0A;--white:#FFFFFF;--dark:#1A1A2E;--coral-pale:#FDF0EE;--green:#4CAF50;--red:#E74C3C}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Open Sans',sans-serif;background:#f0f4f8;color:var(--dark);min-height:100vh;display:flex;flex-direction:column;align-items:center}
+.progress-bar{position:fixed;top:0;left:0;width:100%;height:6px;background:#e0e0e0;z-index:100}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--coral));transition:width .4s ease;width:0}
+.star-counter{position:fixed;top:14px;right:20px;font-family:'Poppins',sans-serif;font-weight:600;font-size:1.1rem;color:var(--yellow-dark);z-index:100;background:var(--white);padding:4px 14px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.star-counter.pop{animation:starPop .4s ease}
+@keyframes starPop{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+.slide-area{flex:1;display:flex;align-items:center;justify-content:center;width:100%;padding:50px 20px 80px}
+.slide{display:none;background:var(--white);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.08);max-width:900px;width:100%;min-height:480px;padding:48px 44px;animation:fadeIn .35s ease}
+.slide.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.nav-bar{position:fixed;bottom:0;left:0;width:100%;background:var(--white);border-top:1px solid #e0e0e0;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100}
+.nav-btn{font-family:'Open Sans',sans-serif;font-weight:600;font-size:.95rem;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+.nav-btn.prev{background:var(--blue-pale);color:var(--teal)}.nav-btn.next{background:var(--teal);color:var(--white)}
+.nav-btn:hover{opacity:.85;transform:translateY(-1px)}.nav-btn:disabled{opacity:.4;cursor:default;transform:none}
+.slide-counter{font-family:'Open Sans',sans-serif;font-size:.85rem;color:#888}
+.phase-label{font-family:'Poppins',sans-serif;font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;padding:4px 14px;border-radius:20px;display:inline-block;margin-bottom:16px}
+.phase-learn{background:var(--light-blue);color:var(--teal)}.phase-practice{background:var(--coral-pale);color:var(--coral)}.phase-review{background:var(--blue-pale);color:var(--teal)}
+h1{font-family:'Poppins',sans-serif;font-weight:700;font-size:2rem;color:var(--teal);margin-bottom:8px}
+h2{font-family:'Poppins',sans-serif;font-weight:600;font-size:1.5rem;color:var(--teal);margin-bottom:12px}
+h3{font-family:'Poppins',sans-serif;font-weight:600;font-size:1.15rem;color:var(--coral);margin-bottom:8px}
+p{font-family:'Poppins',sans-serif;font-size:1rem;line-height:1.6;color:var(--dark);margin-bottom:10px}
+.subtitle{font-family:'Poppins',sans-serif;font-size:1.1rem;color:#555;margin-bottom:20px}
+.goal-box{background:var(--light-blue);border-radius:10px;padding:16px 20px;margin-top:16px;font-family:'Poppins',sans-serif;font-size:.95rem;color:var(--teal)}
+.concept-big{font-family:'Poppins',sans-serif;font-weight:700;font-size:3.2rem;color:var(--teal);text-align:center;margin:50px 0 16px}
+.concept-sub{font-family:'Poppins',sans-serif;font-size:1.1rem;color:#666;text-align:center}
+/* MC */
+.mc-options{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.mc-opt{font-family:'Poppins',sans-serif;font-size:1rem;padding:14px 20px;border:2px solid #ddd;border-radius:10px;cursor:pointer;transition:all .2s;background:var(--white)}
+.mc-opt:hover{border-color:var(--teal);background:var(--blue-pale)}
+.mc-opt.correct{border-color:var(--green);background:#e8f5e9}.mc-opt.wrong{border-color:var(--red);background:#fce4ec}.mc-opt.disabled{pointer-events:none;opacity:.7}
+.mc-feedback{font-family:'Poppins',sans-serif;font-size:.95rem;padding:12px 16px;border-radius:8px;margin-top:12px;display:none}
+.mc-feedback.show{display:block}.mc-feedback.correct-fb{background:#e8f5e9;color:#2e7d32}.mc-feedback.wrong-fb{background:#fce4ec;color:#c62828}
+/* Rule display */
+.rule-card{background:var(--light-blue);border-radius:12px;padding:20px 24px;margin:12px 0}
+.rule-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0}
+.rule-box{background:var(--white);border-radius:10px;padding:16px;text-align:center;border:2px solid var(--light-blue)}
+.rule-box .article{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.8rem;color:var(--teal)}
+.rule-box .rule-desc{font-family:'Poppins',sans-serif;font-size:.85rem;color:#555;margin-top:4px}
+.rule-box .rule-ex{font-family:'Poppins',sans-serif;font-size:.9rem;color:var(--dark);margin-top:8px;font-style:italic}
+/* Fill-in activity */
+.fill-item{background:var(--blue-pale);border-radius:10px;padding:16px 20px;margin:10px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.fill-blank{display:inline-flex;gap:6px}
+.fill-btn{font-family:'Poppins',sans-serif;font-weight:600;font-size:.9rem;padding:6px 18px;border:2px solid #ddd;border-radius:20px;cursor:pointer;background:var(--white);transition:all .2s}
+.fill-btn:hover{border-color:var(--teal);background:var(--light-blue)}
+.fill-btn.selected{border-color:var(--coral);background:var(--coral);color:var(--white)}
+.fill-btn.correct-ans{border-color:var(--green);background:#e8f5e9;color:#2e7d32}
+.fill-btn.wrong-ans{border-color:var(--red);background:#fce4ec;color:#c62828}
+.fill-btn.disabled{pointer-events:none;opacity:.6}
+.fill-sentence{font-family:'Poppins',sans-serif;font-size:1rem;color:var(--dark)}
+.fill-fb{font-family:'Poppins',sans-serif;font-size:.85rem;margin-top:4px;display:none}
+.fill-fb.show{display:block}
+.counter-text{font-family:'Poppins',sans-serif;font-size:.85rem;color:#888;text-align:right;margin-bottom:8px}
+.btn{font-family:'Poppins',sans-serif;font-weight:600;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;font-size:.95rem;transition:all .2s}
+.btn-teal{background:var(--teal);color:var(--white)}.btn-coral{background:var(--coral);color:var(--white)}
+.btn:hover{opacity:.85}.btn:disabled{opacity:.4;cursor:default}
+/* Sort activity */
+.sort-columns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:12px 0}
+.sort-col{background:var(--blue-pale);border-radius:10px;padding:12px;text-align:center;min-height:140px}
+.sort-col-header{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.3rem;color:var(--teal);margin-bottom:8px}
+.sort-col .dropped{font-family:'Poppins',sans-serif;font-size:.9rem;padding:4px 10px;background:var(--white);border-radius:6px;margin:4px;display:inline-block}
+.sort-col .dropped.right{background:#e8f5e9;color:#2e7d32}.sort-col .dropped.wrong{background:#fce4ec;color:#c62828}
+.sort-words{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+.sort-word{font-family:'Poppins',sans-serif;font-size:.95rem;padding:8px 18px;border:2px solid #ddd;border-radius:20px;cursor:pointer;background:var(--white);transition:all .2s;user-select:none}
+.sort-word:hover{border-color:var(--coral);background:var(--coral-pale)}
+.sort-word.placed{opacity:.3;pointer-events:none}
+.sort-selected{border:2px solid var(--teal);background:var(--light-blue)}
+/* Review cards */
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.review-card{background:var(--white);border-radius:12px;padding:20px;cursor:pointer;transition:all .3s;border:2px solid #e0e0e0;min-height:100px;display:flex;align-items:center;justify-content:center;text-align:center}
+.review-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.review-card.flipped{border-color:var(--teal)}
+.rc-teal{border-left:4px solid var(--teal)}.rc-coral{border-left:4px solid var(--coral)}.rc-yellow{border-left:4px solid var(--yellow)}.rc-blue{border-left:4px solid var(--light-blue)}
+.rc-front{font-family:'Poppins',sans-serif;font-weight:600;font-size:.95rem;color:var(--teal)}.rc-back{font-family:'Poppins',sans-serif;font-size:.9rem;color:var(--dark);display:none}
+.review-card.flipped .rc-front{display:none}.review-card.flipped .rc-back{display:block}
+/* Celebration */
+.celebration{text-align:center}.celebration h1{font-size:2.2rem;margin-bottom:12px}
+.celebration .stats{display:flex;justify-content:center;gap:30px;margin:24px 0}
+.celebration .stat{text-align:center}.celebration .stat-num{font-family:'Poppins',sans-serif;font-weight:700;font-size:2.5rem;color:var(--teal)}.celebration .stat-label{font-family:'Poppins',sans-serif;font-size:.85rem;color:#888}
+.start-over-btn{font-family:'Poppins',sans-serif;font-weight:600;padding:12px 32px;border:none;border-radius:8px;background:var(--coral);color:var(--white);cursor:pointer;font-size:1rem;margin-top:20px;transition:all .2s}
+.start-over-btn:hover{opacity:.85}
+.confetti-piece{position:fixed;width:10px;height:10px;z-index:999;pointer-events:none}
+@media(max-width:700px){.slide{padding:32px 24px;min-height:400px}h1{font-size:1.6rem}h2{font-size:1.3rem}.concept-big{font-size:2.2rem}.rule-grid,.sort-columns{grid-template-columns:1fr}.review-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="star-counter" id="starCounter">⭐ 0</div>
+
+<div class="slide-area">
+
+<!-- SLIDE 1: Title -->
+<div class="slide active" id="slide1">
+  <span class="phase-label phase-learn">Unit 2 &bull; Lesson 7</span>
+  <h1>Articles: A, An, The</h1>
+  <p class="subtitle">Using the Right Article Before Nouns</p>
+  <div class="goal-box"><strong>Today's Goal:</strong> I can use the correct article (a, an, the) before nouns.</div>
+  <div style="margin-top:24px">
+    <p style="font-size:.95rem;color:#555">Key rules for today:</p>
+    <p style="font-size:.95rem;margin:6px 0">&#8226; Use <strong>A</strong> before consonant sounds</p>
+    <p style="font-size:.95rem;margin:6px 0">&#8226; Use <strong>AN</strong> before vowel sounds</p>
+    <p style="font-size:.95rem;margin:6px 0">&#8226; Use <strong>THE</strong> for specific things</p>
+    <p style="font-size:.95rem;margin:6px 0">&#8226; Listen to the SOUND, not just the letter</p>
+  </div>
+</div>
+
+<!-- SLIDE 2: Concept Intro -->
+<div class="slide" id="slide2">
+  <span class="phase-label phase-learn">Concept</span>
+  <div class="concept-big">A &middot; An &middot; The</div>
+  <div class="concept-sub">Three small words that make a big difference</div>
+</div>
+
+<!-- SLIDE 3: Review (L6) -->
+<div class="slide" id="slide3">
+  <span class="phase-label phase-learn">Review</span>
+  <h2>Quick Review: Multiple Describing Words</h2>
+  <p>Which sentence is balanced (not overloaded)?</p>
+  <div class="mc-options" id="mc1">
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc1')">The big, huge, enormous, gigantic dog ran very really fast.</div>
+    <div class="mc-opt" data-correct="true" onclick="checkMC(this,'mc1')">The large, fluffy dog ran swiftly.</div>
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc1')">The dog ran.</div>
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc1')">The tiny small little brown soft cute dog ran super very quickly.</div>
+  </div>
+  <div class="mc-feedback" id="mc1-fb"></div>
+</div>
+
+<!-- SLIDE 4: Rule Display -->
+<div class="slide" id="slide4">
+  <span class="phase-label phase-learn">Learn</span>
+  <h2>The Three Articles</h2>
+  <div class="rule-grid">
+    <div class="rule-box"><div class="article">A</div><div class="rule-desc">Before <strong>consonant</strong> sounds</div><div class="rule-ex">a dog, a tree, a uniform</div></div>
+    <div class="rule-box"><div class="article">AN</div><div class="rule-desc">Before <strong>vowel</strong> sounds</div><div class="rule-ex">an apple, an egg, an hour</div></div>
+    <div class="rule-box"><div class="article">THE</div><div class="rule-desc">For <strong>specific</strong> things</div><div class="rule-ex">the sun, the book I read</div></div>
+  </div>
+  <div class="rule-card">
+    <h3>Tricky Words: Listen to the SOUND</h3>
+    <p style="font-size:.95rem;margin:6px 0"><strong>A</strong> unicorn &mdash; sounds like "yoo" (consonant sound)</p>
+    <p style="font-size:.95rem;margin:6px 0"><strong>AN</strong> hour &mdash; silent H, sounds like "our" (vowel sound)</p>
+    <p style="font-size:.95rem;margin:6px 0"><strong>AN</strong> honest person &mdash; silent H, sounds like "on-est" (vowel sound)</p>
+    <p style="font-size:.95rem;margin:6px 0"><strong>A</strong> university &mdash; sounds like "yoo" (consonant sound)</p>
+  </div>
+  <p style="font-size:.9rem;color:#555;margin-top:8px"><strong>With adjectives:</strong> The article matches the sound of the <em>next</em> word. "An old house" (not "a old house") because "old" starts with a vowel sound.</p>
+</div>
+
+<!-- SLIDE 5: Quick Check -->
+<div class="slide" id="slide5">
+  <span class="phase-label phase-learn">Quick Check</span>
+  <h2>Which Article?</h2>
+  <p>Choose the correct article for this sentence:</p>
+  <p style="font-family:'Poppins',sans-serif;font-weight:600;font-size:1.15rem;color:var(--teal);margin:12px 0">"It will take ___ hour to finish."</p>
+  <div class="mc-options" id="mc2">
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc2')">a</div>
+    <div class="mc-opt" data-correct="true" onclick="checkMC(this,'mc2')">an</div>
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc2')">the</div>
+  </div>
+  <div class="mc-feedback" id="mc2-fb"></div>
+</div>
+
+<!-- SLIDE 6: Practice - Fill In -->
+<div class="slide" id="slide6">
+  <span class="phase-label phase-practice">Practice</span>
+  <h2>Choose the Correct Article</h2>
+  <p>For each sentence, pick <strong>A</strong>, <strong>AN</strong>, or <strong>THE</strong>.</p>
+  <div id="fillArea"></div>
+  <div style="margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <button class="btn btn-teal" id="fillCheckBtn" onclick="checkFills()" disabled>Check All</button>
+    <span class="fill-fb" id="fillFb"></span>
+  </div>
+</div>
+
+<!-- SLIDE 7: Practice - Sort -->
+<div class="slide" id="slide7">
+  <span class="phase-label phase-practice">Practice</span>
+  <h2>Article Sort</h2>
+  <p>Click a word, then click the correct column to sort it.</p>
+  <div class="sort-words" id="sortWords"></div>
+  <div class="sort-columns">
+    <div class="sort-col" id="colA" onclick="placeWord('a')"><div class="sort-col-header">A</div><div class="sort-col-header" style="font-size:.75rem;font-weight:400;color:#888">(consonant sound)</div><div id="colA-items"></div></div>
+    <div class="sort-col" id="colAN" onclick="placeWord('an')"><div class="sort-col-header">AN</div><div class="sort-col-header" style="font-size:.75rem;font-weight:400;color:#888">(vowel sound)</div><div id="colAN-items"></div></div>
+    <div class="sort-col" id="colTHE" onclick="placeWord('the')"><div class="sort-col-header">THE</div><div class="sort-col-header" style="font-size:.75rem;font-weight:400;color:#888">(specific)</div><div id="colTHE-items"></div></div>
+  </div>
+  <div style="margin-top:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <button class="btn btn-teal" id="sortCheckBtn" onclick="checkSort()" disabled>Check Sort</button>
+    <span class="fill-fb" id="sortFb"></span>
+  </div>
+</div>
+
+<!-- SLIDE 8: Review Cards -->
+<div class="slide" id="slide8">
+  <span class="phase-label phase-review">Review</span>
+  <h2>What Did We Learn?</h2>
+  <p style="font-size:.9rem;color:#888;margin-bottom:12px">Click each card to reveal the answer.</p>
+  <div class="review-grid">
+    <div class="review-card rc-teal" onclick="this.classList.toggle('flipped')"><div class="rc-front">What are the three articles?</div><div class="rc-back"><strong>A, AN, THE</strong> &mdash; small words that come before nouns.</div></div>
+    <div class="review-card rc-coral" onclick="this.classList.toggle('flipped')"><div class="rc-front">When do you use A?</div><div class="rc-back">Before <strong>consonant sounds</strong>.<br><em>a dog, a tree, a uniform</em></div></div>
+    <div class="review-card rc-yellow" onclick="this.classList.toggle('flipped')"><div class="rc-front">When do you use AN?</div><div class="rc-back">Before <strong>vowel sounds</strong>.<br><em>an apple, an hour, an egg</em></div></div>
+    <div class="review-card rc-blue" onclick="this.classList.toggle('flipped')"><div class="rc-front">When do you use THE?</div><div class="rc-back">For <strong>specific</strong> things &mdash; one particular item.<br><em>the sun, the book I read</em></div></div>
+    <div class="review-card rc-teal" onclick="this.classList.toggle('flipped')"><div class="rc-front">What is the most important tip?</div><div class="rc-back">Listen to the <strong>SOUND</strong>, not just the letter. Say the word aloud and hear the first sound.</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 9: Celebration -->
+<div class="slide celebration" id="slide9">
+  <h1>Great Work Today</h1>
+  <p class="subtitle">You now know how to use A, AN, and THE correctly.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="finalStars">0</div><div class="stat-label">Stars Earned</div></div>
+    <div class="stat"><div class="stat-num" id="finalActivities">0</div><div class="stat-label">Activities Completed</div></div>
+  </div>
+  <p style="margin-top:16px;font-size:.95rem;color:#555">Next time: Unit 2 Review and Application.</p>
+  <button class="start-over-btn" onclick="startOver()">Start Over</button>
+</div>
+
+</div>
+
+<div class="nav-bar">
+  <button class="nav-btn prev" id="prevBtn" onclick="navigate(-1)" disabled>&larr; Back</button>
+  <span class="slide-counter" id="slideCounter">1 / 9</span>
+  <button class="nav-btn next" id="nextBtn" onclick="navigate(1)">Next &rarr;</button>
+</div>
+
+<script>
+const L = {
+  fills: [
+    { before:"I saw", blank:true, after:"bird in the tree.", answer:"a", explain:"B = consonant sound" },
+    { before:"She ate", blank:true, after:"apple for lunch.", answer:"an", explain:"A = vowel sound" },
+    { before:"", blank:true, after:"sun is very bright today.", answer:"the", explain:"Specific \u2013 there is only one sun" },
+    { before:"They live in", blank:true, after:"old house.", answer:"an", explain:"O = vowel sound" },
+    { before:"I need", blank:true, after:"umbrella because it is raining.", answer:"an", explain:"U = vowel sound" },
+    { before:"She found", blank:true, after:"interesting book at the library.", answer:"an", explain:"I = vowel sound" },
+    { before:"It will take", blank:true, after:"hour to finish.", answer:"an", explain:"Silent H, sounds like \u2018our\u2019 = vowel" },
+    { before:"", blank:true, after:"unicorn is a mythical creature.", answer:"a", explain:"Sounds like \u2018yoo\u2019 = consonant" },
+  ],
+  sortWords: [
+    { word:"dog", answer:"a" },{ word:"elephant", answer:"an" },{ word:"orange", answer:"an" },
+    { word:"book", answer:"a" },{ word:"umbrella", answer:"an" },{ word:"car", answer:"a" },
+    { word:"sun (in the sky)", answer:"the" },{ word:"honest person", answer:"an" },
+    { word:"ice cream cone", answer:"an" },{ word:"teacher next door", answer:"the" },
+  ],
+};
+
+let currentSlide=1;const totalSlides=9;let stars=0;let activitiesCompleted=0;
+let fillAnswers={};let sortSelected=null;let sortPlacements={};let sortDone=false;
+
+// NAV
+function showSlide(n){document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));document.getElementById('slide'+n).classList.add('active');currentSlide=n;document.getElementById('slideCounter').textContent=n+' / '+totalSlides;document.getElementById('prevBtn').disabled=(n===1);document.getElementById('nextBtn').style.display=(n===totalSlides)?'none':'';document.getElementById('progressFill').style.width=((n-1)/(totalSlides-1)*100)+'%';if(n===totalSlides)showCelebration();}
+function navigate(dir){const next=currentSlide+dir;if(next>=1&&next<=totalSlides)showSlide(next);}
+document.addEventListener('keydown',e=>{if(document.activeElement.tagName==='INPUT')return;if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();navigate(1);}if(e.key==='ArrowLeft'){e.preventDefault();navigate(-1);}});
+function addStars(n){stars+=n;const el=document.getElementById('starCounter');el.textContent='\u2B50 '+stars;el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');}
+
+// MC
+function checkMC(el,id){const opts=document.querySelectorAll('#'+id+' .mc-opt');opts.forEach(o=>o.classList.add('disabled'));const fb=document.getElementById(id+'-fb');if(el.dataset.correct==='true'){el.classList.add('correct');fb.textContent=id==='mc1'?'Correct. Two different adjectives plus one adverb creates a balanced sentence.':'Correct. "Hour" has a silent H, so it sounds like "our" (vowel sound). Use AN.';fb.className='mc-feedback show correct-fb';addStars(1);activitiesCompleted++;}else{el.classList.add('wrong');opts.forEach(o=>{if(o.dataset.correct==='true')o.classList.add('correct');});fb.textContent=id==='mc1'?'Not quite. The first option is overloaded with repeated adjectives. The third has no describing words at all. The balanced option has 2 adjectives and 1 adverb.':'Not quite. "Hour" has a silent H. It sounds like "our," which starts with a vowel sound, so we use AN.';fb.className='mc-feedback show wrong-fb';}}
+
+// FILL-IN
+function buildFills(){
+  const area=document.getElementById('fillArea');area.innerHTML='';fillAnswers={};
+  L.fills.forEach((item,i)=>{
+    const row=document.createElement('div');row.className='fill-item';row.id='fill-'+i;
+    const sentParts=document.createElement('span');sentParts.className='fill-sentence';
+    if(item.before)sentParts.innerHTML=item.before+' ';
+    const blank=document.createElement('span');blank.className='fill-blank';
+    ['a','an','the'].forEach(art=>{
+      const btn=document.createElement('button');btn.className='fill-btn';btn.textContent=art;btn.dataset.idx=i;btn.dataset.art=art;
+      btn.onclick=()=>{
+        blank.querySelectorAll('.fill-btn').forEach(b=>b.classList.remove('selected'));
+        btn.classList.add('selected');fillAnswers[i]=art;
+        document.getElementById('fillCheckBtn').disabled=(Object.keys(fillAnswers).length<L.fills.length);
+      };
+      blank.appendChild(btn);
+    });
+    sentParts.appendChild(blank);
+    const afterSpan=document.createElement('span');afterSpan.textContent=' '+item.after;afterSpan.style.fontFamily="'Poppins',sans-serif";afterSpan.style.fontSize='1rem';
+    row.appendChild(sentParts);row.appendChild(afterSpan);
+    area.appendChild(row);
+  });
+}
+function checkFills(){
+  let correct=0;
+  L.fills.forEach((item,i)=>{
+    const row=document.getElementById('fill-'+i);
+    row.querySelectorAll('.fill-btn').forEach(btn=>{
+      btn.classList.add('disabled');
+      if(btn.dataset.art===item.answer)btn.classList.add('correct-ans');
+      if(btn.classList.contains('selected')&&btn.dataset.art!==item.answer)btn.classList.add('wrong-ans');
+    });
+    if(fillAnswers[i]===item.answer)correct++;
+  });
+  const fb=document.getElementById('fillFb');
+  fb.textContent=correct+' of '+L.fills.length+' correct.';
+  fb.style.color=correct>=6?'#2e7d32':'#e65100';fb.style.background=correct>=6?'#e8f5e9':'#fff3e0';
+  fb.style.padding='8px 14px';fb.style.borderRadius='8px';fb.classList.add('show');
+  document.getElementById('fillCheckBtn').disabled=true;
+  addStars(correct>=7?3:correct>=5?2:1);activitiesCompleted++;
+}
+
+// SORT
+function buildSort(){
+  const wordsDiv=document.getElementById('sortWords');wordsDiv.innerHTML='';
+  sortPlacements={};sortSelected=null;sortDone=false;
+  document.getElementById('sortCheckBtn').disabled=true;
+  ['colA-items','colAN-items','colTHE-items'].forEach(id=>document.getElementById(id).innerHTML='');
+  L.sortWords.forEach((item,i)=>{
+    const el=document.createElement('div');el.className='sort-word';el.textContent=item.word;el.dataset.idx=i;
+    el.onclick=()=>{
+      if(sortDone)return;
+      wordsDiv.querySelectorAll('.sort-word').forEach(w=>w.classList.remove('sort-selected'));
+      el.classList.add('sort-selected');sortSelected=i;
+    };
+    wordsDiv.appendChild(el);
+  });
+}
+function placeWord(col){
+  if(sortSelected===null||sortDone)return;
+  const item=L.sortWords[sortSelected];
+  sortPlacements[sortSelected]=col;
+  const colItems=document.getElementById('col'+col.toUpperCase()+'-items');
+  const tag=document.createElement('span');tag.className='dropped';tag.textContent=item.word;tag.dataset.idx=sortSelected;
+  colItems.appendChild(tag);
+  const wordEl=document.getElementById('sortWords').querySelector('[data-idx="'+sortSelected+'"]');
+  wordEl.classList.add('placed');wordEl.classList.remove('sort-selected');
+  sortSelected=null;
+  if(Object.keys(sortPlacements).length>=L.sortWords.length)document.getElementById('sortCheckBtn').disabled=false;
+}
+function checkSort(){
+  sortDone=true;let correct=0;
+  document.querySelectorAll('.dropped').forEach(tag=>{
+    const idx=parseInt(tag.dataset.idx);const item=L.sortWords[idx];
+    if(sortPlacements[idx]===item.answer){tag.classList.add('right');correct++;}
+    else tag.classList.add('wrong');
+  });
+  const fb=document.getElementById('sortFb');
+  fb.textContent=correct+' of '+L.sortWords.length+' sorted correctly.';
+  fb.style.color=correct>=8?'#2e7d32':'#e65100';fb.style.background=correct>=8?'#e8f5e9':'#fff3e0';
+  fb.style.padding='8px 14px';fb.style.borderRadius='8px';fb.classList.add('show');
+  document.getElementById('sortCheckBtn').disabled=true;
+  addStars(correct>=9?3:correct>=7?2:1);activitiesCompleted++;
+}
+
+// CELEBRATION
+function showCelebration(){document.getElementById('finalStars').textContent=stars;document.getElementById('finalActivities').textContent=activitiesCompleted;fireConfetti();}
+function fireConfetti(){const colors=['#E66B5D','#3A7D8C','#F3D25B','#D7ECF0','#4CAF50'];for(let i=0;i<60;i++){const p=document.createElement('div');p.className='confetti-piece';p.style.left=Math.random()*100+'vw';p.style.top='-10px';p.style.background=colors[Math.floor(Math.random()*colors.length)];p.style.borderRadius=Math.random()>.5?'50%':'2px';p.style.width=(6+Math.random()*8)+'px';p.style.height=(6+Math.random()*8)+'px';document.body.appendChild(p);const dur=1500+Math.random()*2000;const drift=(Math.random()-.5)*200;p.animate([{transform:'translateY(0) translateX(0) rotate(0deg)',opacity:1},{transform:'translateY(100vh) translateX('+drift+'px) rotate('+(360+Math.random()*360)+'deg)',opacity:0}],{duration:dur,easing:'ease-out'});setTimeout(()=>p.remove(),dur);}}
+
+// START OVER
+function startOver(){
+  stars=0;activitiesCompleted=0;document.getElementById('starCounter').textContent='\u2B50 0';
+  ['mc1','mc2'].forEach(id=>{document.querySelectorAll('#'+id+' .mc-opt').forEach(o=>o.classList.remove('correct','wrong','disabled'));document.getElementById(id+'-fb').className='mc-feedback';});
+  document.querySelectorAll('.review-card').forEach(c=>c.classList.remove('flipped'));
+  document.getElementById('fillFb').className='fill-fb';document.getElementById('sortFb').className='fill-fb';
+  buildFills();buildSort();showSlide(1);
+}
+
+// INIT
+buildFills();buildSort();showSlide(1);
+</script>
+</body>
+</html>

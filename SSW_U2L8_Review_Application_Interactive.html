@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSW | Unit 2, Lesson 8: Review & Application</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--coral:#E66B5D;--teal:#3A7D8C;--light-blue:#D7ECF0;--blue-pale:#EBF5F8;--yellow:#F3D25B;--yellow-dark:#9E7F0A;--white:#FFFFFF;--dark:#1A1A2E;--coral-pale:#FDF0EE;--green:#4CAF50;--red:#E74C3C}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Open Sans',sans-serif;background:#f0f4f8;color:var(--dark);min-height:100vh;display:flex;flex-direction:column;align-items:center}
+.progress-bar{position:fixed;top:0;left:0;width:100%;height:6px;background:#e0e0e0;z-index:100}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--coral));transition:width .4s ease;width:0}
+.star-counter{position:fixed;top:14px;right:20px;font-family:'Poppins',sans-serif;font-weight:600;font-size:1.1rem;color:var(--yellow-dark);z-index:100;background:var(--white);padding:4px 14px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.star-counter.pop{animation:starPop .4s ease}
+@keyframes starPop{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+.slide-area{flex:1;display:flex;align-items:center;justify-content:center;width:100%;padding:50px 20px 80px}
+.slide{display:none;background:var(--white);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.08);max-width:900px;width:100%;min-height:480px;padding:48px 44px;animation:fadeIn .35s ease}
+.slide.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.nav-bar{position:fixed;bottom:0;left:0;width:100%;background:var(--white);border-top:1px solid #e0e0e0;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100}
+.nav-btn{font-family:'Open Sans',sans-serif;font-weight:600;font-size:.95rem;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+.nav-btn.prev{background:var(--blue-pale);color:var(--teal)}.nav-btn.next{background:var(--teal);color:var(--white)}
+.nav-btn:hover{opacity:.85;transform:translateY(-1px)}.nav-btn:disabled{opacity:.4;cursor:default;transform:none}
+.slide-counter{font-family:'Open Sans',sans-serif;font-size:.85rem;color:#888}
+.phase-label{font-family:'Poppins',sans-serif;font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;padding:4px 14px;border-radius:20px;display:inline-block;margin-bottom:16px}
+.phase-learn{background:var(--light-blue);color:var(--teal)}.phase-practice{background:var(--coral-pale);color:var(--coral)}.phase-review{background:var(--blue-pale);color:var(--teal)}.phase-celebrate{background:var(--yellow);color:var(--yellow-dark)}
+h1{font-family:'Poppins',sans-serif;font-weight:700;font-size:2rem;color:var(--teal);margin-bottom:8px}
+h2{font-family:'Poppins',sans-serif;font-weight:600;font-size:1.5rem;color:var(--teal);margin-bottom:12px}
+h3{font-family:'Poppins',sans-serif;font-weight:600;font-size:1.15rem;color:var(--coral);margin-bottom:8px}
+p{font-family:'Poppins',sans-serif;font-size:1rem;line-height:1.6;color:var(--dark);margin-bottom:10px}
+.subtitle{font-family:'Poppins',sans-serif;font-size:1.1rem;color:#555;margin-bottom:20px}
+.goal-box{background:var(--light-blue);border-radius:10px;padding:16px 20px;margin-top:16px;font-family:'Poppins',sans-serif;font-size:.95rem;color:var(--teal)}
+/* Skills grid */
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+.skill-card{background:var(--blue-pale);border-radius:10px;padding:14px 16px;border-left:4px solid var(--teal)}
+.skill-card h3{font-size:.9rem;margin-bottom:4px;color:var(--teal)}
+.skill-card p{font-size:.85rem;margin:0;color:#555}
+/* MC */
+.mc-options{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.mc-opt{font-family:'Poppins',sans-serif;font-size:1rem;padding:14px 20px;border:2px solid #ddd;border-radius:10px;cursor:pointer;transition:all .2s;background:var(--white)}
+.mc-opt:hover{border-color:var(--teal);background:var(--blue-pale)}
+.mc-opt.correct{border-color:var(--green);background:#e8f5e9}.mc-opt.wrong{border-color:var(--red);background:#fce4ec}.mc-opt.disabled{pointer-events:none;opacity:.7}
+.mc-feedback{font-family:'Poppins',sans-serif;font-size:.95rem;padding:12px 16px;border-radius:8px;margin-top:12px;display:none}
+.mc-feedback.show{display:block}.mc-feedback.correct-fb{background:#e8f5e9;color:#2e7d32}.mc-feedback.wrong-fb{background:#fce4ec;color:#c62828}
+/* Builder */
+.builder-box{background:var(--blue-pale);border-radius:12px;padding:20px;margin:14px 0}
+.builder-base{font-family:'Poppins',sans-serif;font-weight:600;font-size:1.1rem;color:var(--teal);margin-bottom:10px}
+.word-group{margin:8px 0}
+.word-group-label{font-family:'Poppins',sans-serif;font-weight:600;font-size:.85rem;color:var(--coral);margin-bottom:4px}
+.word-chips{display:flex;flex-wrap:wrap;gap:6px}
+.w-chip{font-family:'Poppins',sans-serif;font-size:.88rem;padding:6px 14px;border:2px solid #ddd;border-radius:18px;cursor:pointer;transition:all .2s;background:var(--white);user-select:none}
+.w-chip:hover{border-color:var(--teal);background:var(--blue-pale)}
+.w-chip.sel{border-color:var(--teal);background:var(--light-blue);color:var(--teal);font-weight:600}
+.w-chip.sel-adv{border-color:var(--coral);background:var(--coral-pale);color:var(--coral);font-weight:600}
+.w-chip.disabled{pointer-events:none;opacity:.5}
+.builder-result{font-family:'Poppins',sans-serif;font-size:1.05rem;min-height:44px;padding:12px 16px;background:var(--white);border-radius:8px;border:2px dashed #ccc;margin:10px 0;text-align:center;color:#888}
+.builder-result.filled{border-color:var(--teal);border-style:solid;color:var(--dark)}
+.btn{font-family:'Poppins',sans-serif;font-weight:600;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;font-size:.95rem;transition:all .2s}
+.btn-teal{background:var(--teal);color:var(--white)}.btn-coral{background:var(--coral);color:var(--white)}
+.btn:hover{opacity:.85}.btn:disabled{opacity:.4;cursor:default}
+.builder-fb{font-family:'Poppins',sans-serif;font-size:.9rem;margin-top:10px;padding:10px 14px;border-radius:8px;display:none}
+.builder-fb.show{display:block}
+.counter-text{font-family:'Poppins',sans-serif;font-size:.85rem;color:#888;text-align:right;margin-bottom:8px}
+/* Edit activity */
+.edit-sentence{font-family:'Poppins',sans-serif;font-size:1.05rem;background:var(--blue-pale);padding:16px 20px;border-radius:10px;margin:10px 0;line-height:1.7}
+.edit-sentence .weak{background:var(--yellow);padding:1px 4px;border-radius:3px;cursor:pointer;transition:all .2s;font-weight:600}
+.edit-sentence .weak:hover{background:#f0c830}
+.edit-sentence .weak.replaced{background:#c8e6c9;text-decoration:none;font-weight:400}
+.replace-options{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.rep-chip{font-family:'Poppins',sans-serif;font-size:.88rem;padding:6px 14px;border:2px solid #ddd;border-radius:18px;cursor:pointer;background:var(--white);transition:all .2s}
+.rep-chip:hover{border-color:var(--green);background:#e8f5e9}
+.rep-chip.picked{border-color:var(--green);background:#c8e6c9;color:#2e7d32;font-weight:600}
+/* Before/After */
+.ba-box{display:flex;gap:16px;margin:16px 0;flex-wrap:wrap}
+.ba-card{flex:1;min-width:200px;border-radius:12px;padding:20px;text-align:center}
+.ba-before{background:#fce4ec;border:2px solid var(--red)}.ba-after{background:#e8f5e9;border:2px solid var(--green)}
+.ba-label{font-family:'Poppins',sans-serif;font-weight:700;font-size:.85rem;text-transform:uppercase;margin-bottom:8px}
+.ba-text{font-family:'Poppins',sans-serif;font-size:1.1rem;font-style:italic}
+/* Review cards */
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.review-card{background:var(--white);border-radius:12px;padding:20px;cursor:pointer;transition:all .3s;border:2px solid #e0e0e0;min-height:100px;display:flex;align-items:center;justify-content:center;text-align:center}
+.review-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.review-card.flipped{border-color:var(--teal)}
+.rc-teal{border-left:4px solid var(--teal)}.rc-coral{border-left:4px solid var(--coral)}.rc-yellow{border-left:4px solid var(--yellow)}.rc-blue{border-left:4px solid var(--light-blue)}
+.rc-front{font-family:'Poppins',sans-serif;font-weight:600;font-size:.95rem;color:var(--teal)}.rc-back{font-family:'Poppins',sans-serif;font-size:.9rem;color:var(--dark);display:none}
+.review-card.flipped .rc-front{display:none}.review-card.flipped .rc-back{display:block}
+/* Celebration */
+.celebration{text-align:center}.celebration h1{font-size:2.2rem;margin-bottom:12px}
+.celebration .stats{display:flex;justify-content:center;gap:30px;margin:24px 0}
+.celebration .stat{text-align:center}.celebration .stat-num{font-family:'Poppins',sans-serif;font-weight:700;font-size:2.5rem;color:var(--teal)}.celebration .stat-label{font-family:'Poppins',sans-serif;font-size:.85rem;color:#888}
+.start-over-btn{font-family:'Poppins',sans-serif;font-weight:600;padding:12px 32px;border:none;border-radius:8px;background:var(--coral);color:var(--white);cursor:pointer;font-size:1rem;margin-top:20px;transition:all .2s}
+.start-over-btn:hover{opacity:.85}
+.confetti-piece{position:fixed;width:10px;height:10px;z-index:999;pointer-events:none}
+.trophy{font-size:4rem;margin-bottom:16px}
+@media(max-width:700px){.slide{padding:32px 24px;min-height:400px}h1{font-size:1.6rem}h2{font-size:1.3rem}.skills-grid,.review-grid{grid-template-columns:1fr}.ba-box{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="star-counter" id="starCounter">⭐ 0</div>
+
+<div class="slide-area">
+
+<!-- SLIDE 1: Title -->
+<div class="slide active" id="slide1">
+  <span class="phase-label phase-celebrate">Unit 2 &bull; Lesson 8 &bull; Final Review</span>
+  <h1>Review & Application</h1>
+  <p class="subtitle">Putting All Your Unit 2 Skills Together</p>
+  <div class="goal-box"><strong>Today's Goal:</strong> I can use ALL my Unit 2 skills together to expand sentences effectively.</div>
+</div>
+
+<!-- SLIDE 2: Skills Review -->
+<div class="slide" id="slide2">
+  <span class="phase-label phase-learn">Review</span>
+  <h2>Your Unit 2 Tool Kit</h2>
+  <div class="skills-grid">
+    <div class="skill-card"><h3>L1: Why Expand?</h3><p>Ask: Who? What? Where? When? Why? How?</p></div>
+    <div class="skill-card"><h3>L2-3: Adjectives</h3><p>Describe nouns. PAINT A PICTURE with sensory details.</p></div>
+    <div class="skill-card"><h3>L4-5: Adverbs</h3><p>Describe verbs. How? When? Where? Can move positions.</p></div>
+    <div class="skill-card"><h3>L6: Multiple Words</h3><p>Combine adjectives + adverbs. Stay balanced.</p></div>
+    <div class="skill-card"><h3>L7: Articles</h3><p>A (consonant sound), AN (vowel sound), THE (specific).</p></div>
+    <div class="skill-card"><h3>L8: Today</h3><p>Use ALL skills together. Expand AND edit.</p></div>
+  </div>
+</div>
+
+<!-- SLIDE 3: Review MC -->
+<div class="slide" id="slide3">
+  <span class="phase-label phase-learn">Quick Check</span>
+  <h2>Unit 2 Quick Check</h2>
+  <p>Which sentence best demonstrates ALL Unit 2 skills (article, adjectives, adverb, balance)?</p>
+  <div class="mc-options" id="mc1">
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc1')">A dog ran fast.</div>
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc1')">The very, really, extremely big dog ran so fast down the long, huge, wide street.</div>
+    <div class="mc-opt" data-correct="true" onclick="checkMC(this,'mc1')">The playful, golden dog sprinted eagerly across the sunny park.</div>
+    <div class="mc-opt" data-correct="false" onclick="checkMC(this,'mc1')">An dog ran quick across an park.</div>
+  </div>
+  <div class="mc-feedback" id="mc1-fb"></div>
+</div>
+
+<!-- SLIDE 4: Before & After -->
+<div class="slide" id="slide4">
+  <span class="phase-label phase-learn">Learn</span>
+  <h2>The Power of Expansion</h2>
+  <p>See what your Unit 2 skills can do.</p>
+  <div class="ba-box">
+    <div class="ba-card ba-before"><div class="ba-label" style="color:var(--red)">Before Unit 2</div><div class="ba-text">"The dog ran."</div></div>
+    <div class="ba-card ba-after"><div class="ba-label" style="color:var(--green)">After Unit 2</div><div class="ba-text">"The small, brown dog ran quickly across the yard."</div></div>
+  </div>
+  <div style="background:var(--blue-pale);border-radius:10px;padding:16px;margin-top:12px">
+    <h3 style="color:var(--teal);font-size:.95rem">The 5-Step Expansion Process</h3>
+    <p style="font-size:.9rem;margin:4px 0"><strong>1.</strong> Check articles (a, an, the)</p>
+    <p style="font-size:.9rem;margin:4px 0"><strong>2.</strong> Add adjectives for nouns</p>
+    <p style="font-size:.9rem;margin:4px 0"><strong>3.</strong> Add adverb for verb</p>
+    <p style="font-size:.9rem;margin:4px 0"><strong>4.</strong> Add details (where, when, why)</p>
+    <p style="font-size:.9rem;margin:4px 0"><strong>5.</strong> Check balance (not overloaded)</p>
+  </div>
+</div>
+
+<!-- SLIDE 5: Practice - Full Expansion Builder -->
+<div class="slide" id="slide5">
+  <span class="phase-label phase-practice">Practice</span>
+  <h2>Full Sentence Expansion</h2>
+  <p>Use ALL your skills: pick adjectives, an adverb, and a detail to expand each sentence.</p>
+  <div class="counter-text" id="buildCounter">Sentence 1 of 3</div>
+  <div id="buildArea"></div>
+</div>
+
+<!-- SLIDE 6: Practice - Edit Weak Sentences -->
+<div class="slide" id="slide6">
+  <span class="phase-label phase-practice">Practice</span>
+  <h2>Edit Weak Sentences</h2>
+  <p>Click each <span style="background:var(--yellow);padding:1px 6px;border-radius:3px;font-weight:600">highlighted word</span> to replace it with a stronger choice.</p>
+  <div class="counter-text" id="editCounter">Sentence 1 of 3</div>
+  <div id="editArea"></div>
+</div>
+
+<!-- SLIDE 7: Review Cards -->
+<div class="slide" id="slide7">
+  <span class="phase-label phase-review">Review</span>
+  <h2>Unit 2 Final Review</h2>
+  <p style="font-size:.9rem;color:#888;margin-bottom:12px">Click each card to reveal the answer.</p>
+  <div class="review-grid">
+    <div class="review-card rc-teal" onclick="this.classList.toggle('flipped')"><div class="rc-front">What do adjectives describe?</div><div class="rc-back"><strong>Nouns</strong> (people, places, things, animals). They tell us what kind, how many, and which one.</div></div>
+    <div class="review-card rc-coral" onclick="this.classList.toggle('flipped')"><div class="rc-front">What do adverbs describe?</div><div class="rc-back"><strong>Verbs</strong> (actions). They tell us how, when, where, and to what extent.</div></div>
+    <div class="review-card rc-yellow" onclick="this.classList.toggle('flipped')"><div class="rc-front">What is the comma rule for adjectives?</div><div class="rc-back">Use commas between adjectives when you can put <strong>"and"</strong> between them.<br><em>"tall, green tree"</em> (tall AND green &check;)</div></div>
+    <div class="review-card rc-blue" onclick="this.classList.toggle('flipped')"><div class="rc-front">When do you use A vs. AN?</div><div class="rc-back"><strong>A</strong> before consonant sounds. <strong>AN</strong> before vowel sounds. Listen to the SOUND, not the letter.</div></div>
+    <div class="review-card rc-teal" onclick="this.classList.toggle('flipped')"><div class="rc-front">What does "overloading" mean?</div><div class="rc-back">Using <strong>too many</strong> describing words. Keep it balanced: 2&ndash;3 adjectives per noun, 1&ndash;2 adverbs per verb. Quality over quantity.</div></div>
+    <div class="review-card rc-coral" onclick="this.classList.toggle('flipped')"><div class="rc-front">What words should you avoid?</div><div class="rc-back">Weak, vague words: <em>really, very, good, nice, big, fun.</em> Replace with specific, vivid words.</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 8: Celebration -->
+<div class="slide celebration" id="slide8">
+  <div class="trophy">🏆</div>
+  <h1>Unit 2 Complete</h1>
+  <p class="subtitle">You can now expand sentences with adjectives, adverbs, articles, and balanced details.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="finalStars">0</div><div class="stat-label">Stars Earned</div></div>
+    <div class="stat"><div class="stat-num" id="finalActivities">0</div><div class="stat-label">Activities Completed</div></div>
+  </div>
+  <div class="ba-box" style="margin-top:20px">
+    <div class="ba-card ba-before"><div class="ba-label" style="color:var(--red)">Before</div><div class="ba-text">"The dog ran."</div></div>
+    <div class="ba-card ba-after"><div class="ba-label" style="color:var(--green)">After</div><div class="ba-text">"The small, brown dog ran quickly across the yard."</div></div>
+  </div>
+  <p style="margin-top:16px;font-size:.95rem;color:#555">Next up: Unit 3 &mdash; Sentence Variety and Types.</p>
+  <button class="start-over-btn" onclick="startOver()">Start Over</button>
+</div>
+
+</div>
+
+<div class="nav-bar">
+  <button class="nav-btn prev" id="prevBtn" onclick="navigate(-1)" disabled>&larr; Back</button>
+  <span class="slide-counter" id="slideCounter">1 / 8</span>
+  <button class="nav-btn next" id="nextBtn" onclick="navigate(1)">Next &rarr;</button>
+</div>
+
+<script>
+const L = {
+  builders: [
+    { base:"The bird flew.", noun:"bird", verb:"flew",
+      adjs:["small","blue","graceful","colourful","swift"],
+      advs:["gracefully","swiftly","silently","eagerly"],
+      details:["through the trees","over the calm lake","into the bright sky","across the open field"],
+      sample:"The small, blue bird flew gracefully through the trees." },
+    { base:"A child read a book.", noun:"child", verb:"read",
+      adjs:["young","curious","focused","eager","quiet"],
+      advs:["eagerly","silently","carefully","happily"],
+      details:["on the cozy couch","at the library","before bedtime","under the oak tree"],
+      sample:"A young, curious child eagerly read a thick book on the cozy couch." },
+    { base:"The waves crashed.", noun:"waves", verb:"crashed",
+      adjs:["powerful","foamy","massive","icy","dark"],
+      advs:["loudly","fiercely","relentlessly","steadily"],
+      details:["on the sandy beach","against the rocky shore","during the storm","all through the night"],
+      sample:"The powerful, foamy waves crashed fiercely against the rocky shore." },
+  ],
+  edits: [
+    { parts:[
+        {t:"A ",w:false},{t:"really",w:true,opts:["suspenseful","thrilling","captivating"],best:"captivating"},
+        {t:", ",w:false},{t:"really",w:true,opts:["incredibly","remarkably","astonishingly"],best:"incredibly"},
+        {t:" ",w:false},{t:"good",w:true,opts:["gripping","brilliant","outstanding"],best:"gripping"},
+        {t:" movie was ",w:false},{t:"very",w:true,opts:["deeply","truly","thoroughly"],best:"thoroughly"},
+        {t:" interesting.",w:false}
+      ], explain:"Replace weak words (really, good, very) with specific, vivid alternatives." },
+    { parts:[
+        {t:"The ",w:false},{t:"big",w:true,opts:["enormous","towering","majestic"],best:"enormous"},
+        {t:", ",w:false},{t:"huge",w:true,opts:["grey","wrinkled","ancient"],best:"grey"},
+        {t:", ",w:false},{t:"enormous",w:true,opts:["(remove)","gentle","powerful"],best:"(remove)"},
+        {t:" elephant walked ",w:false},{t:"very",w:true,opts:["(remove)","steadily","deliberately"],best:"(remove)"},
+        {t:" slowly.",w:false}
+      ], explain:"Remove repetitive size words (big, huge, enormous). Keep one and add a different type of detail." },
+    { parts:[
+        {t:"A ",w:false},{t:"nice",w:true,opts:["cheerful","thoughtful","energetic"],best:"cheerful"},
+        {t:" girl had a ",w:false},{t:"good",w:true,opts:["wonderful","memorable","fantastic"],best:"wonderful"},
+        {t:" time at the ",w:false},{t:"fun",w:true,opts:["lively","vibrant","festive"],best:"lively"},
+        {t:" party.",w:false}
+      ], explain:"Replace vague words (nice, good, fun) with specific, descriptive alternatives." },
+  ],
+};
+
+let currentSlide=1;const totalSlides=8;let stars=0;let activitiesCompleted=0;
+let buildIdx=0;let editIdx=0;
+
+// NAV
+function showSlide(n){document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));document.getElementById('slide'+n).classList.add('active');currentSlide=n;document.getElementById('slideCounter').textContent=n+' / '+totalSlides;document.getElementById('prevBtn').disabled=(n===1);document.getElementById('nextBtn').style.display=(n===totalSlides)?'none':'';document.getElementById('progressFill').style.width=((n-1)/(totalSlides-1)*100)+'%';if(n===totalSlides)showCelebration();}
+function navigate(dir){const next=currentSlide+dir;if(next>=1&&next<=totalSlides)showSlide(next);}
+document.addEventListener('keydown',e=>{if(document.activeElement.tagName==='INPUT')return;if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();navigate(1);}if(e.key==='ArrowLeft'){e.preventDefault();navigate(-1);}});
+function addStars(n){stars+=n;const el=document.getElementById('starCounter');el.textContent='\u2B50 '+stars;el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');}
+
+// MC
+function checkMC(el,id){const opts=document.querySelectorAll('#'+id+' .mc-opt');opts.forEach(o=>o.classList.add('disabled'));const fb=document.getElementById(id+'-fb');if(el.dataset.correct==='true'){el.classList.add('correct');fb.textContent='Correct. This sentence has a proper article (the), specific adjectives (playful, golden), a strong adverb (eagerly), and is balanced with a detail (across the sunny park).';fb.className='mc-feedback show correct-fb';addStars(1);activitiesCompleted++;}else{el.classList.add('wrong');opts.forEach(o=>{if(o.dataset.correct==='true')o.classList.add('correct');});fb.textContent='Not quite. Look for: correct article, specific adjectives, a strong adverb, balance (not overloaded), and no weak words.';fb.className='mc-feedback show wrong-fb';}}
+
+// BUILDER
+function buildBuilder(){
+  const area=document.getElementById('buildArea');
+  if(buildIdx>=L.builders.length){area.innerHTML='<div style="text-align:center;padding:30px"><p style="font-size:1.1rem;color:var(--teal);font-weight:600">All sentences expanded. Well done.</p></div>';return;}
+  const item=L.builders[buildIdx];
+  document.getElementById('buildCounter').textContent='Sentence '+(buildIdx+1)+' of '+L.builders.length;
+  let selAdj=[],selAdv=null,selDet=null;
+  area.innerHTML='';
+  const box=document.createElement('div');box.className='builder-box';
+  box.innerHTML='<div class="builder-base">Base: '+item.base+'</div>';
+
+  function makeGroup(label,words,type,max){
+    const grp=document.createElement('div');grp.className='word-group';
+    grp.innerHTML='<div class="word-group-label">'+label+'</div>';
+    const chips=document.createElement('div');chips.className='word-chips';
+    words.forEach(w=>{
+      const c=document.createElement('div');c.className='w-chip';c.textContent=w;
+      c.onclick=()=>{
+        if(type==='adj'){if(c.classList.contains('sel')){c.classList.remove('sel');selAdj=selAdj.filter(x=>x!==w);}else if(selAdj.length<max){c.classList.add('sel');selAdj.push(w);}}
+        else if(type==='adv'){chips.querySelectorAll('.w-chip').forEach(ch=>ch.classList.remove('sel-adv'));c.classList.add('sel-adv');selAdv=w;}
+        else{chips.querySelectorAll('.w-chip').forEach(ch=>ch.classList.remove('sel'));c.classList.add('sel');selDet=w;}
+        checkBtn.disabled=!(selAdj.length>=1&&selAdv&&selDet);
+      };
+      chips.appendChild(c);
+    });
+    grp.appendChild(chips);return grp;
+  }
+
+  box.appendChild(makeGroup('Adjectives for "'+item.noun+'" (pick 1\u20132):',item.adjs,'adj',2));
+  box.appendChild(makeGroup('Adverb for "'+item.verb+'" (pick 1):',item.advs,'adv',1));
+  box.appendChild(makeGroup('Detail (pick 1):',item.details,'det',1));
+
+  const btnRow=document.createElement('div');btnRow.style.cssText='display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px';
+  const checkBtn=document.createElement('button');checkBtn.className='btn btn-teal';checkBtn.textContent='Check My Expansion';checkBtn.disabled=true;
+  const fb=document.createElement('div');fb.className='builder-fb';
+  const nextBtn=document.createElement('button');nextBtn.className='btn btn-coral';nextBtn.textContent='Next \u2192';nextBtn.style.display='none';
+
+  checkBtn.onclick=()=>{
+    checkBtn.disabled=true;
+    box.querySelectorAll('.w-chip').forEach(c=>c.style.pointerEvents='none');
+    const total=selAdj.length+1+1;
+    if(selAdj.length>=1&&selAdj.length<=2&&selAdv&&selDet){
+      fb.textContent='Nicely expanded and balanced. '+selAdj.length+' adjectives, 1 adverb, 1 detail. All Unit 2 skills applied.';
+      fb.style.background='#e8f5e9';fb.style.color='#2e7d32';addStars(3);
+    }else{
+      fb.textContent='Good effort. Sample: '+item.sample;
+      fb.style.background='#fff3e0';fb.style.color='#e65100';addStars(1);
+    }
+    fb.classList.add('show');activitiesCompleted++;
+    if(buildIdx<L.builders.length-1)nextBtn.style.display='inline-block';
+  };
+  nextBtn.onclick=()=>{buildIdx++;buildBuilder();};
+  btnRow.appendChild(checkBtn);btnRow.appendChild(nextBtn);
+  box.appendChild(btnRow);box.appendChild(fb);area.appendChild(box);
+}
+
+// EDIT
+function buildEdit(){
+  const area=document.getElementById('editArea');
+  if(editIdx>=L.edits.length){area.innerHTML='<div style="text-align:center;padding:30px"><p style="font-size:1.1rem;color:var(--teal);font-weight:600">All sentences edited. Great revision skills.</p></div>';return;}
+  const item=L.edits[editIdx];
+  document.getElementById('editCounter').textContent='Sentence '+(editIdx+1)+' of '+L.edits.length;
+  area.innerHTML='';
+
+  const sentDiv=document.createElement('div');sentDiv.className='edit-sentence';
+  let weakEls=[];let replacements={};let activeWeak=null;
+
+  const optionsDiv=document.createElement('div');optionsDiv.className='replace-options';optionsDiv.style.display='none';
+  const optLabel=document.createElement('p');optLabel.style.cssText="font-size:.85rem;color:#555;margin:8px 0 4px;display:none";
+
+  item.parts.forEach((p,i)=>{
+    if(p.w){
+      const span=document.createElement('span');span.className='weak';span.textContent=p.t;span.dataset.idx=i;
+      span.onclick=()=>{
+        if(span.classList.contains('replaced'))return;
+        activeWeak=i;
+        optLabel.textContent='Replace "'+p.t+'" with:';optLabel.style.display='block';
+        optionsDiv.style.display='flex';optionsDiv.innerHTML='';
+        p.opts.forEach(opt=>{
+          const chip=document.createElement('div');chip.className='rep-chip';chip.textContent=opt;
+          chip.onclick=()=>{
+            optionsDiv.querySelectorAll('.rep-chip').forEach(c=>c.classList.remove('picked'));
+            chip.classList.add('picked');
+            span.textContent=opt==='(remove)'?'':opt;span.classList.add('replaced');
+            replacements[i]=opt;
+            optionsDiv.style.display='none';optLabel.style.display='none';activeWeak=null;
+            const allDone=weakEls.every(el=>el.classList.contains('replaced'));
+            if(allDone)checkEditBtn.disabled=false;
+          };
+          optionsDiv.appendChild(chip);
+        });
+      };
+      weakEls.push(span);
+      sentDiv.appendChild(span);
+    }else{
+      sentDiv.appendChild(document.createTextNode(p.t));
+    }
+  });
+
+  const btnRow=document.createElement('div');btnRow.style.cssText='display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px';
+  const checkEditBtn=document.createElement('button');checkEditBtn.className='btn btn-teal';checkEditBtn.textContent='Check Edits';checkEditBtn.disabled=true;
+  const fb=document.createElement('div');fb.className='builder-fb';
+  const nextBtn=document.createElement('button');nextBtn.className='btn btn-coral';nextBtn.textContent='Next \u2192';nextBtn.style.display='none';
+
+  checkEditBtn.onclick=()=>{
+    checkEditBtn.disabled=true;
+    weakEls.forEach(el=>el.style.pointerEvents='none');
+    fb.textContent='Good editing. '+item.explain;
+    fb.style.background='#e8f5e9';fb.style.color='#2e7d32';
+    fb.classList.add('show');addStars(2);activitiesCompleted++;
+    if(editIdx<L.edits.length-1)nextBtn.style.display='inline-block';
+  };
+  nextBtn.onclick=()=>{editIdx++;buildEdit();};
+
+  area.appendChild(sentDiv);area.appendChild(optLabel);area.appendChild(optionsDiv);
+  btnRow.appendChild(checkEditBtn);btnRow.appendChild(nextBtn);
+  area.appendChild(btnRow);area.appendChild(fb);
+}
+
+// CELEBRATION
+function showCelebration(){document.getElementById('finalStars').textContent=stars;document.getElementById('finalActivities').textContent=activitiesCompleted;fireConfetti();}
+function fireConfetti(){const colors=['#E66B5D','#3A7D8C','#F3D25B','#D7ECF0','#4CAF50','#FF9800'];for(let i=0;i<80;i++){const p=document.createElement('div');p.className='confetti-piece';p.style.left=Math.random()*100+'vw';p.style.top='-10px';p.style.background=colors[Math.floor(Math.random()*colors.length)];p.style.borderRadius=Math.random()>.5?'50%':'2px';p.style.width=(6+Math.random()*10)+'px';p.style.height=(6+Math.random()*10)+'px';document.body.appendChild(p);const dur=1800+Math.random()*2500;const drift=(Math.random()-.5)*250;p.animate([{transform:'translateY(0) translateX(0) rotate(0deg)',opacity:1},{transform:'translateY(100vh) translateX('+drift+'px) rotate('+(360+Math.random()*720)+'deg)',opacity:0}],{duration:dur,easing:'ease-out'});setTimeout(()=>p.remove(),dur);}}
+
+// START OVER
+function startOver(){
+  stars=0;activitiesCompleted=0;buildIdx=0;editIdx=0;
+  document.getElementById('starCounter').textContent='\u2B50 0';
+  document.querySelectorAll('#mc1 .mc-opt').forEach(o=>o.classList.remove('correct','wrong','disabled'));
+  document.getElementById('mc1-fb').className='mc-feedback';
+  document.querySelectorAll('.review-card').forEach(c=>c.classList.remove('flipped'));
+  buildBuilder();buildEdit();showSlide(1);
+}
+
+// INIT
+buildBuilder();buildEdit();showSlide(1);
+</script>
+</body>
+</html>

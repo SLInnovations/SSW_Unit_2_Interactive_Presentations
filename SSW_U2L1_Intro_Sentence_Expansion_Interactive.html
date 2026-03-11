@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSW Unit 2, Lesson 1: Introduction to Sentence Expansion</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--coral:#E66B5D;--teal:#3A7D8C;--light-blue:#D7ECF0;--blue-pale:#EBF5F8;--yellow:#F3D25B;--yellow-dark:#9E7F0A;--white:#FFFFFF;--dark:#1A1A2E;--coral-pale:#FDF0EE;--green:#4CAF50;--red:#E74C3C}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Open Sans',sans-serif;background:#f0f4f8;color:var(--dark);min-height:100vh;display:flex;flex-direction:column;align-items:center}
+#progress-bar{position:fixed;top:0;left:0;height:6px;background:var(--coral);transition:width .4s;z-index:100}
+#star-counter{position:fixed;top:14px;right:20px;font-family:'Poppins',sans-serif;font-size:1.1rem;font-weight:600;color:var(--yellow-dark);z-index:100;background:var(--white);padding:4px 14px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+#star-counter.pop{animation:popStar .4s}
+@keyframes popStar{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+.slide{width:100%;max-width:900px;min-height:480px;margin:50px auto 80px;padding:40px;background:var(--white);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.08);display:none;animation:fadeIn .3s}
+.slide.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+nav{position:fixed;bottom:0;left:0;width:100%;background:var(--white);border-top:2px solid var(--light-blue);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;z-index:99}
+nav button{font-family:'Poppins',sans-serif;font-weight:600;font-size:.95rem;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+#btn-back{background:var(--blue-pale);color:var(--teal)}#btn-back:hover{background:var(--light-blue)}
+#btn-next{background:var(--coral);color:var(--white)}#btn-next:hover{background:#d45a4d}
+#slide-num{font-family:'Open Sans',sans-serif;font-size:.9rem;color:#888}
+.phase{display:inline-block;font-family:'Poppins',sans-serif;font-weight:600;font-size:.75rem;text-transform:uppercase;letter-spacing:1px;padding:4px 12px;border-radius:12px;margin-bottom:16px}
+.phase-learn{background:var(--light-blue);color:var(--teal)}.phase-practice{background:var(--coral-pale);color:var(--coral)}.phase-review{background:var(--blue-pale);color:var(--teal)}
+h1{font-family:'Poppins',sans-serif;font-weight:700;color:var(--teal);margin-bottom:8px}
+h2{font-family:'Poppins',sans-serif;font-weight:600;color:var(--teal);margin-bottom:12px;font-size:1.4rem}
+h3{font-family:'Poppins',sans-serif;font-weight:600;color:var(--coral);margin-bottom:10px;font-size:1.1rem}
+p{font-size:1rem;line-height:1.7;margin-bottom:10px}
+.title-slide{text-align:center;padding:60px 30px}
+.title-slide .unit-label{font-family:'Poppins',sans-serif;font-weight:600;color:var(--coral);font-size:1rem;letter-spacing:2px;text-transform:uppercase}
+.title-slide h1{font-size:2.2rem;margin:12px 0 6px}
+.title-slide .subtitle{font-family:'Poppins',sans-serif;color:#666;font-size:1.1rem;margin-bottom:20px}
+.goal-box{background:var(--light-blue);border-radius:12px;padding:16px 24px;margin:20px auto;max-width:600px}
+.goal-box p{color:var(--teal);font-weight:600;font-size:.95rem;margin:0}
+.concept-intro{text-align:center;padding:80px 30px}
+.big-word{font-family:'Poppins',sans-serif;font-weight:700;font-size:3rem;color:var(--teal);margin-bottom:10px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:20px 0}
+.card{background:var(--blue-pale);border-radius:12px;padding:20px;text-align:center;transition:transform .2s}.card:hover{transform:translateY(-3px)}
+.card-icon{font-size:2rem;margin-bottom:8px}.card-title{font-family:'Poppins',sans-serif;font-weight:600;color:var(--teal);font-size:1rem;margin-bottom:6px}.card-desc{font-size:.85rem;color:#555}
+.rule-box{background:var(--light-blue);border-radius:12px;padding:24px;margin:20px 0;border-left:5px solid var(--teal)}
+.strategy-grid{display:grid;gap:12px;margin:20px 0}
+.strategy-step{display:flex;align-items:center;gap:16px;background:var(--white);border:2px solid var(--light-blue);border-radius:12px;padding:16px;transition:all .3s}
+.strategy-step:hover{border-color:var(--teal);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.strategy-letter{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.5rem;color:var(--white);background:var(--coral);width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.strategy-text{font-family:'Poppins',sans-serif;font-size:1rem}.strategy-text strong{color:var(--teal)}
+.mc-options{display:grid;gap:12px;margin:16px 0}
+.mc-opt{background:var(--white);border:2px solid var(--light-blue);border-radius:10px;padding:14px 20px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:.95rem;transition:all .2s;text-align:left}
+.mc-opt:hover{border-color:var(--teal);background:var(--blue-pale)}
+.mc-opt.correct{border-color:var(--green);background:#e8f5e9;pointer-events:none}.mc-opt.incorrect{border-color:var(--red);background:#fde8e8}
+.mc-opt.locked{pointer-events:none;opacity:.6}
+.mc-fb{margin-top:12px;padding:12px 16px;border-radius:8px;font-weight:600;display:none}.mc-fb.show{display:block}
+.base-sentence{background:var(--coral-pale);border-radius:12px;padding:16px 20px;margin-bottom:16px;font-family:'Poppins',sans-serif;font-weight:600;font-size:1.1rem;color:var(--coral);text-align:center}
+.detail-options{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:16px 0}
+.detail-chip{background:var(--white);border:2px solid var(--light-blue);border-radius:20px;padding:8px 16px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:.9rem;transition:all .2s;user-select:none}
+.detail-chip:hover{border-color:var(--teal);background:var(--blue-pale)}.detail-chip.selected{background:var(--teal);color:var(--white);border-color:var(--teal)}.detail-chip.locked{pointer-events:none}
+.exp-preview{background:var(--light-blue);border-radius:12px;padding:16px 20px;margin:16px 0;min-height:60px;font-family:'Poppins',sans-serif;font-size:1rem;line-height:1.6;text-align:center;color:var(--teal);font-weight:500}
+.check-btn{display:block;margin:16px auto;font-family:'Poppins',sans-serif;font-weight:600;font-size:1rem;padding:12px 32px;background:var(--teal);color:var(--white);border:none;border-radius:10px;cursor:pointer;transition:all .2s}
+.check-btn:hover{background:#2d6470}.check-btn:disabled{background:#ccc;cursor:default}
+.act-fb{text-align:center;margin-top:12px;padding:10px;border-radius:8px;font-weight:600;display:none}.act-fb.show{display:block}
+.sort-bank{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:50px;margin:16px 0;padding:16px;background:#f9f9f9;border-radius:12px}
+.sort-word{padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:.85rem;font-weight:500;transition:all .2s;user-select:none;border:2px solid transparent}
+.sort-word:hover{transform:translateY(-2px);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.sort-word.bw{background:#FFE0B2;border-color:#FFB74D}.sort-word.ew{background:#C8E6C9;border-color:#66BB6A}
+.sort-word.sel-sort{outline:3px solid var(--teal)}
+.sort-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.sort-col{border:2px dashed var(--light-blue);border-radius:12px;padding:16px;min-height:120px;text-align:center;cursor:pointer;transition:all .2s}
+.sort-col:hover{border-color:var(--teal)}
+.sort-col h3{margin-bottom:12px;font-size:1rem}.sort-col .dropped{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:20px 0}
+.review-card{border-radius:12px;padding:20px;cursor:pointer;transition:all .3s;min-height:120px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.rc-q{font-family:'Poppins',sans-serif;font-weight:600;font-size:1rem}.rc-a{display:none;font-size:.9rem;margin-top:10px;line-height:1.5}
+.review-card.flipped .rc-q{display:none}.review-card.flipped .rc-a{display:block}
+.rc-teal{background:var(--light-blue);border:2px solid var(--teal)}.rc-teal .rc-q,.rc-teal .rc-a{color:var(--teal)}
+.rc-coral{background:var(--coral-pale);border:2px solid var(--coral)}.rc-coral .rc-q,.rc-coral .rc-a{color:var(--coral)}
+.rc-yellow{background:#FFFDF0;border:2px solid var(--yellow)}.rc-yellow .rc-q,.rc-yellow .rc-a{color:var(--yellow-dark)}
+.rc-blue{background:var(--blue-pale);border:2px solid #90CAF9}.rc-blue .rc-q,.rc-blue .rc-a{color:#1565C0}
+.celebration{text-align:center;padding:40px}.celebration h1{font-size:2rem;margin-bottom:16px}
+.stats{display:flex;justify-content:center;gap:30px;margin:24px 0}.stat{text-align:center}
+.stat-num{font-family:'Poppins',sans-serif;font-weight:700;font-size:2rem;color:var(--teal)}.stat-label{font-size:.85rem;color:#888}
+.start-over{margin-top:20px;font-family:'Poppins',sans-serif;font-weight:600;font-size:1rem;padding:12px 32px;background:var(--coral);color:var(--white);border:none;border-radius:10px;cursor:pointer}.start-over:hover{background:#d45a4d}
+@media(max-width:700px){.slide{margin:40px 10px 80px;padding:24px}.card-grid,.sort-cols,.review-grid{grid-template-columns:1fr}.title-slide h1{font-size:1.6rem}.big-word{font-size:2rem}}
+@media(max-width:500px){.detail-options{flex-direction:column;align-items:center}.stats{flex-direction:column;gap:16px}}
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<div id="star-counter">⭐ 0</div>
+
+<!-- S1: Title -->
+<div class="slide active" data-s="1">
+<div class="title-slide">
+<div class="unit-label">Unit 2 &bull; Lesson 1</div>
+<h1>Introduction to Sentence Expansion</h1>
+<p class="subtitle">Making Sentences More Interesting and Detailed</p>
+<div class="goal-box"><p>🎯 I can explain why writers expand sentences and tell the difference between basic and expanded sentences.</p></div>
+</div></div>
+
+<!-- S2: Concept Intro -->
+<div class="slide" data-s="2">
+<div class="concept-intro">
+<span class="phase phase-learn">Learn</span>
+<div class="big-word">Sentence Expansion</div>
+<p style="font-size:1.1rem;color:#666;margin-top:12px">Adding details to make sentences more interesting and vivid</p>
+</div></div>
+
+<!-- S3: Review - Complete Sentences (MC) -->
+<div class="slide" data-s="3">
+<span class="phase phase-learn">Learn</span>
+<h2>Quick Review: Complete Sentences</h2>
+<div class="rule-box">
+<p>A complete sentence has:</p>
+<p>✔ <strong>Subject</strong> (who or what) &nbsp; ✔ <strong>Predicate</strong> (what they do)</p>
+<p>✔ <strong>Capital</strong> at the beginning &nbsp; ✔ <strong>Punctuation</strong> at the end</p>
+</div>
+<div style="text-align:center;margin:20px 0">
+<p style="font-family:'Poppins',sans-serif;font-size:1.3rem;font-weight:600;color:var(--teal)">Example: The dog ran.</p>
+<p style="margin-top:8px">This is <strong>COMPLETE</strong> and <strong>CORRECT</strong>... but is it <strong style="color:var(--coral)">INTERESTING?</strong></p>
+</div>
+<h3>Quick Check</h3>
+<p><strong>Is "The dog ran." a complete sentence?</strong></p>
+<div class="mc-options" id="mc1">
+<div class="mc-opt" data-correct="true">Yes — it has a subject, predicate, capital, and punctuation</div>
+<div class="mc-opt">No — it is missing important parts</div>
+<div class="mc-opt">It's not a sentence because it's too short</div>
+</div>
+<div class="mc-fb" id="mc1-fb"></div>
+</div>
+
+<!-- S4: Why Expand? -->
+<div class="slide" data-s="4">
+<span class="phase phase-learn">Learn</span>
+<h2>Why Do Writers Expand Sentences?</h2>
+<div class="card-grid">
+<div class="card"><div class="card-icon">🎨</div><div class="card-title">Create Pictures</div><div class="card-desc">Help readers see, hear, and feel what you're describing</div></div>
+<div class="card"><div class="card-icon">✨</div><div class="card-title">Make It Interesting</div><div class="card-desc">Turn plain writing into something readers WANT to read</div></div>
+<div class="card"><div class="card-icon">📖</div><div class="card-title">Give Information</div><div class="card-desc">Details answer questions and help readers understand</div></div>
+<div class="card"><div class="card-icon">🌟</div><div class="card-title">Show, Don't Tell</div><div class="card-desc">Instead of "She was tired," show it with details!</div></div>
+</div>
+<div style="background:var(--coral-pale);border-radius:12px;padding:16px 20px;margin-top:20px">
+<p style="text-align:center"><strong>Which would YOU rather read?</strong></p>
+<p style="text-align:center;margin:8px 0;color:#888">The girl walked.</p>
+<p style="text-align:center;font-weight:600;color:var(--teal)">The tired girl walked slowly home after a long day.</p>
+</div></div>
+
+<!-- S5: Basic vs Expanded -->
+<div class="slide" data-s="5">
+<span class="phase phase-learn">Learn</span>
+<h2>Basic Sentence vs. Expanded Sentence</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0">
+<div style="background:#f9f9f9;border-radius:12px;padding:20px;text-align:center;border:2px solid #ddd">
+<h3 style="color:#888">Basic Sentence</h3>
+<p>Just subject + verb</p><p>Tells us the minimum</p><p>Correct but <em>plain</em></p>
+<div style="margin-top:16px;padding:12px;background:var(--white);border-radius:8px;font-family:'Poppins',sans-serif;font-weight:600">The cat slept.</div>
+</div>
+<div style="background:var(--light-blue);border-radius:12px;padding:20px;text-align:center;border:2px solid var(--teal)">
+<h3 style="color:var(--teal)">Expanded Sentence</h3>
+<p>Subject + verb + <strong>DETAILS</strong></p><p>Tells us much more</p><p>Interesting and <strong>vivid!</strong></p>
+<div style="margin-top:16px;padding:12px;background:var(--white);border-radius:8px;font-family:'Poppins',sans-serif;font-weight:600;color:var(--teal)">The fluffy orange cat slept peacefully on the warm windowsill.</div>
+</div></div></div>
+
+<!-- S6: Six Magic Questions -->
+<div class="slide" data-s="6">
+<span class="phase phase-learn">Learn</span>
+<h2>Six Magic Questions for Expanding Sentences</h2>
+<p>When you want to expand a sentence, ask:</p>
+<div class="strategy-grid">
+<div class="strategy-step"><div class="strategy-letter">W</div><div class="strategy-text"><strong>WHO?</strong> — What kind of person, animal, or thing?</div></div>
+<div class="strategy-step"><div class="strategy-letter">W</div><div class="strategy-text"><strong>WHAT?</strong> — What exactly is happening?</div></div>
+<div class="strategy-step"><div class="strategy-letter">W</div><div class="strategy-text"><strong>WHERE?</strong> — What place? What location?</div></div>
+<div class="strategy-step"><div class="strategy-letter">W</div><div class="strategy-text"><strong>WHEN?</strong> — What time? What day?</div></div>
+<div class="strategy-step"><div class="strategy-letter">W</div><div class="strategy-text"><strong>WHY?</strong> — For what reason?</div></div>
+<div class="strategy-step"><div class="strategy-letter">H</div><div class="strategy-text"><strong>HOW?</strong> — In what way or manner?</div></div>
+</div>
+<div style="background:var(--coral-pale);border-radius:10px;padding:12px 16px;margin-top:16px;text-align:center">
+<p style="font-size:.9rem;color:var(--coral);font-weight:600">💡 You don't have to answer ALL six — choose the most interesting details!</p>
+</div></div>
+
+<!-- S7: Quick Check MC -->
+<div class="slide" data-s="7">
+<span class="phase phase-learn">Learn</span>
+<h2>Quick Check ✓</h2>
+<p><strong>Why do writers expand sentences?</strong></p>
+<div class="mc-options" id="mc2">
+<div class="mc-opt">To make sentences as long as possible</div>
+<div class="mc-opt" data-correct="true">To help readers picture things and make writing more interesting</div>
+<div class="mc-opt">Because short sentences are always wrong</div>
+<div class="mc-opt">To confuse the reader with too many details</div>
+</div>
+<div class="mc-fb" id="mc2-fb"></div>
+</div>
+
+<!-- S8: Practice 1 - Sentence Expansion -->
+<div class="slide" data-s="8">
+<span class="phase phase-practice">Practice</span>
+<h2>Expand the Sentence! (1 of 2)</h2>
+<p>Click details to add them to the basic sentence. Choose 2–4 details that work well together.</p>
+<div class="base-sentence">The bird sings.</div>
+<p style="text-align:center;font-size:.9rem;color:#888">Click details to add them:</p>
+<div class="detail-options" id="exp1-chips"></div>
+<div class="exp-preview" id="exp1-preview">Your expanded sentence will appear here...</div>
+<button class="check-btn" id="exp1-btn" disabled>Check My Sentence ✓</button>
+<div class="act-fb" id="exp1-fb"></div>
+</div>
+
+<!-- S9: Practice 2 - Sentence Expansion -->
+<div class="slide" data-s="9">
+<span class="phase phase-practice">Practice</span>
+<h2>Expand the Sentence! (2 of 2)</h2>
+<p>Click details to add them to the basic sentence.</p>
+<div class="base-sentence">The boy runs.</div>
+<p style="text-align:center;font-size:.9rem;color:#888">Click details to add them:</p>
+<div class="detail-options" id="exp2-chips"></div>
+<div class="exp-preview" id="exp2-preview">Your expanded sentence will appear here...</div>
+<button class="check-btn" id="exp2-btn" disabled>Check My Sentence ✓</button>
+<div class="act-fb" id="exp2-fb"></div>
+</div>
+
+<!-- S10: Sort Basic vs Expanded -->
+<div class="slide" data-s="10">
+<span class="phase phase-practice">Practice</span>
+<h2>Sort: Basic or Expanded?</h2>
+<p>Click a sentence, then click the column where it belongs.</p>
+<div class="sort-bank" id="sort-bank"></div>
+<div class="sort-cols">
+<div class="sort-col" id="col-basic" data-cat="basic"><h3 style="color:#888">📋 Basic Sentences</h3><div class="dropped" id="drop-basic"></div></div>
+<div class="sort-col" id="col-expanded" data-cat="expanded"><h3 style="color:var(--teal)">✨ Expanded Sentences</h3><div class="dropped" id="drop-expanded"></div></div>
+</div>
+<button class="check-btn" id="sort-btn">Check My Sort ✓</button>
+<div class="act-fb" id="sort-fb"></div>
+</div>
+
+<!-- S11: Review Cards -->
+<div class="slide" data-s="11">
+<span class="phase phase-review">Review</span>
+<h2>Lesson Review</h2>
+<p>Click each card to reveal the answer.</p>
+<div class="review-grid" id="review-grid"></div>
+</div>
+
+<!-- S12: Celebration -->
+<div class="slide" data-s="12">
+<div class="celebration">
+<h1>🎉 Amazing Work!</h1>
+<p>You've completed the Introduction to Sentence Expansion!</p>
+<div class="stats">
+<div class="stat"><div class="stat-num" id="fin-stars">0</div><div class="stat-label">Stars Earned</div></div>
+<div class="stat"><div class="stat-num" id="fin-acts">0</div><div class="stat-label">Activities Completed</div></div>
+</div>
+<p style="margin:16px 0;font-family:'Poppins',sans-serif;font-weight:500;color:var(--teal)">You now know how to expand basic sentences with interesting details using the six magic questions!</p>
+<p style="color:#888;font-size:.9rem">Next lesson: What is an Adjective?</p>
+<button class="start-over" onclick="startOver()">Start Over 🔄</button>
+</div></div>
+
+<nav>
+<button id="btn-back" onclick="go(-1)">← Back</button>
+<span id="slide-num">1 / 12</span>
+<button id="btn-next" onclick="go(1)">Next →</button>
+</nav>
+<canvas id="confetti" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:200"></canvas>
+
+<script>
+/* ── DATA ── */
+const L={
+  total:12,
+  exp1:{base:"The bird sings.",subj:"bird",verb:"sings",
+    details:[
+      {t:"beautiful",pos:"bs"},{t:"red",pos:"bs"},
+      {t:"cheerfully",pos:"av"},{t:"a sweet melody",pos:"av"},
+      {t:"in the tall maple tree",pos:"end"},{t:"every morning",pos:"end"}
+    ]},
+  exp2:{base:"The boy runs.",subj:"boy",verb:"runs",
+    details:[
+      {t:"young",pos:"bs"},{t:"excited",pos:"bs"},
+      {t:"quickly",pos:"av"},{t:"to catch the bus",pos:"end"},
+      {t:"across the park",pos:"end"},{t:"after school",pos:"end"}
+    ]},
+  sort:[
+    {t:"The cat sleeps.",c:"basic"},
+    {t:"The fluffy grey cat sleeps peacefully on the warm windowsill.",c:"expanded"},
+    {t:"Rain falls.",c:"basic"},
+    {t:"Heavy autumn rain falls steadily on the colourful leaves.",c:"expanded"},
+    {t:"My teacher reads.",c:"basic"},
+    {t:"My friendly teacher reads us an exciting story every Friday afternoon.",c:"expanded"}
+  ],
+  review:[
+    {q:"What is sentence expansion?",a:"Adding details to a basic sentence to make it more interesting and vivid for the reader.",s:"rc-teal"},
+    {q:"What are the six magic questions?",a:"WHO? WHAT? WHERE? WHEN? WHY? HOW? — These help you think of details to add.",s:"rc-coral"},
+    {q:"Do you answer all six questions?",a:"No! Choose 2–4 of the most interesting details. Too many can make a sentence cluttered.",s:"rc-yellow"},
+    {q:"What is a basic sentence?",a:"A sentence with just a subject and verb — correct but plain. Example: The dog ran.",s:"rc-blue"},
+    {q:"What is an expanded sentence?",a:"A sentence with subject, verb, AND details that help readers picture what's happening.",s:"rc-teal"}
+  ]
+};
+
+/* ── STATE ── */
+let cur=1,stars=0,acts=0,mcDone={},expSel={exp1:[],exp2:[]},expDone={},sortPl={},sortDone=false,selWord=null;
+
+/* ── NAV ── */
+function go(d){const n=cur+d;if(n<1||n>L.total)return;
+document.querySelector(`.slide[data-s="${cur}"]`).classList.remove('active');
+cur=n;document.querySelector(`.slide[data-s="${cur}"]`).classList.add('active');
+updUI();window.scrollTo(0,0)}
+function updUI(){
+document.getElementById('progress-bar').style.width=`${cur/L.total*100}%`;
+document.getElementById('slide-num').textContent=`${cur} / ${L.total}`;
+document.getElementById('btn-back').style.visibility=cur===1?'hidden':'visible';
+document.getElementById('btn-next').style.visibility=cur===L.total?'hidden':'visible';
+if(cur===L.total)showCeleb()}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(1);if(e.key==='ArrowLeft')go(-1)});
+
+/* ── STARS ── */
+function addS(n){stars+=n;const el=document.getElementById('star-counter');el.textContent=`⭐ ${stars}`;el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}
+
+/* ── MC ── */
+document.querySelectorAll('.mc-options').forEach(group=>{
+  const id=group.id;
+  group.querySelectorAll('.mc-opt').forEach(opt=>{
+    opt.addEventListener('click',()=>{
+      if(mcDone[id])return;
+      const correct=opt.dataset.correct==='true';
+      const fb=document.getElementById(id+'-fb');
+      if(correct){mcDone[id]=true;opt.classList.add('correct');
+        group.querySelectorAll('.mc-opt').forEach(o=>o.classList.add('locked'));
+        fb.textContent='✓ Correct! Great job!';fb.style.background='#e8f5e9';fb.style.color='var(--green)';fb.className='mc-fb show';
+        addS(1);acts++}
+      else{opt.classList.add('incorrect');fb.textContent='✗ Not quite — try again!';fb.style.background='#fde8e8';fb.style.color='var(--red)';fb.className='mc-fb show';
+        setTimeout(()=>{opt.classList.remove('incorrect');fb.classList.remove('show')},1500)}
+    })})});
+
+/* ── EXPANSION ── */
+function initExp(id,data){
+  const container=document.getElementById(id+'-chips');container.innerHTML='';
+  data.details.forEach((d,i)=>{
+    const chip=document.createElement('div');chip.className='detail-chip';chip.textContent=d.t;chip.dataset.i=i;
+    chip.addEventListener('click',()=>{if(expDone[id])return;
+      const sel=expSel[id],pos=sel.indexOf(i);
+      if(pos>-1){sel.splice(pos,1);chip.classList.remove('selected')}
+      else{sel.push(i);chip.classList.add('selected')}
+      updExp(id,data);document.getElementById(id+'-btn').disabled=sel.length<2});
+    container.appendChild(chip)});
+  document.getElementById(id+'-btn').addEventListener('click',()=>chkExp(id,data));
+}
+function updExp(id,data){
+  const sel=expSel[id].map(i=>data.details[i]);
+  if(!sel.length){document.getElementById(id+'-preview').textContent='Your expanded sentence will appear here...';return}
+  const bs=sel.filter(d=>d.pos==='bs').map(d=>d.t);
+  const av=sel.filter(d=>d.pos==='av').map(d=>d.t);
+  const end=sel.filter(d=>d.pos==='end').map(d=>d.t);
+  let s='The';if(bs.length)s+=' '+bs.join(' ');s+=' '+data.subj+' '+data.verb;
+  if(av.length)s+=' '+av.join(' ');if(end.length)s+=' '+end.join(' ');
+  s=s.replace(/\s+/g,' ').trim();if(!s.endsWith('.'))s+='.';
+  s=s.charAt(0).toUpperCase()+s.slice(1);
+  document.getElementById(id+'-preview').textContent=s}
+function chkExp(id,data){
+  if(expDone[id])return;expDone[id]=true;
+  const fb=document.getElementById(id+'-fb');
+  fb.textContent=`✓ Excellent! You added ${expSel[id].length} details to make the sentence vivid and interesting!`;
+  fb.style.background='#e8f5e9';fb.style.color='var(--green)';fb.className='act-fb show';
+  document.getElementById(id+'-btn').disabled=true;
+  document.querySelectorAll(`#${id}-chips .detail-chip`).forEach(c=>c.classList.add('locked'));
+  addS(2);acts++;confetti()}
+initExp('exp1',L.exp1);initExp('exp2',L.exp2);
+
+/* ── SORT ── */
+(function initSort(){
+  const bank=document.getElementById('sort-bank');bank.innerHTML='';
+  const shuf=[...L.sort].sort(()=>Math.random()-.5);
+  shuf.forEach(item=>{
+    const idx=L.sort.indexOf(item);
+    const el=document.createElement('div');
+    el.className='sort-word '+(item.c==='basic'?'bw':'ew');
+    el.textContent=item.t;el.dataset.idx=idx;el.dataset.cat=item.c;
+    el.addEventListener('click',()=>{
+      if(sortDone)return;
+      if(el.parentElement.id==='sort-bank'){
+        if(selWord)selWord.classList.remove('sel-sort');
+        selWord=el;el.classList.add('sel-sort')}});
+    bank.appendChild(el)});
+  document.querySelectorAll('.sort-col').forEach(col=>{
+    col.addEventListener('click',()=>{
+      if(!selWord||sortDone)return;
+      const cat=col.dataset.cat;
+      document.getElementById('drop-'+cat).appendChild(selWord);
+      sortPl[selWord.dataset.idx]=cat;selWord.classList.remove('sel-sort');selWord=null})});
+  document.getElementById('sort-btn').addEventListener('click',chkSort)})();
+
+function chkSort(){
+  if(sortDone)return;
+  if(Object.keys(sortPl).length<L.sort.length){
+    const fb=document.getElementById('sort-fb');
+    fb.textContent='Please sort all sentences first!';fb.style.background='#FFF3E0';fb.style.color='#E65100';fb.className='act-fb show';
+    setTimeout(()=>fb.classList.remove('show'),2000);return}
+  sortDone=true;let ok=0;
+  document.querySelectorAll('.sort-word').forEach(el=>{
+    const idx=el.dataset.idx;
+    if(sortPl[idx]===L.sort[idx].c){el.style.borderColor='var(--green)';ok++}
+    else el.style.borderColor='var(--red)'});
+  const fb=document.getElementById('sort-fb');
+  if(ok===L.sort.length){fb.textContent=`✓ Perfect! All ${ok} sorted correctly!`;fb.style.background='#e8f5e9';fb.style.color='var(--green)';addS(3);confetti()}
+  else{fb.textContent=`${ok}/${L.sort.length} correct. Red borders are in the wrong column.`;fb.style.background='#FFF3E0';fb.style.color='#E65100';addS(1)}
+  fb.className='act-fb show';acts++;document.getElementById('sort-btn').disabled=true}
+
+/* ── REVIEW CARDS ── */
+(function initRC(){
+  const grid=document.getElementById('review-grid');grid.innerHTML='';
+  L.review.forEach(rc=>{
+    const card=document.createElement('div');card.className='review-card '+rc.s;
+    card.innerHTML=`<div class="rc-q">${rc.q}</div><div class="rc-a">${rc.a}</div>`;
+    card.addEventListener('click',()=>card.classList.toggle('flipped'));
+    grid.appendChild(card)})})();
+
+/* ── CELEBRATION ── */
+function showCeleb(){document.getElementById('fin-stars').textContent=stars;document.getElementById('fin-acts').textContent=acts;confetti()}
+
+/* ── CONFETTI ── */
+function confetti(){
+  const cv=document.getElementById('confetti'),ctx=cv.getContext('2d');
+  cv.width=window.innerWidth;cv.height=window.innerHeight;
+  const P=[],cols=['#E66B5D','#3A7D8C','#F3D25B','#D7ECF0','#FF6B6B','#4CAF50'];
+  for(let i=0;i<120;i++)P.push({x:Math.random()*cv.width,y:Math.random()*cv.height-cv.height,
+    w:Math.random()*10+5,h:Math.random()*6+3,c:cols[Math.floor(Math.random()*cols.length)],
+    vy:Math.random()*3+2,vx:(Math.random()-.5)*2,r:Math.random()*360,rv:(Math.random()-.5)*8});
+  let frames=0;
+  (function draw(){if(frames++>180){ctx.clearRect(0,0,cv.width,cv.height);return}
+    ctx.clearRect(0,0,cv.width,cv.height);
+    P.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.r+=p.rv;
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r*Math.PI/180);
+      ctx.fillStyle=p.c;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore()});
+    requestAnimationFrame(draw)})()}
+
+/* ── START OVER ── */
+function startOver(){
+  cur=1;stars=0;acts=0;mcDone={};expSel={exp1:[],exp2:[]};expDone={};sortPl={};sortDone=false;selWord=null;
+  document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
+  document.querySelector('.slide[data-s="1"]').classList.add('active');
+  document.getElementById('star-counter').textContent='⭐ 0';
+  // Reset MC
+  document.querySelectorAll('.mc-opt').forEach(o=>{o.classList.remove('correct','incorrect','locked')});
+  document.querySelectorAll('.mc-fb').forEach(f=>{f.classList.remove('show')});
+  // Reset expansion
+  initExp('exp1',L.exp1);initExp('exp2',L.exp2);
+  ['exp1','exp2'].forEach(id=>{
+    document.getElementById(id+'-preview').textContent='Your expanded sentence will appear here...';
+    document.getElementById(id+'-btn').disabled=true;
+    document.getElementById(id+'-fb').classList.remove('show')});
+  // Reset sort
+  const bank=document.getElementById('sort-bank');
+  document.querySelectorAll('.sort-word').forEach(w=>{w.style.borderColor='';w.classList.remove('sel-sort');bank.appendChild(w)});
+  document.getElementById('drop-basic').innerHTML='';document.getElementById('drop-expanded').innerHTML='';
+  document.getElementById('sort-btn').disabled=false;document.getElementById('sort-fb').classList.remove('show');
+  // Reset review
+  document.querySelectorAll('.review-card').forEach(c=>c.classList.remove('flipped'));
+  updUI()}
+
+updUI();
+</script>
+</body>
+</html>
